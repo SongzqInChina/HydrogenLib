@@ -1,0 +1,10 @@
+# git ignore
+.idea
+# idea directory
+*__pycache__
+# pycache
+
+# test files
+qzlib/_ZqLib_Test.py
+test.py
+test
