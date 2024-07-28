@@ -49,6 +49,7 @@ To get started with Qzlib, simply install the package using pip:
 ```bash
 pip install qzlib
 ```
+Warning: The package has **not** been released to PyPi.And, We will upload it as soon as possible in the future.
 ---
 
 ## Usage Examples
