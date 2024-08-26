@@ -4,15 +4,15 @@
 
 ## Introduction
 
-Qzlib is a versatile Python library designed to simplify common and complex operations, making coding more efficient and enjoyable. Whether you're dealing with file systems, network communications, or data manipulation, Qzlib aims to provide straightforward solutions.
+Hydrogen Lib is a versatile Python library designed to simplify common and complex operations, making coding more efficient and enjoyable. Whether you're dealing with file systems, network communications, or data manipulation, Hydrogen Lib aims to provide straightforward solutions.
 
 ---
 
 ## Project Overview
 
-- **Project Name**: Qzlib
-- **Description**: Qzlib is a comprehensive Python module that simplifies a wide range of practical operations, from file handling to system-level tasks.
-- **Purpose**: The primary goal of Qzlib is to offer a set of utilities that streamline various programming tasks, saving developers time and effort.
+- **Project Name**: Hydrogen Lib
+- **Description**: Hydrogen Lib is a comprehensive Python module that simplifies a wide range of practical operations, from file handling to system-level tasks.
+- **Purpose**: The primary goal of Hydrogen Lib is to offer a set of utilities that streamline various programming tasks, saving developers time and effort.
 - **Target Platform**: Most functionalities are tailored for Windows environments.
 
 ---
@@ -45,19 +45,19 @@ Qzlib is a versatile Python library designed to simplify common and complex oper
 
 ## Getting Started
 
-To get started with Qzlib, simply install the package using pip:
+To get started with Hydrogen Lib, simply install the package using pip:
 ```bash
-pip install qzlib
+pip install Hydrogen Lib
 ```
 Warning: The package has **not** been released to PyPi.And, We will upload it as soon as possible in the future.
 ---
 
 ## Usage Examples
 
-Here are a few quick examples of how to use Qzlib:
+Here are a few quick examples of how to use Hydrogen Lib:
 
 ```python
-import qzlib.zFileSystemMapper.FileSystemMapper as FileSystemMapper
+import Hydrogen.zFileSystemMapper.FileSystemMapper as FileSystemMapper
 
 # Initialize FileSystemMapper with a path
 mapper = FileSystemMapper('D:\\')
