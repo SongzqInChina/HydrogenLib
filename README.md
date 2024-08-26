@@ -1,4 +1,4 @@
-# Qzlib (written in Python 3)
+# Hydrogen Lib (written in Python 3)
 
 ---
 
