@@ -1,0 +1,7 @@
+jsonpickle
+pywin32
+winreg
+psutil
+pyaes
+rsa
+inspect
