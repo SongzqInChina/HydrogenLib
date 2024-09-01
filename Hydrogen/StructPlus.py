@@ -1,7 +1,7 @@
 from typing import Any
 
 from . import _BaseStruct as ostruct
-from .Json import pickle_simple
+from .Json import Pickle
 
 
 def simple_pack(data_bytes: bytes):
@@ -33,21 +33,21 @@ def simple_unpack_one(data: bytes):
 
 
 def simple_jsonpickle_pack(data: Any):
-    jsonpickle_data = pickle_simple.encode(data)
+    jsonpickle_data = Pickle.encode(data)
     return simple_pack(jsonpickle_data.encode())
 
 
 def simple_jsonpickle_unpack(data: bytes):
     orial_data = simple_unpack(data)
-    return pickle_simple.decode(orial_data.decode())
+    return Pickle.decode(orial_data.decode())
 
 
 def simple_jsonpickle_unpacks(data: bytes):
     orial_data_list = simple_unpacks(data)
-    return [pickle_simple.decode(x.decode()) for x in orial_data_list]
+    return [Pickle.decode(x.decode()) for x in orial_data_list]
 
 
 def simple_jsonpickle_unpack_one(data: bytes):
     orial_one_data, data_ = simple_unpack_one(data)
-    return pickle_simple.decode(orial_one_data.decode()), data_
+    return Pickle.decode(orial_one_data.decode()), data_
 

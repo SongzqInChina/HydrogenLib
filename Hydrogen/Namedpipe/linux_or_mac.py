@@ -3,9 +3,13 @@
 import fcntl
 import os
 import time
+from queue import Queue
+from threading import Event
 
-from Hydrogen.ThreadingPlus import run_with_timeout
+from Hydrogen.ThreadingPlus import run_with_timeout, start_daemon_thread
 
+
+# module end, but test not finished
 
 def create_fifo(path):
     try:
@@ -25,6 +29,9 @@ def unlock_fifo(fd):
 class _Reader:
     def __init__(self, name):
         self.name = name
+        self._event = Event()
+        self._queue = Queue()
+        self._thread = start_daemon_thread(self._read_thread)
 
     def _wait(self):
         while not os.path.exists(self.name):
@@ -46,22 +53,31 @@ class _Reader:
             except Exception:
                 return None
 
+    def _read_thread(self):
+        while not self._event.is_set():
+            try:
+                data = self._read()
+                self._queue.put(data)
+            except:
+                continue
+
     def read(self, timeout=None):
-        try:
-            return run_with_timeout(self._read, timeout)
-        except TimeoutError as e:
-            raise e
+        return self._queue.get(timeout=timeout)
 
 
 class _Writer:
     def __init__(self, name):
         self.name = name
+        self._queue = Queue()
+        self._event = Event()
+
+        self._thread = start_daemon_thread(self._write_thread)
 
     def check(self):
         if not os.path.exists(self.name):
             create_fifo(self.name)
 
-    def write(self, data):
+    def _write(self, data):
         self.check()
         with open(self.name, 'w') as f:
             try:
@@ -69,7 +85,18 @@ class _Writer:
                 f.write(data)
                 unlock_fifo(f.fileno())
             except Exception:
+                return
+
+    def _write_thread(self):
+        while not self._event.is_set():
+            try:
+                data = self._queue.get(timeout=0.05)
+                self._write(data)
+            except Exception as e:
                 pass
+
+    def write(self, data):
+        self._queue.put(data)
 
     def close(self):
         os.remove(self.name)
@@ -81,3 +108,11 @@ def Reader(name):
 
 def Writer(name):
     return _Writer(name)
+
+
+if __name__ == '__main__':
+    r = Reader("Test")
+    w = Writer("Test")
+    r.wait()
+    w.write("Hello")
+    print(r.read())

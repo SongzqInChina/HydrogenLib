@@ -74,7 +74,7 @@ class _JsonFile:
         data = self._io.read()
         if len(data) < 1:
             data = "null"
-        enc = pickle_free.decode(data)
+        enc = Pickle.decode(data)
         self._data = enc
         return enc
 
@@ -93,7 +93,7 @@ class _JsonFile:
 
     def _setfile(self):
         self._clear()
-        self._io.write(pickle_free.encode(self._data, self._indent))
+        self._io.write(Pickle.encode(self._data, self._indent))
 
     def __setitem__(self, key, value):
         self._data[key] = value
@@ -408,11 +408,11 @@ def JsonDecryGet(file, key, iv=None):
 
 
 def encode(obj):
-    return pickle_simple.encode(obj)
+    return Pickle.encode(obj)
 
 
 def decode(obj):
-    return pickle_simple.decode(obj)
+    return Pickle.decode(obj)
 
 
 FileLogger.debug("Module File loading ...")

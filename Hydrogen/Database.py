@@ -126,7 +126,7 @@ class DB:
         self._stream.save()
 
     def __str__(self):
-        return f"DB GameObject \n{pickle_free.encode(self._stream['data'])}"
+        return f"DB GameObject \n{Pickle.encode(self._stream['data'])}"
 
     def __call__(self, _type):
         """

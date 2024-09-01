@@ -1,4 +1,4 @@
-# 操作Windows的os.pipe()返回的管道
+# 操作os.pipe()返回的管道
 
 import os
 import queue
@@ -12,7 +12,7 @@ from . import ThreadingPlus, Json
 
 class _PIPEWriter:
     """
-    因为pipe是单向的，所以我们需要创建两个类
+    Pipe Writer
     """
 
     def __init__(self, writer: int, buffer_size: int = 1024):
@@ -20,9 +20,9 @@ class _PIPEWriter:
         self._io = os.fdopen(self._pipe, 'w', buffer_size)
 
         self._msg_queue = queue.Queue(buffer_size)
-        self._event = zthread.threading.Event()
+        self._event = ThreadingPlus.threading.Event()
 
-        self._write_thread = zthread.start_daemon_thread(self._write_thread_func)
+        self._write_thread = ThreadingPlus.start_daemon_thread(self._write_thread_func)
 
         self.buffersize = buffer_size
 
@@ -33,12 +33,12 @@ class _PIPEWriter:
         self._pipe = pipe
         self._io = os.fdopen(self._pipe, 'w', self.buffersize)
         self._event.clear()
-        self._write_thread = zthread.start_daemon_thread(self._write_thread_func)
+        self._write_thread = ThreadingPlus.start_daemon_thread(self._write_thread_func)
 
     def write(self, data):
         if data is None or data is ...:
             raise ValueError("You should send 'None' or '...' to the reader, they hava their functions.")
-        data_text = zjson.pickle_simple.encode(data)
+        data_text = Json.Pickle.encode(data)
         self._msg_queue.put(data_text)
 
     def _write_thread_func(self):
@@ -51,15 +51,18 @@ class _PIPEWriter:
 
 
 class _PIPEReader:
+    """
+    Pipe Reader
+    """
     def __init__(self, reader: int):
         self._pipe = reader
 
         self._io = os.fdopen(reader, 'r')
 
         self._msg_queue = queue.Queue()
-        self._event = zthread.threading.Event()
+        self._event = ThreadingPlus.threading.Event()
 
-        self._read_thread = zthread.start_daemon_thread(self._read_thread_func)
+        self._read_thread = ThreadingPlus.start_daemon_thread(self._read_thread_func)
         self.errors = deque()
 
     def set(self, reader):
@@ -69,7 +72,7 @@ class _PIPEReader:
         self._pipe = reader
         self._io = os.fdopen(self._pipe, 'r')
         self._event.clear()
-        self._read_thread = zthread.start_daemon_thread(self._read_thread_func)
+        self._read_thread = ThreadingPlus.start_daemon_thread(self._read_thread_func)
 
     def read(self, timeout: int | None = ...):
         if timeout is ...:
@@ -85,7 +88,7 @@ class _PIPEReader:
         while not self._event.is_set():
             try:
                 one_data = self._io.readline()
-                unpacking_data = zjson.pickle_simple.decode(one_data)
+                unpacking_data = Json.Pickle.decode(one_data)
                 self._msg_queue.put(unpacking_data)
             except Exception as e:
                 self.errors.append(e)

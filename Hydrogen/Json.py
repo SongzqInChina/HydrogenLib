@@ -1,39 +1,21 @@
 import json
 import logging
-from typing import Any
 
 import jsonpickle
+
+from .Const import JSON_DECODE, JSON_ENCODE
 
 """
 所有类都用于解析JSON表达式
 """
 
-zjson_logger = logging.getLogger("SzQlib.zjson")
+Json_logger = logging.getLogger("SzQlib.Json")
 
 
 # module end
 
-class json_simple:
-    @staticmethod
-    def encode(data):
-        return json.dumps(data, ensure_ascii=False, sort_keys=True)
 
-    @staticmethod
-    def decode(data):
-        return json.loads(data)
-
-
-class pickle_simple:
-    @staticmethod
-    def encode(data) -> str:
-        return jsonpickle.encode(data)
-
-    @staticmethod
-    def decode(data) -> Any:
-        return jsonpickle.decode(data)
-
-
-class json_free:
+class Json:
     @staticmethod
     def encode(data, indent=4):
         return json.dumps(data, ensure_ascii=False, sort_keys=True, indent=indent)
@@ -42,8 +24,17 @@ class json_free:
     def decode(data):
         return json.loads(data)
 
+    @classmethod
+    def __call__(cls, opt, obj, *args, **kwargs):
+        if opt == JSON_DECODE:
+            return cls.decode(obj)
+        elif opt == JSON_ENCODE:
+            return cls.encode(obj, *args, **kwargs)
+        else:
+            raise ValueError("Invalid opt")
 
-class pickle_free:
+
+class Pickle:
     @staticmethod
     def encode(data, indent=4):
         return jsonpickle.encode(data, indent=indent)
@@ -52,5 +43,14 @@ class pickle_free:
     def decode(data):
         return jsonpickle.decode(data)
 
+    @classmethod
+    def __call__(cls, opt, obj, *args, **kwargs):
+        if opt == JSON_DECODE:
+            return cls.decode(obj)
+        elif opt == JSON_ENCODE:
+            return cls.encode(obj, *args, **kwargs)
+        else:
+            raise ValueError("Invalid opt")
 
-zjson_logger.debug("Module zjson loading ...")
+
+Json_logger.debug("Module Json loading ...")
