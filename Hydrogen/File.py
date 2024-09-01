@@ -2,7 +2,7 @@ import datetime
 import os
 
 from .Json import *
-from .OtherClasses import null
+from .Classes.Null import null
 
 FileLogger = logging.getLogger(__name__)
 

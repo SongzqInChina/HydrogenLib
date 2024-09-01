@@ -8,7 +8,7 @@ class Template:
 
 
 def match(dic, tem):
-    from . import dict as dictx
+    from . import Dict as dictx
     if dictx.sub(tem, dic) and dictx.parent(tem, dic):
         return True
     else:
@@ -26,5 +26,5 @@ def sort(dic, tem):
 def sub(template: Template, data: dict):
     if data is None:
         return False
-    from . import dict as dictx
+    from . import Dict as dictx
     return dictx.sub(template.template, data)

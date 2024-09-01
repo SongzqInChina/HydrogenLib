@@ -1,7 +1,7 @@
 from typing import overload
 
 from ..Const import PERM_ROLE_DENY, PERM_ROLE_ALLOW
-from ..OtherClasses import Namespace
+from Hydrogen.Classes.Namespace import Namespace
 
 
 class RoleNotFound(Exception):

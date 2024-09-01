@@ -56,7 +56,7 @@ from . import (
     Const,  # finished (dynamic updates)
     SocketPlus,  # finished
     Namedpipe,  # finished
-    OtherClasses,  # finished
+    Classes,  # finished
     PathPlus,  # finished
     Process,  # finished
     ProcessPlus,  # finished

@@ -3,7 +3,8 @@ import socket
 
 from .Encrypt.aes import decrypt as aes_decode, encode as aes_encode
 from .Encrypt.rsa import encrypt as rsa_encrypt, decrypt as rsa_decrypt
-from .File import JsonFileOpen, null
+from .File import JsonFileOpen
+from .Classes.Null import null
 from .Json import Pickle
 from .SocketPlus import SimpleSocket
 
