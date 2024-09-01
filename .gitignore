@@ -1,10 +1,13 @@
 # git ignore
+.git
 .idea
-# idea directory
-*__pycache__
-# pycache
+.github
+
+__pycache__
 
 # test files
-qzlib/_ZqLib_Test.py
 test.py
-test
+
+venv
+venv312
+venv313
