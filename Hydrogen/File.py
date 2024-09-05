@@ -3,6 +3,7 @@ import os
 
 from .Json import *
 from .Classes.Null import null
+from typing import Any
 
 FileLogger = logging.getLogger(__name__)
 

@@ -1,4 +1,3 @@
-import json
 import tkinter as tk
 
 import win32api
@@ -6,7 +5,7 @@ import win32con
 import win32gui
 import win32process
 
-from .ProcessPlus import CProcess
+from ..ProcessPlus import CProcess
 
 MB_OK = 0
 MB_OK_CLEAN = 1

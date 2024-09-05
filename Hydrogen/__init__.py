@@ -34,7 +34,7 @@ _lib_logging_root = logging.getLogger()
 Formatter = _LogFormat()
 _lib_logging_root.setLevel(logging.DEBUG)
 
-version = "0.0.1"
+version = "0.1.0"
 
 _lib_logging_root.debug("--Qzlib-------------------------")
 _lib_logging_root.debug(f"| version:\t{version}")
