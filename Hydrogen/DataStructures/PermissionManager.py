@@ -7,11 +7,11 @@ class PermissonStruct(ABC):
         ...
 
 
-class BaseError(BaseException):
+class PermissionBaseError(BaseException):
     ...
 
 
-class PermissionObjectExistsError(BaseError):
+class PermissionObjectExistsError(PermissionBaseError):
     def __init__(self, obj):
         self.error_obj = obj
 
@@ -19,12 +19,28 @@ class PermissionObjectExistsError(BaseError):
         return f"Permission object exists(Type: {self.error_obj.__class__.__name__})"
 
 
-class PermissionNameNotFoundError(BaseError):
+class PermissionNameNotFoundError(PermissionBaseError):
     def __init__(self, name):
         self.name = name
 
     def __str__(self):
         return f"Permission name not found(Name: {self.name})"
+
+
+class PermissionSameNameError(PermissionBaseError):
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"Permission name is same(Name: {self.name})"
+
+
+class PermissionSameTypeError(PermissionBaseError):
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f"Permission name is same(Name: {self.name})"
 
 
 def merge_roles(*roles):
@@ -351,6 +367,18 @@ class PermissionManager:
 
     def get_by_name(self, name):
         return one_of_set(self.objects, name)
+
+    def isinstance(self, name, _type):
+        return isinstance(one_of_set(self.objects, name), _type)
+
+    def is_group(self, name):
+        return self.isinstance(name, Group)
+
+    def is_user(self, name):
+        return self.isinstance(name, User)
+
+    def is_domain(self, name):
+        return self.isinstance(name, Domain)
 
     def check(self, target_name, opt):
         if target_name not in self.objects:
