@@ -14,9 +14,9 @@ FileLogger = logging.getLogger(__name__)
 def create_file(file, text="", clean: bool = True):
     """
     创建一个文件并写入数据
-    :param file:
-    :param text:
-    :param clean:
+    :param file: 文件名
+    :param text: 文件信息
+    :param clean: 是否清空再写入
     :return:
     """
     FileLogger.debug(f"Create a new file: {file}, text={repr(text)}")
@@ -24,16 +24,13 @@ def create_file(file, text="", clean: bool = True):
     f.write(text)
 
 
-def get_path(__file__=__file__):
+def get_path(file):
     """
     获取一个文件的父目录
-    :param __file__:
+    :param file: 文件路径
     :return:
     """
-    if '/' in __file__:
-        return "\\".join(__file__.split('/')[0:-1:]) + '\\'
-    else:
-        return '\\'.join(__file__.split('\\')[0:-1:]) + '\\'
+    return os.path.dirname(file)
 
 
 class _JsonFile:
@@ -338,9 +335,9 @@ def JsonEncrypt(file, key, iv=None):
     如果你希望更智能的加密JSON，可以导入 **SzQlib.encrypt.EncryptJson**
 
 
-    :param file:
-    :param key:
-    :param iv:
+    :param file: JSON源文件
+    :param key: 密钥
+    :param iv: CBC初始化向量
     :return:
     """
     from .Encrypt.aes import encrypt
