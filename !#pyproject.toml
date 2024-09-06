@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=40.8.0", "wheel", "build"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "HydrogenLib"
+version = "0.1.0"
+authors = [
+  { name="SongzqInChina", email="idesong6@qq.com" },
+]
+description = "Unknown"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+
+[project.urls]
+Homepage = "https://github.com/SongzqInChina/Hydrogen"
+
+[project.dependencies]
+jsonpickle = "2.0.0"
+psutil = "2.1.3"
+
