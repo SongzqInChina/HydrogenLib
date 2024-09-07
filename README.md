@@ -13,7 +13,7 @@ Hydrogen Lib is a versatile Python library designed to simplify common and compl
 - **Project Name**: Hydrogen Lib
 - **Description**: Hydrogen Lib is a comprehensive Python module that simplifies a wide range of practical operations, from file handling to system-level tasks.
 - **Purpose**: The primary goal of Hydrogen Lib is to offer a set of utilities that streamline various programming tasks, saving developers time and effort.
-- **Target Platform**: Most functionalities are tailored for Windows environments.
+- **Target Platform**: Some functionalities are tailored for Windows environments.
 
 ---
 
@@ -57,7 +57,7 @@ Warning: The package has **not** been released to PyPi.And, We will upload it as
 Here are a few quick examples of how to use Hydrogen Lib:
 
 ```python
-import Hydrogen.zFileSystemMapper.FileSystemMapper as FileSystemMapper
+from Hydrogen.File import FileSystemMapper
 
 # Initialize FileSystemMapper with a path
 mapper = FileSystemMapper('D:\\')
