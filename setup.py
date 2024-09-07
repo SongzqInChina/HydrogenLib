@@ -34,9 +34,10 @@ setup(
     python_requires='>=3.12',
     install_requires=[
         'jsonpickle>=3.2.2',
-        'psutil>=6.0.0',
+        'psutil>=6.0.0'
     ],
 )
+
 print("Remove temp files")
 print("Remove build ...")
 shutil.rmtree('build')

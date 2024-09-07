@@ -1,5 +1,4 @@
 import logging
-import msvcrt
 import sys
 import time
 from datetime import timedelta
@@ -192,6 +191,7 @@ class LocalCursor(Cursor):
 
 
 def get_base_cursor():
+    import msvcrt
     # 发送请求光标位置的 ANSI 转义序列
     sys.stdout.write("\033[6n")
     sys.stdout.flush()
