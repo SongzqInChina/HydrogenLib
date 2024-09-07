@@ -11,3 +11,14 @@ test.py
 venv
 venv312
 venv313
+
+HydrogenLib.egg-info
+build
+dist
+
+Release
+Source_code
+
+setup.py
+
+

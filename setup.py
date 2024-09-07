@@ -1,11 +1,24 @@
-from setuptools import setup, find_packages
+import Hydrogen
+import os.path
+import shutil
 from pathlib import Path
+import glob
+
+from setuptools import setup, find_packages
 
 readme_text = (Path(__file__).parent / 'README.md').read_text()
 
+if not os.path.exists(r".\Release"):
+    os.mkdir(r".\Release")
+
+if not os.path.exists(r".\Source_code"):
+    os.mkdir(r".\Source_code")
+
+version_now = rf"{Hydrogen.version}-{Hydrogen.version_suffix}"
+
 setup(
     name='HydrogenLib',
-    version='0.1.0',
+    version=version_now,
     author='SongzqInChina',
     author_email='idesong6@qq.com',
     description='A multi-functional module, but '
@@ -26,3 +39,27 @@ setup(
         'psutil>=6.0.0',
     ],
 )
+print("Remove temp files")
+print("Remove build ...")
+shutil.rmtree('build')
+print("Remove egg-info")
+shutil.rmtree('HydrogenLib.egg-info')
+
+print("Copy release file")
+
+# get release whl file
+whl_file = glob.glob(r".\dist\*.whl")[0]
+whl_file_name = rf"HydrogenLib-py3-{version_now}.whl"
+shutil.copy(whl_file, rf".\Release\{whl_file_name}")
+
+# get source code
+src_code_file = glob.glob(r".\dist\*.tar.gz")[0]
+src_code_file_name = rf"HydrogenLib-{version_now}.tar.gz"
+shutil.copy(src_code_file, rf".\Source_code\{src_code_file_name}")
+
+print("Clean dist ...")
+shutil.rmtree(r".\dist")
+
+print("Finish.")
+
+
