@@ -11,8 +11,6 @@ readme_text = (Path(__file__).parent / 'README.md').read_text()
 if not os.path.exists(r".\Release"):
     os.mkdir(r".\Release")
 
-if not os.path.exists(r".\Source_code"):
-    os.mkdir(r".\Source_code")
 
 version_now = rf"{Hydrogen.version}-{Hydrogen.version_suffix}"
 
@@ -55,7 +53,7 @@ shutil.copy(whl_file, rf".\Release\{whl_file_name}")
 # get source code
 src_code_file = glob.glob(r".\dist\*.tar.gz")[0]
 src_code_file_name = rf"HydrogenLib-{version_now}.tar.gz"
-shutil.copy(src_code_file, rf".\Source_code\{src_code_file_name}")
+shutil.copy(src_code_file, rf".\Release\{src_code_file_name}")
 
 print("Clean dist ...")
 shutil.rmtree(r".\dist")
