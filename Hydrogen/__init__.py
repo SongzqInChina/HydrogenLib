@@ -4,7 +4,6 @@ import sys
 
 from . import OutputPlus, Time
 
-
 # TODO: Improve the OutputPlus module
 
 

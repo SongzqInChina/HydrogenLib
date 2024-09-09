@@ -1,3 +1,6 @@
+import sys
+import time
+
 import Hydrogen
 import os.path
 import shutil
@@ -12,8 +15,9 @@ if not os.path.exists(r".\Release"):
     os.mkdir(r".\Release")
 
 
-version_now = rf"{Hydrogen.version}-{Hydrogen.version_suffix}"
-
+version_now = rf"{Hydrogen.version}.{Hydrogen.version_suffix}"
+print(version_now)
+time.sleep(3)
 setup(
     name='HydrogenLib',
     version=version_now,
@@ -46,15 +50,15 @@ shutil.rmtree('HydrogenLib.egg-info')
 
 print("Copy release file")
 
-# get release whl file
-whl_file = glob.glob(r".\dist\*.whl")[0]
-whl_file_name = rf"HydrogenLib-py3-{version_now}.whl"
-shutil.copy(whl_file, rf".\Release\{whl_file_name}")
+if "install" not in sys.argv:
+    # get release whl file
+    whl_file = glob.glob(r".\dist\*.whl")[0]
+    shutil.copy(whl_file, rf".\Release")
 
-# get source code
-src_code_file = glob.glob(r".\dist\*.tar.gz")[0]
-src_code_file_name = rf"HydrogenLib-{version_now}.tar.gz"
-shutil.copy(src_code_file, rf".\Release\{src_code_file_name}")
+    # get source code
+    src_code_file = glob.glob(r".\dist\*.tar.gz")[0]
+    src_code_file_name = rf"HydrogenLib-{version_now}.tar.gz"
+    shutil.copy(src_code_file, rf".\Release\{src_code_file_name}")
 
 print("Clean dist ...")
 shutil.rmtree(r".\dist")

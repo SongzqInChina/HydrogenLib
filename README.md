@@ -24,7 +24,6 @@ Hydrogen Lib is a versatile Python library designed to simplify common and compl
 - System Information Retrieval
 - Encryption and Security Functions
 - Process and Thread Control
-- Database Interaction
 - JSON Handling
 - Dynamic Library Management
 - Networking Utilities
@@ -47,7 +46,7 @@ Hydrogen Lib is a versatile Python library designed to simplify common and compl
 
 To get started with Hydrogen Lib, simply install the package using pip:
 ```bash
-pip install Hydrogen Lib
+pip install HydrogenLib
 ```
 Warning: The package has **not** been released to PyPi.And, We will upload it as soon as possible in the future.
 ---
@@ -77,12 +76,13 @@ del mapper["new_file.txt"]
 # Get file attributes
 file_info = mapper.get("existing_file.txt")
 # Alternatively
-file_info = mapper["existing_file.txt"]
+# file_info = mapper["existing_file.txt"]
 
 # Scan the directory for files and subdirectories
 mapper.scan()
-# Access the scan results
-scan_results = mapper.scan_results
+# Alternatively
+res = mapper.scan_res
+print(res)
 ```
 
 ---
