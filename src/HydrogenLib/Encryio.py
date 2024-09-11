@@ -3,8 +3,9 @@ import socket
 
 from .Encrypt.aes import decrypt as aes_decode, encode as aes_encode
 from .Encrypt.rsa import encrypt as rsa_encrypt, decrypt as rsa_decrypt
-from .File import JsonFileOpen, null
-from .Json import pickle_simple
+from .File import JsonFileOpen
+from .Classes.Null import null
+from .Json import Pickle
 from .SocketPlus import SimpleSocket
 
 zencryio_logger = logging.getLogger("SzQlib.zencryio")
@@ -26,10 +27,10 @@ class _EncryptJsonFile:
     def __getitem__(self, item):
         cry_text = self.iostream[item]
         plain_text = aes_decode(cry_text, self.key, self.iv)
-        return pickle_simple.decode(plain_text)
+        return Pickle.decode(plain_text)
 
     def __setitem__(self, key, value):
-        value = pickle_simple.encode(value)
+        value = Pickle.encode(value)
         cry_text = aes_encode(value, self.key, self.iv)
         self.iostream[key] = cry_text
 
@@ -112,7 +113,7 @@ class EncryptSocket(SimpleSocket):
             )
 
     def write(self, data):
-        data = pickle_simple.encode(data).encode()  # <------------- encode() return bytes
+        data = Pickle.encode(data).encode()  # <------------- encode() return bytes
         if self._encry_mode:
             if self._encry_mode == 'aes':
                 encry_data = aes_encode(data, self.key1, self.key2)
@@ -133,7 +134,7 @@ class EncryptSocket(SimpleSocket):
             else:
                 raise ValueError("无效的加密模式")
 
-            return pickle_simple.decode(decry_data.decode())
+            return Pickle.decode(decry_data.decode())
 
 
 zencryio_logger.debug("Module zencryio loading ...")

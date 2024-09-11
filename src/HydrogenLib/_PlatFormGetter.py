@@ -1,17 +1,13 @@
-import platform
-
-Windows = 'Windows'
-MacOS = 'Darwin'
-Linux = 'Linux'
+import os
 
 
 def is_win():
-    return platform.system() == Windows
-
-
-def is_mac():
-    return platform.system() == MacOS
+    return os.name == 'nt'
 
 
 def is_linux():
-    return platform.system() == Linux
+    return os.name == 'posix'
+
+
+def is_mac():
+    return os.name == 'mac'

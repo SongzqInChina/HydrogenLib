@@ -1,8 +1,10 @@
 import datetime
 import os
+from typing import Any
 
+from .Classes.Null import null
 from .Json import *
-from .OtherClasses import null
+from .PathPlus import isfile, exists, tree, path_to, mkfile, mkdir, isabspath, isdir, rmfile, rmdirs
 
 FileLogger = logging.getLogger(__name__)
 
@@ -12,9 +14,9 @@ FileLogger = logging.getLogger(__name__)
 def create_file(file, text="", clean: bool = True):
     """
     创建一个文件并写入数据
-    :param file:
-    :param text:
-    :param clean:
+    :param file: 文件名
+    :param text: 文件信息
+    :param clean: 是否清空再写入
     :return:
     """
     FileLogger.debug(f"Create a new file: {file}, text={repr(text)}")
@@ -22,16 +24,13 @@ def create_file(file, text="", clean: bool = True):
     f.write(text)
 
 
-def get_path(__file__=__file__):
+def get_path(file):
     """
     获取一个文件的父目录
-    :param __file__:
+    :param file: 文件路径
     :return:
     """
-    if '/' in __file__:
-        return "\\".join(__file__.split('/')[0:-1:]) + '\\'
-    else:
-        return '\\'.join(__file__.split('\\')[0:-1:]) + '\\'
+    return os.path.dirname(file)
 
 
 class _JsonFile:
@@ -74,7 +73,7 @@ class _JsonFile:
         data = self._io.read()
         if len(data) < 1:
             data = "null"
-        enc = pickle_free.decode(data)
+        enc = Pickle.decode(data)
         self._data = enc
         return enc
 
@@ -93,7 +92,7 @@ class _JsonFile:
 
     def _setfile(self):
         self._clear()
-        self._io.write(pickle_free.encode(self._data, self._indent))
+        self._io.write(Pickle.encode(self._data, self._indent))
 
     def __setitem__(self, key, value):
         self._data[key] = value
@@ -293,51 +292,6 @@ def FileExists(filename):
     return os.path.exists(filename)
 
 
-class File:
-    @staticmethod
-    def create(path):
-        open(path, 'a').close()
-
-    @staticmethod
-    def read(path):
-        with open(path, 'r') as f:
-            t = f.read()
-        return t
-
-    @staticmethod
-    def write(path, content):
-        f = open(path, 'w')
-        f.write(content)
-        f.close()
-
-    @staticmethod
-    def append(path, content):
-        f = open(path, 'a')
-        f.write(content)
-        f.close()
-
-    @staticmethod
-    def delete(path):
-        import os
-        os.remove(path)
-
-    @staticmethod
-    def clear(path):
-        open(path, 'w').close()
-
-    @staticmethod
-    def getLogClass(path):
-        return LogFileOpen(path)
-
-    @staticmethod
-    def getInfoClass(path):
-        return JsonFileOpen(path)
-
-    @staticmethod
-    def getListClass(path):
-        return FileListOpen(path)
-
-
 def JsonGet(file, key=None):
     io = JsonFileOpen(file)
     data = dict(io)
@@ -381,9 +335,9 @@ def JsonEncrypt(file, key, iv=None):
     如果你希望更智能的加密JSON，可以导入 **SzQlib.encrypt.EncryptJson**
 
 
-    :param file:
-    :param key:
-    :param iv:
+    :param file: JSON源文件
+    :param key: 密钥
+    :param iv: CBC初始化向量
     :return:
     """
     from .Encrypt.aes import encrypt
@@ -408,11 +362,114 @@ def JsonDecryGet(file, key, iv=None):
 
 
 def encode(obj):
-    return pickle_simple.encode(obj)
+    return Pickle.encode(obj)
 
 
 def decode(obj):
-    return pickle_simple.decode(obj)
+    return Pickle.decode(obj)
+
+
+class File:
+    def __init__(self, file):
+        if not isfile(file):
+            raise FileNotFoundError(file)
+        self._file = file
+
+    def _check(self):
+        if not exists(self._file):
+            raise FileNotFoundError(self._file)
+
+    @property
+    def size(self):
+        self._check()
+        return os.path.getsize(self._file)
+
+    @property
+    def data(self):
+        self._check()
+        with open(self._file, 'rb') as f:
+            return f.read()
+
+    @property
+    def name(self):
+        self._check()
+        return os.path.basename(self._file)
+
+    @property
+    def fat(self):
+        self._check()
+        return os.path.dirname(self._file)
+
+    def __repr__(self):
+        return f'<File Object of "{self._file}">'
+
+    __str__ = __repr__
+
+
+class FileSystemMapper:  # 把文件系统（文件夹）映射成字典
+    def __init__(self, path):
+        self._path = path
+        self._dic = None
+
+    def scan(self):
+        self._dic = tree(self._path)
+
+    @property
+    def scan_res(self):
+        return self._dic
+
+    def __setitem__(self, key, value):
+        key = path_to(self._path, key)
+        if value is None:
+            if not exists(key):
+                mkfile(key)
+            else:
+                raise FileExistsError(key)
+        elif isinstance(value, str):
+            with open(key, 'w') as f:
+                f.write(value)
+        elif value == self or isinstance(value, dict):
+            if not exists(key):
+                mkdir(key)
+            else:
+                raise FileExistsError(key)
+
+    def __getitem__(self, key):
+        if not isabspath(key):
+            key = path_to(self._path, key)
+        if not exists(key):
+            raise FileNotFoundError(key)
+        if isfile(key):
+            return File(key)
+        if isdir(key):
+            return self.__class__(key)
+
+    def __delitem__(self, key):
+        self.pop(key)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return True
+        return False
+
+    def get(self, key):
+        key = path_to(self._path, key)
+        try:
+            return self[key]
+        except FileNotFoundError:
+            return None
+
+    def pop(self, key):
+        key = path_to(self._path, key)
+        if exists(key):
+            data = self[key].data
+            if isfile(key):
+                rmfile(key)
+            if isdir(key):
+                rmdirs(key)
+            return data
+        else:
+            raise FileNotFoundError(key)
 
 
 FileLogger.debug("Module File loading ...")
