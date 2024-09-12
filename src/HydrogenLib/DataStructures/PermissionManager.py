@@ -50,13 +50,6 @@ def merge_roles(*roles):
     return role
 
 
-def one_of_set(setobj, value):
-    if value not in setobj:
-        raise KeyError(value)
-    x = list(setobj & {value})
-    return x[0]
-
-
 class Role:
     def __init__(self, permit_opts=None, prohibit_opts=None):
         if permit_opts is None:
@@ -83,8 +76,8 @@ class Role:
         self._process()
 
     def merge(self, other):
-        self.permit_opts += other.permit_opts
-        self.prohibit_opts += other.prohibit_opts
+        self.permit_opts |= other.permit_opts
+        self.prohibit_opts |= other.prohibit_opts
         self._process()
 
 
@@ -103,11 +96,6 @@ class User(PermissonStruct):
         self.update()
 
     def check(self, opt):
-        """
-        权限判定机制：拒绝权限大于允许权限
-        :param opt: 检查操作
-        :return: Bool
-        """
         return self.last_permission.check(opt)
 
     def add_role(self, role):
@@ -138,7 +126,7 @@ class User(PermissonStruct):
         return self.name == other
 
     def update(self):
-        last_permission = merge_roles(self.roles)
+        last_permission = merge_roles(*self.roles)
 
         for g in self.groups:
             last_permission.merge(g.last_permission)
@@ -216,12 +204,7 @@ class Domain(PermissonStruct):
         self.last_permission = Role()
 
     def update(self):
-        """
-        对于顶级结构“域”来说，不需要考虑上层结构引发的权限变更
-        :return: 
-        """
         self.last_permission = self.roles
-        pass
 
     def check(self, opt):
         return all(role.check(opt) for role in self.roles)
@@ -263,27 +246,27 @@ class PermissionManager:
             groups = set()
         if domains is None:
             domains = set()
-        self.objects = users | groups | domains
+        self.objects = {}  # 使用字典存储对象
         self.default_roles = roles
 
     def create_user(self, name):
         if name in self.objects:
-            raise PermissionObjectExistsError(one_of_set(self.objects, name))
+            raise PermissionObjectExistsError(self.objects[name])
         u = User(name, self.default_roles)
-        self.objects.add(u)
+        self.objects[name] = u
 
     def create_group(self, name):
         if name in self.objects:
-            raise PermissionObjectExistsError(one_of_set(self.objects, name))
+            raise PermissionObjectExistsError(self.objects[name])
         g = Group(name, self.default_roles)
-        self.objects.add(g)
+        self.objects[name] = g
         return g
 
     def create_domain(self, name):
         if name in self.objects:
-            raise PermissionObjectExistsError(one_of_set(self.objects, name))
+            raise PermissionObjectExistsError(self.objects[name])
         d = Domain(name, self.default_roles)
-        self.objects.add(d)
+        self.objects[name] = d
         return d
 
     def exists(self, name):
@@ -292,8 +275,7 @@ class PermissionManager:
     def remove(self, name):
         if name not in self.objects:
             raise Exception("permission object not exists")
-        obj = one_of_set(self.objects, name)  # type: PermissonStruct | User | Group | Domain
-        self.objects -= {obj}
+        obj = self.objects.pop(name)  # type: PermissonStruct | User | Group | Domain
         if isinstance(obj, User):
             for group in obj.groups:
                 group.remove_user(obj)
@@ -316,20 +298,20 @@ class PermissionManager:
                 group.remove_domain(obj)
 
     def update(self):
-        domains = list(i for i in self.objects if isinstance(i, Domain))
+        domains = [i for i in self.objects.values() if isinstance(i, Domain)]
         for d in domains:
             d.update()
 
-        groups = list(i for i in self.objects if isinstance(i, Group))
+        groups = [i for i in self.objects.values() if isinstance(i, Group)]
         for g in groups:
             g.update()
 
-        users = list(i for i in self.objects if isinstance(i, User))
+        users = [i for i in self.objects.values() if isinstance(i, User)]
         for u in users:
             u.update()
 
-    NonTopTypes = Group | User
-    ContainerTypes = Group | Domain
+    NonTopTypes = (Group, User)
+    ContainerTypes = (Group, Domain)
 
     def let_join(self, obj: NonTopTypes, container: ContainerTypes):
         if type(obj) is type(container):  # type check
@@ -365,11 +347,12 @@ class PermissionManager:
                 container.remove_group(obj)
                 obj.leave_domain(container)
 
-    def get_by_name(self, name):
-        return one_of_set(self.objects, name)
+    def get_by_name(self, name) -> User | Group | Domain | None:
+        return self.objects.get(name)
 
     def isinstance(self, name, _type):
-        return isinstance(one_of_set(self.objects, name), _type)
+        obj = self.objects.get(name)
+        return isinstance(obj, _type) if obj else False
 
     def is_group(self, name):
         return self.isinstance(name, Group)
@@ -384,5 +367,30 @@ class PermissionManager:
         if target_name not in self.objects:
             raise PermissionNameNotFoundError(target_name)
 
-        target = one_of_set(self.objects, target_name)
+        target = self.objects[target_name]
         return target.check(opt)
+
+
+if __name__ == '__main__':
+    pm = PermissionManager()
+    pm.create_user("user1")
+    pm.create_user("user2")
+    pm.create_user("user3")
+
+    pm.create_group("group1")
+    pm.create_group("group2")
+    pm.create_group("group3")
+
+    print(pm.objects)
+
+    usr1 = pm.get_by_name("user1")
+    print(usr1)
+    usr1.add_role(Role({'R', 'W'}, {'X', 'Y'}))
+    pm.get_by_name("user2").add_role(Role({'R'}, {'X'}))
+    pm.get_by_name("user3").add_role(Role({'R', 'W', 'X', 'Y'}, ))
+
+    pm.get_by_name("group1").add_role(Role({'R'}, {'X'}))
+    pm.get_by_name("group2").add_role(Role({'R'}, {'Y'}))
+    pm.get_by_name("group3").add_role(Role({'R', 'X'}, {'W'}))
+
+    print(pm.check("user1", "R"))
