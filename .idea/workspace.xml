@@ -4,14 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Revert &quot;Sept. 9 2024 01 改用Hatch项目管理器&quot;&#10;&#10;This reverts commit fc013161">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 12 2024 02">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/Graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/Graph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -46,8 +57,10 @@
   "keyToString": {
     "Python.PermissionManager.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Python项目/HydrogenLib"
+    "last_opened_file_path": "E:/Python项目/HydrogenLib/src/HydrogenLib/Classes/Auto.py",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RunManager">
@@ -119,6 +132,18 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Revert &quot;Sept. 9 2024 01 改用Hatch项目管理器&quot;&#10;&#10;This reverts commit fc013161" />
-    <option name="LAST_COMMIT_MESSAGE" value="Revert &quot;Sept. 9 2024 01 改用Hatch项目管理器&quot;&#10;&#10;This reverts commit fc013161" />
+    <MESSAGE value="Sept. 12 2024 02" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 12 2024 02" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py</url>
+          <line>384</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

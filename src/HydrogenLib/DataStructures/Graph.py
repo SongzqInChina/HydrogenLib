@@ -4,7 +4,7 @@ class UndirectedGraph:
             If no dictionary or None is given,
             an empty dictionary will be used
         """
-        if graph_dict == None:
+        if graph_dict is None:
             graph_dict = {}
         self.graph_dict = graph_dict
 
@@ -27,12 +27,11 @@ class UndirectedGraph:
             return True
         return False
 
-    def add_edge(self, edge):
+    def add_edge(self, left, right):
         """ assumes that edge is of type set, tuple or list;
             between two vertices can be multiple edges!
         """
-        edge = set(edge)
-        (vertex1, vertex2) = tuple(edge)
+        (vertex1, vertex2) = left, right
 
         # Add vertex1 if it does not exist
         if vertex1 not in self.graph_dict:
@@ -99,11 +98,11 @@ class DirectedGraph:
         if vertex not in self.graph_dict:
             self.graph_dict[vertex] = []
 
-    def add_edge(self, edge):
+    def add_edge(self, left, right):
         """ assumes that edge is of type tuple (vertex1, vertex2);
             adds a directed edge from vertex1 to vertex2.
         """
-        (vertex1, vertex2) = edge
+        (vertex1, vertex2) = left, right
         if vertex1 in self.graph_dict:
             self.graph_dict[vertex1].append(vertex2)
         else:

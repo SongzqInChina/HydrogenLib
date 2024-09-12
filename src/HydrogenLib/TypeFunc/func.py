@@ -32,3 +32,4 @@ def is_callable(obj):
     Func_Callable_Types = typing.Union[types.FunctionType, types.BuiltinFunctionType]
     return isinstance(obj, Func_Callable_Types)
 
+

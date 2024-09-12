@@ -82,3 +82,5 @@ class AttrDict:
     @property
     def get_dict(self):
         return self._dict
+
+

@@ -106,15 +106,19 @@ class User(PermissonStruct):
 
     def join_domain(self, domain):
         self.domains.add(domain)
+        domain.add_user(self)
 
     def leave_domain(self, domain):
         self.domains -= {domain}
+        domain.remove_user(self)
 
     def join_group(self, group):
         self.groups.add(group)
+        group.add_user(self)
 
     def leave_group(self, group):
         self.groups -= {group}
+        group.remove_user(self)
 
     def __hash__(self):
         return hash(self.name)
@@ -155,7 +159,6 @@ class Group(PermissonStruct):
 
     def add_user(self, user):
         self.users.add(user)
-        user.add_group(self)
 
     def add_role(self, role):
         self.roles.add(role)
@@ -165,13 +168,14 @@ class Group(PermissonStruct):
 
     def remove_user(self, user):
         self.users -= {user}
-        user.leave_group(self)
 
     def join_domain(self, domain):
         self.domains.add(domain)
+        domain.add_group(self)
 
     def leave_domain(self, domain):
         self.domains -= {domain}
+        domain.remove_group(self)
 
     def __hash__(self):
         return hash(self.name)
@@ -182,7 +186,7 @@ class Group(PermissonStruct):
         return self.name == other
 
     def update(self):
-        last_permission = merge_roles(self.roles)
+        last_permission = merge_roles(*self.roles)
 
         for d in self.domains:
             last_permission.merge(d.last_permission)
@@ -247,6 +251,13 @@ class PermissionManager:
         if domains is None:
             domains = set()
         self.objects = {}  # 使用字典存储对象
+        for u in users:
+            self.objects[u.name] = u
+        for g in groups:
+            self.objects[g.name] = g
+        for d in domains:
+            self.objects[d.name] = d
+
         self.default_roles = roles
 
     def create_user(self, name):
@@ -355,13 +366,13 @@ class PermissionManager:
         return isinstance(obj, _type) if obj else False
 
     def is_group(self, name):
-        return self.isinstance(name, Group)
+        return self.isinstance(self.objects[name], Group)
 
     def is_user(self, name):
-        return self.isinstance(name, User)
+        return self.isinstance(self.objects[name], User)
 
     def is_domain(self, name):
-        return self.isinstance(name, Domain)
+        return self.isinstance(self.objects[name], Domain)
 
     def check(self, target_name, opt):
         if target_name not in self.objects:
@@ -372,6 +383,7 @@ class PermissionManager:
 
 
 if __name__ == '__main__':
+    # Test for PermissionManager
     pm = PermissionManager()
     pm.create_user("user1")
     pm.create_user("user2")
@@ -393,4 +405,18 @@ if __name__ == '__main__':
     pm.get_by_name("group2").add_role(Role({'R'}, {'Y'}))
     pm.get_by_name("group3").add_role(Role({'R', 'X'}, {'W'}))
 
+    pm.update()
+
     print(pm.check("user1", "R"))
+    print(pm.check("user1", "X"))
+    print(pm.check("user1", "W"))
+    print(pm.is_user("user1"))
+    print(pm.is_user("group1"))
+
+    pm.let_join(pm.get_by_name("user1"), pm.get_by_name("group1"))
+    pm.let_join(pm.get_by_name("user2"), pm.get_by_name("group2"))
+
+    pm.update()
+
+    print(pm.check("user1", "R"))
+    print(pm.check("user1", "X"))
