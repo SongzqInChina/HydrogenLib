@@ -1,5 +1,5 @@
-from ..Classes.Auto import AutoCreateDict, AutoCompareClass
-from ..Classes.Namespace import Namespace
+from src.HydrogenLib.Classes.Auto import AutoCreateDict, AutoCompareClass
+from src.HydrogenLib.Classes.Namespace import Namespace
 
 
 class BaseStruct(AutoCompareClass):

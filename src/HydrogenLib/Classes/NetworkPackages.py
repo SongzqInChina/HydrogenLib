@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from jsonpickle import jsonpickler
+
 
 class NetPackage(ABC):
     @abstractmethod
@@ -9,16 +9,12 @@ class NetPackage(ABC):
     def is_package(cls, package_object):
         return isinstance(package_object, cls) or issubclass(package_object.__class__, cls)
 
-    @jsonpickler
-    @abstractmethod
-    def __jsonpickled__(self, context):
-        pass
+    def __getstate__(self):
+        raise NotImplementedError("This class is not picklable")
 
-    @classmethod
-    @jsonpickler
-    @abstractmethod
-    def __jsonunpickled__(cls, data, context):
-        pass
+    def __setstate__(self, state):
+        raise NotImplementedError("This class is not picklable")
+
 
 class Request(NetPackage):
     def __init__(self, header=None, data=None):
@@ -28,20 +24,16 @@ class Request(NetPackage):
     def get(self):
         return self.header, self.data
 
-    @jsonpickler
-    def __jsonpickled__(self, context):
+    def __getstate__(self):
         return {
             "header": self.header,
             "data": self.data
         }
 
-    @classmethod
-    @jsonpickler
-    def __jsonunpickled__(cls, data, context):
-        return cls(
-            header=data["header"],
-            data=data['data']
-        )
+    def __setstate__(self, state):
+        self.header = state.get("header", {})
+        self.data = state.get("data", None)
+
 
 class Answer(NetPackage):
     def __init__(self, header=None, result=None, status=None):
@@ -52,29 +44,20 @@ class Answer(NetPackage):
     def get(self):
         return self.header, self.result, self.status
 
-    @jsonpickler
-    def __jsonpickled__(self, context):
+    def __getstate__(self):
         return {
             "header": self.header,
             "result": self.result,
             "status": self.status
         }
 
-    @classmethod
-    @jsonpickler
-    def __jsonunpickled__(cls, data, context):
-        return cls(
-            header=data['header'],
-            result=data['result'],
-            status=data['status']
-        )
+    def __setstate__(self, state):
+        self.header = state.get("header", None)
+        self.result = state.get("result", None)
+        self.status = state.get("status", None)
+
 
 class Error(NetPackage):
-    @classmethod
-    @jsonpickler
-    def __jsonunpickled__(cls, data, context):
-        return cls(data['header'], data['error'], data['reason'])
-
     def __init__(self, header=None, error=None, reason=None):
         self.header = header
         self.error = error
@@ -83,13 +66,18 @@ class Error(NetPackage):
     def get(self):
         return self.header, self.error, self.reason
 
-    @jsonpickler
-    def __jsonpickled__(self, context):
+    def __getstate__(self):
         return {
             "header": self.header,
             "error": self.error,
             "reason": self.reason
         }
+
+    def __setstate__(self, state):
+        self.header = state.get("header", None)
+        self.error = state.get("error", None)
+        self.reason = state.get("reason", None)
+
 
 class Info(NetPackage):
     def __init__(self, header=None, info=None):
@@ -99,17 +87,16 @@ class Info(NetPackage):
     def get(self):
         return self.header, self.info
 
-    @jsonpickler
-    def __jsonpickled__(self, context):
+    def __getstate__(self):
         return {
             "header": self.header,
             "info": self.info
         }
 
-    @classmethod
-    @jsonpickler
-    def __jsonunpickled__(cls, data, context):
-        return cls(header=data['header'], info=data['info'])
+    def __setstate__(self, state):
+        self.header = state.get("header", None)
+        self.info = state.get("info", None)
+
 
 class Action(NetPackage):
     def __init__(self, header=None, action=None):
@@ -119,14 +106,12 @@ class Action(NetPackage):
     def get(self):
         return self.header, self.action
 
-    @jsonpickler
-    def __jsonpickled__(self, context):
+    def __getstate__(self):
         return {
             "header": self.header,
             "action": self.action
         }
 
-    @classmethod
-    @jsonpickler
-    def __jsonunpickled__(cls, data, context):
-        return cls(header=data['header'], action=data['action'])
+    def __setstate__(self, state):
+        self.header = state.get("header", None)
+        self.action = state.get("action", None)

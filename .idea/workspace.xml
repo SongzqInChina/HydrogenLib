@@ -4,15 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 14 2024 01">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/TestManagerWrapper/BaseStructures.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/TestManagerWrapper/StandardWrapper.py" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 14 2024 02">
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_BaseStructures.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tests/test_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/zconsole/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/ABC/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/zconsole/remote_console_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/ConsolePlus/remote_console_client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Time.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Time.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/MemberManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/PermissionManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/FileSystemMapper.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,21 +61,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.PermissionManager.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Python项目/HydrogenLib/src/HydrogenLib/Classes/Auto.py",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.PermissionManager.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Python项目/HydrogenLib/src/HydrogenLib/Classes/Auto.py&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/新建临时文件": [
-      "Python"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/新建临时文件&quot;: [
+      &quot;Python&quot;
     ]
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="PermissionManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="hydrogenlib" />
@@ -86,7 +95,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" />
+      <option name="SCRIPT_NAME" value="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes\PermissionManager.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -104,7 +113,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-23a043a7ab33-127ccd18a533-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.32" />
+        <option value="bundled-python-sdk-ce3d9afa04ac-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.20224.347" />
       </set>
     </attachedChunks>
   </component>
@@ -133,7 +142,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726312776921</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Sept. 14 2024 02">
+      <option name="closed" value="true" />
+      <created>1726316425063</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1726316425063</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -151,13 +168,14 @@
     <MESSAGE value="Revert &quot;Sept. 9 2024 01 改用Hatch项目管理器&quot;&#10;&#10;This reverts commit fc013161" />
     <MESSAGE value="Sept. 12 2024 02" />
     <MESSAGE value="Sept. 14 2024 01" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 14 2024 01" />
+    <MESSAGE value="Sept. 14 2024 02" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 14 2024 02" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py</url>
+          <url>file://$PROJECT_DIR$/src/HydrogenLib/Classes/PermissionManager.py</url>
           <line>384</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>

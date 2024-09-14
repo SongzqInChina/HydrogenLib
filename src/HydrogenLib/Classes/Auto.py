@@ -61,3 +61,19 @@ class AutoCompareClass:
 
     def __ge__(self, other):
         return self._auto_compare_attrs('ge', other, True)
+
+
+class AutoJsonPickler:
+    _pickle_attrs = None
+
+    def __getstate__(self):
+        if self._pickle_attrs is None:
+            return self.__dict__
+        return {attr: getattr(self, attr) for attr in self._pickle_attrs}
+
+    def __setstate__(self, state):
+        if self._pickle_attrs is None:
+            self.__dict__ = state
+        else:
+            for attr in self._pickle_attrs:
+                setattr(self, attr, state[attr])
