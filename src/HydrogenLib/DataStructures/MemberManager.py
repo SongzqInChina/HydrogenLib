@@ -1,16 +1,22 @@
-from ..Classes.Namespace import Namespace
 from ..Classes.Auto import AutoCreateDict, AutoCompareClass
+from ..Classes.Namespace import Namespace
 
 
 class BaseStruct(AutoCompareClass):
+    _compare_attrs = ('name',)
+
     def __init__(self, name):
         self.name = name
+        self.joins = set()
+        self.info = Infomation()
 
-    def __eq__(self, other):
-        if isinstance(other, self.__class__):
-            return self.name == other.name
-        else:
-            return self.name == other
+
+class BaseError(Exception):
+    ...
+
+
+class ObjectExistError(BaseError):
+    ...
 
 
 class Infomation(Namespace):
@@ -21,24 +27,18 @@ class User(BaseStruct):
     def __init__(self, name):
         super().__init__(name)
         self.info = Infomation()
-        self.groups = set()
-        self.domains = set()
 
 
 class Group(BaseStruct):
     def __init__(self, name):
         super().__init__(name)
         self.info = Infomation()
-        self.users = set()
-        self.domains = set()
 
 
 class Domain(BaseStruct):
     def __init__(self, name):
         super().__init__(name)
         self.info = Infomation()
-        self.users = set()
-        self.groups = set()
 
 
 priority_dict = {
@@ -114,3 +114,17 @@ class Manager:
         if priority_dict[type(nontop_obj)] > priority_dict[type(container_obj)]:
             raise TypeError(f'{nontop_obj} is not a {container_obj}')
         # TODO: 完成容器加入操作， 完成容器离开操作
+        if container_obj in nontop_obj.joins:
+            raise ObjectExistError(f"{nontop_obj} is already in {container_obj}")
+        nontop_obj.joins.add(container_obj)
+
+    def let_leave(self, name, container):
+        nontop_obj = self.objects[name]
+        container_obj = self.objects[container]
+        if not isinstance(container_obj, self._ContainerType):
+            raise TypeError(f'{container_obj} is not a container')
+        if not isinstance(nontop_obj, self._NonTopType):
+            raise TypeError(f'{nontop_obj} is not a non-top object')
+        if container_obj not in nontop_obj.joins:
+            raise ObjectExistError(f"{nontop_obj} is not in {container_obj}")
+        nontop_obj.joins.remove(container_obj)
