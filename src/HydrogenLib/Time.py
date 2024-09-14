@@ -98,6 +98,7 @@ class Timer:
     def __init__(self):
         self.start_time = None
         self.end_time = None
+        self.res = None
 
     def start(self):
         self.start_time = time.time()
@@ -106,6 +107,8 @@ class Timer:
         if self.start_time is None:
             return None
         self.end_time = time.time()
-        return Vtime(self.end_time - self.start_time)
+        res = Vtime(self.end_time - self.start_time)
+        self.res = res
+        return res
 
 

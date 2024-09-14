@@ -3,11 +3,11 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "hydrogenlib"
+name = "HydrogenLib"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12.0"
 license = "MIT"
 keywords = []
 authors = [
@@ -16,10 +16,6 @@ authors = [
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: Implementation :: CPython",
   "Programming Language :: Python :: Implementation :: PyPy",
@@ -27,31 +23,31 @@ classifiers = [
 dependencies = []
 
 [project.urls]
-Documentation = "https://github.com/SongzqInChina/hydrogenlib#readme"
-Issues = "https://github.com/SongzqInChina/hydrogenlib/issues"
-Source = "https://github.com/SongzqInChina/hydrogenlib"
+Documentation = "https://github.com/SongzqInChina/HydrogenLib#readme"
+Issues = "https://github.com/SongzqInChina/HydrogenLib/issues"
+Source = "https://github.com/SongzqInChina/HydrogenLib"
 
 [tool.hatch.version]
-path = "src/hydrogenlib/__about__.py"
+path = "src/HydrogenLib/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
   "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/hydrogenlib tests}"
+check = "mypy --install-types --non-interactive {args:src/HydrogenLib tests}"
 
 [tool.coverage.run]
-source_pkgs = ["hydrogenlib", "tests"]
+source_pkgs = ["HydrogenLib", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/hydrogenlib/__about__.py",
+  "src/HydrogenLib/__about__.py",
 ]
 
 [tool.coverage.paths]
-hydrogenlib = ["src/hydrogenlib", "*/hydrogenlib/src/hydrogenlib"]
-tests = ["tests", "*/hydrogenlib/tests"]
+HydrogenLib = ["src/HydrogenLib", "*/HydrogenLib/src/HydrogenLib"]
+tests = ["tests", "*/HydrogenLib/tests"]
 
 [tool.coverage.report]
 exclude_lines = [

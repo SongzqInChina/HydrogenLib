@@ -101,6 +101,24 @@ class Manager:
         del self.objects[domain.name]
         return True
 
+    def create_user(self, name):
+        if name in self.objects:
+            raise ObjectExistError(f"{name} is already exist")
+        u = User(name)
+        self.objects[name] = u
+
+    def create_group(self, name):
+        if name in self.objects:
+            raise ObjectExistError(f"{name} is already exist")
+        g = Group(name)
+        self.objects[name] = g
+
+    def create_domain(self, name):
+        if name in self.objects:
+            raise ObjectExistError(f"{name} is already exist")
+        d = Domain(name)
+        self.objects[name] = d
+
     _ContainerType = Group | Domain
     _NonTopType = User | Group
 
@@ -128,3 +146,11 @@ class Manager:
         if container_obj not in nontop_obj.joins:
             raise ObjectExistError(f"{nontop_obj} is not in {container_obj}")
         nontop_obj.joins.remove(container_obj)
+
+    def get_info(self, name):
+        if name not in self.objects:
+            return None
+        return self.objects[name].info
+
+    def get_obj(self, name):
+        return self.objects[name]

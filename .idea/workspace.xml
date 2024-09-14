@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 12 2024 02">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/Graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/Graph.py" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 14 2024 01">
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/TestManagerWrapper/BaseStructures.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/TestManagerWrapper/StandardWrapper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/zconsole/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/ABC/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/zconsole/remote_console_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/ConsolePlus/remote_console_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Time.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Time.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +50,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2lvPz7CY1DbQCHIDnlcxzoiVobL" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -61,6 +65,11 @@
     "git-widget-placeholder": "main",
     "last_opened_file_path": "E:/Python项目/HydrogenLib/src/HydrogenLib/Classes/Auto.py",
     "settings.editor.selected.configurable": "preferences.pluginManager"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.ScratchImplUtil$2/新建临时文件": [
+      "Python"
+    ]
   }
 }]]></component>
   <component name="RunManager">
@@ -95,7 +104,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-98f27166c754-ba05f1cad1b1-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.21829.153" />
+        <option value="bundled-python-sdk-23a043a7ab33-127ccd18a533-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.32" />
       </set>
     </attachedChunks>
   </component>
@@ -116,7 +125,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726058187641</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Sept. 14 2024 01">
+      <option name="closed" value="true" />
+      <created>1726312776921</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1726312776921</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,7 +150,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Revert &quot;Sept. 9 2024 01 改用Hatch项目管理器&quot;&#10;&#10;This reverts commit fc013161" />
     <MESSAGE value="Sept. 12 2024 02" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 12 2024 02" />
+    <MESSAGE value="Sept. 14 2024 01" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 14 2024 01" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
