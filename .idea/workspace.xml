@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 14 2024 02">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_BaseStructures.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/test_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/MemberManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructures/PermissionManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/PermissionManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/FileSystemMapper.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 14 2024 03&#10;修复了JsonPickle可能无法序列化的BUG&#10;完成了成员管理器&#10;开始重制测试管理器（未完成）" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -150,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726316425063</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Sept. 14 2024 03&#10;修复了JsonPickle可能无法序列化的BUG&#10;完成了成员管理器&#10;开始重制测试管理器（未完成）">
+      <option name="closed" value="true" />
+      <created>1726321635191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1726321635191</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -169,7 +164,8 @@
     <MESSAGE value="Sept. 12 2024 02" />
     <MESSAGE value="Sept. 14 2024 01" />
     <MESSAGE value="Sept. 14 2024 02" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 14 2024 02" />
+    <MESSAGE value="Sept. 14 2024 03&#10;修复了JsonPickle可能无法序列化的BUG&#10;完成了成员管理器&#10;开始重制测试管理器（未完成）" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 14 2024 03&#10;修复了JsonPickle可能无法序列化的BUG&#10;完成了成员管理器&#10;开始重制测试管理器（未完成）" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
