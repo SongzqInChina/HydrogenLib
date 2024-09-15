@@ -1,3 +1,6 @@
+from src import HydrogenLib
+
+toml_text = '''
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
@@ -11,7 +14,7 @@ requires-python = ">=3.12.0"
 license = "MIT"
 keywords = []
 authors = [
-  { name = "SongzqInChina", email = "142714722+SongzqInChina@users.noreply.github.com" },
+  { "name" : "SongzqInChina", "email" : "142714722+SongzqInChina@users.noreply.github.com" },
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -46,8 +49,8 @@ check = "mypy --install-types --non-interactive {args:src/HydrogenLib tests}"
 
 [tool.coverage.run]
 source_pkgs = ["HydrogenLib", "tests"]
-branch = true
-parallel = true
+branch = True
+parallel = True
 omit = [
   "src/HydrogenLib/__about__.py",
 ]
@@ -64,3 +67,12 @@ exclude_lines = [
 ]
 [tool.hatch.build]
 target="wheel"
+'''
+# print(
+#     HydrogenLib.EnhanceToml.parser.find_tables(toml_text)
+# )
+
+res = HydrogenLib.EnhanceToml.parser.decode(
+    toml_text
+)
+print(res)

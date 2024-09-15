@@ -78,6 +78,7 @@ from . import (
     # boardcast_room # 这个模块也没有完成，等把znetwork的功能类在完善和添加后再制作
     TestManager,  # 重制中
     SES,  # finished
+    EnhanceToml,  # not finish
 )
 
 _lib_logging_root.debug("All modules are ready.")

@@ -1,15 +1,16 @@
+from . import ThreadSafeCollections
 from .BplusTree import BplusTree
 from .Graph import UndirectedGraph, DirectedGraph, WeightedGraph, LabeledGraph
-from . import ThreadSafeCollections
+
 
 class Stack:
     def __init__(self, lst=None):
         self.lst = [] if lst is None else lst
 
-    def put(self, data):
+    def push(self, data):
         self.lst.append(data)
 
-    def get(self):
+    def pop(self):
         return self.lst.pop() if not self.empty() else None
 
     def size(self):

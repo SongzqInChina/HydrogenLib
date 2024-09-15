@@ -1,4 +1,4 @@
-from Hydrogen.Decorators import singleton_decorator
+from ..Decorators import singleton_decorator
 
 
 @singleton_decorator
