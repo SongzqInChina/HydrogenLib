@@ -1,7 +1,5 @@
 import logging
 import sys
-import time
-from datetime import timedelta
 from decimal import Decimal
 from typing import Callable
 
@@ -72,6 +70,52 @@ def print_color(
     print(get_background(r, g, b), end='', file=file, flush=flush)
     print(*values, sep=sep, end=end, file=file, flush=flush)
     print(color_init(), end='', file=file, flush=flush)
+
+
+class Cursor:
+    def left(self, n):
+        print(f"\033[{n}D", end='', flush=True)
+        return self
+
+    def right(self, n):
+        print(f"\033[{n}C", end='', flush=True)
+        return self
+
+    def up(self, n):
+        print(f"\033[{n}A", end='', flush=True)
+        return self
+
+    def down(self, n):
+        print(f"\033[{n}B", end='', flush=True)
+        return self
+
+    def next_line(self):
+        print(f"\033[E", end='', flush=True)
+        return self
+
+    def previous_line(self):
+        print(f"\033[F", end='', flush=True)
+        return self
+
+    def clear_line(self):
+        print(f"\033[2K", end='', flush=True)
+        return self
+
+    def clear_screen(self):
+        print(f"\033[2J", end='', flush=True)
+        return self
+
+    def clear_to_end(self):
+        print(f"\033[0K", end='', flush=True)
+        return self
+
+    def clear_to_start(self):
+        print(f"\033[1K", end='', flush=True)
+        return self
+
+    def move(self, x, y):
+        print(f"\033[{y};{x}H", end='', flush=True)
+        return self
 
 
 class RedirectOutput:

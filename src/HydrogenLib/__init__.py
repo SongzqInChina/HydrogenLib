@@ -8,6 +8,9 @@ import sys
 
 from . import OutputPlus, Time
 
+version = "0.0.1.2"
+version_suffix = "Dev"
+
 
 class _LogFormat(logging.Formatter):
     def format(self, record):
@@ -35,10 +38,7 @@ _lib_logging_root = logging.getLogger()
 Formatter = _LogFormat()
 _lib_logging_root.setLevel(logging.DEBUG)
 
-version = "0.0.1"
-version_suffix = "Dev"
-
-_lib_logging_root.debug("--Qzlib-------------------------")
+_lib_logging_root.debug("--HydrogenLib-------------------------")
 _lib_logging_root.debug(f"| version:\t{version}")
 _lib_logging_root.debug(f"| platform:\t{os.name}")
 _lib_logging_root.debug(f"| python:\t{sys.version}")
@@ -51,7 +51,6 @@ def management_logger():
 
 from . import (
     Database,
-    # zdatabaseX,  # TODO: This module is not finished  # 这个模块处于半弃坑状态
     Encrypt,  # finished
     File,  # finished
     Json,  # finished

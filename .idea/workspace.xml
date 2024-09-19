@@ -4,20 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md">
-      <change afterPath="$PROJECT_DIR$/.pypirc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/_error_hook.py" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 19 2024 02">
       <change beforePath="$PROJECT_DIR$/.idea/HydrogenLib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HydrogenLib.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/ConsolePlus.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DatabasePlus.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/OutputPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/OutputPlus.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +297,31 @@
       <option name="project" value="LOCAL" />
       <updated>1726401601967</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Sept. 19 2024 01">
+      <option name="closed" value="true" />
+      <created>1726746819018</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726746819019</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Sept. 19 2024 02">
+      <option name="closed" value="true" />
+      <created>1726746840850</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1726746840850</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Sept. 19 2024 02">
+      <option name="closed" value="true" />
+      <created>1726746861577</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1726746861577</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -329,7 +344,9 @@
     <MESSAGE value="Sept. 15 2024 01&#10;.idea" />
     <MESSAGE value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md&#10;还有增强版TOML" />
     <MESSAGE value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
+    <MESSAGE value="Sept. 19 2024 01" />
+    <MESSAGE value="Sept. 19 2024 02" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 19 2024 02" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
