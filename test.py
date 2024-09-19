@@ -1,78 +1,56 @@
-from src import HydrogenLib
-
-toml_text = '''
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
-name = "HydrogenLib"
-dynamic = ["version"]
-description = ''
-readme = "README.md"
-requires-python = ">=3.12.0"
-license = "MIT"
-keywords = []
-authors = [
-  { "name" : "SongzqInChina", "email" : "142714722+SongzqInChina@users.noreply.github.com" },
-]
-classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
-]
-dependencies = [
-  "jsonpickle >= 3.3.0",
-  "pywin32 >= 306",
-  "pyaes >= 1.6.0",
-  "rsa >= 4.9",
-  "psutil >= 6.0.0"
-]
-
-[project.urls]
-Documentation = "https://github.com/SongzqInChina/HydrogenLib#readme"
-Issues = "https://github.com/SongzqInChina/HydrogenLib/issues"
-Source = "https://github.com/SongzqInChina/HydrogenLib"
+import curses
 
 
-[tool.hatch.version]
-path = "src/HydrogenLib/__about__.py"
+def draw_menu(stdscr, options, callback, select_fg=..., select_bg=..., unselect_fg=..., unselect_bg=...):
+    if select_fg is ...:
+        select_fg = curses.COLOR_BLACK
+    if select_bg is ...:
+        select_bg = curses.COLOR_WHITE
+    if unselect_fg is ...:
+        unselect_fg = curses.COLOR_WHITE
+    if unselect_bg is ...:
+        unselect_bg = curses.COLOR_BLACK
 
-[tool.hatch.envs.types]
-extra-dependencies = [
-  "mypy>=1.0.0",
-]
-[tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/HydrogenLib tests}"
+    # 初始化 curses
+    curses.curs_set(0)  # 隐藏光标
+    current_row = 0
+    menu_options = list(options)
 
-[tool.coverage.run]
-source_pkgs = ["HydrogenLib", "tests"]
-branch = True
-parallel = True
-omit = [
-  "src/HydrogenLib/__about__.py",
-]
+    # 设置颜色对
+    curses.start_color()
+    curses.init_pair(1, unselect_fg, unselect_bg)
+    curses.init_pair(2, select_fg, select_bg)
 
-[tool.coverage.paths]
-HydrogenLib = ["src/HydrogenLib", "*/HydrogenLib/src/HydrogenLib"]
-tests = ["tests", "*/HydrogenLib/tests"]
+    while True:
+        stdscr.clear()
+        h, w = stdscr.getmaxyx()
 
-[tool.coverage.report]
-exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
-]
-[tool.hatch.build]
-target="wheel"
-'''
-# print(
-#     HydrogenLib.EnhanceToml.parser.find_tables(toml_text)
-# )
+        # 绘制菜单项
+        for idx, row in enumerate(menu_options):
+            x = w // 2 - len(row) // 2
+            y = h // 2 - len(menu_options) // 2 + idx
+            if idx == current_row:
+                stdscr.addstr(y, x, f"{idx + 1}. {row}", curses.color_pair(2))
+            else:
+                stdscr.addstr(y, x, f"{idx + 1}. {row}", curses.color_pair(1))
 
-res = HydrogenLib.EnhanceToml.parser.decode(
-    toml_text
-)
-print(res)
+        stdscr.refresh()
+
+        key = stdscr.getch()
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+        elif key == curses.KEY_DOWN and current_row < len(menu_options) - 1:
+            current_row += 1
+        elif key == curses.KEY_ENTER or key in [10, 13]:
+            callback(key, menu_options[current_row])
+            stdscr.refresh()
+            stdscr.getch()
+            break
+
+
+def main():
+    curses.wrapper(draw_menu, ['A', 'B', 'C'], lambda x: print(x))
+
+
+if __name__ == "__main__":
+    main()

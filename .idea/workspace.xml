@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md">
+      <change afterPath="$PROJECT_DIR$/.pypirc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/_error_hook.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/HydrogenLib.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/HydrogenLib.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/ConsolePlus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DatabasePlus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/OutputPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/OutputPlus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,13 +68,16 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Python.PermissionManager.executor": "Run",
+    "Python._error_hook.executor": "Run",
     "Python._expression_parser.executor": "Run",
     "Python._literal_eval.executor": "Run",
+    "Python.scratch.executor": "Run",
+    "Python.scratch_1.executor": "Run",
     "Python.test.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "E:/Python项目/HydrogenLib/src/HydrogenLib/Classes/Auto.py",
+    "last_opened_file_path": "E:/PythonProjects/Hy2O",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   },
   "keyToStringList": {
@@ -74,7 +91,7 @@
       <recent name="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes" />
     </key>
   </component>
-  <component name="RunManager" selected="Python._literal_eval">
+  <component name="RunManager">
     <configuration name="PermissionManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="hydrogenlib" />
       <option name="ENV_FILES" value="" />
@@ -89,6 +106,28 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes\PermissionManager.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="_error_hook" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="hydrogenlib" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/_error_hook.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -141,6 +180,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="hydrogenlib" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="hydrogenlib" />
       <option name="ENV_FILES" value="" />
@@ -165,8 +226,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python._literal_eval" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.scratch" />
+        <item itemvalue="Python._error_hook" />
+        <item itemvalue="Python._literal_eval" />
         <item itemvalue="Python.PermissionManager" />
       </list>
     </recent_temporary>
@@ -235,7 +298,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726401547135</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md">
+      <option name="closed" value="true" />
+      <created>1726401601967</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726401601967</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,6 +327,7 @@
     <MESSAGE value="Sept. 14 2024 02" />
     <MESSAGE value="Sept. 14 2024 03&#10;修复了JsonPickle可能无法序列化的BUG&#10;完成了成员管理器&#10;开始重制测试管理器（未完成）" />
     <MESSAGE value="Sept. 15 2024 01&#10;.idea" />
+    <MESSAGE value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md&#10;还有增强版TOML" />
     <MESSAGE value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
     <option name="LAST_COMMIT_MESSAGE" value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
   </component>
@@ -269,7 +341,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test.py</url>
-          <line>74</line>
+          <line>54</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

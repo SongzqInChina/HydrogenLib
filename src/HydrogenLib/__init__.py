@@ -1,10 +1,12 @@
+from . import _error_hook
+
+_error_hook.init()
+
 import logging
 import os
 import sys
 
 from . import OutputPlus, Time
-
-# TODO: Improve the OutputPlus module
 
 
 class _LogFormat(logging.Formatter):
@@ -24,18 +26,17 @@ class _LogFormat(logging.Formatter):
         elif error_level == "CRITICAL":
             color_head = OutputPlus.get_color_head(255, 0, 255)
         elif error_level == "NOTSET":
-            color_head = OutputPlus.get_color_init()
+            color_head = OutputPlus.color_init()
 
-        return color_head + f"Module {record.module} at '{data_time}' Logging: [{error_level}] - {message}" + OutputPlus.get_color_init()
+        return color_head + f"Module {record.module} at '{data_time}' Logging: [{error_level}] - {message}" + OutputPlus.color_init()
 
 
 _lib_logging_root = logging.getLogger()
 Formatter = _LogFormat()
 _lib_logging_root.setLevel(logging.DEBUG)
 
-version = "0.1.0"
+version = "0.0.1"
 version_suffix = "Dev"
-
 
 _lib_logging_root.debug("--Qzlib-------------------------")
 _lib_logging_root.debug(f"| version:\t{version}")
@@ -63,7 +64,6 @@ from . import (
     ProcessPlus,  # finished
     WinregPlus,  # finished
     SysPlus,  # finished
-    ConsolePlus,  # finished
     ThreadingPlus,  # finished
     TypeFunc,  # finished
     Win32Window,  # finished  # Warning: This module has not undergone comprehensive testing
@@ -84,7 +84,6 @@ from . import (
 _lib_logging_root.debug("All modules are ready.")
 __all__ = [
     'Auth',
-    'ConsolePlus',
     'Const',
     'Database',
     'Decorators',
