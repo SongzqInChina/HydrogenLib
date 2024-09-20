@@ -1,5 +1,5 @@
 from . import _error_hook
-
+from .Classes.Version import Version as _Version
 _error_hook.init()
 
 import logging
@@ -8,8 +8,7 @@ import sys
 
 from . import OutputPlus, Time
 
-version = "0.0.1.2"
-version_suffix = "Dev"
+version = _Version.from_file(r".\Resources\version")
 
 
 class _LogFormat(logging.Formatter):
@@ -57,7 +56,7 @@ from . import (
     Const,  # finished (dynamic updates)
     SocketPlus,  # finished
     Namedpipe,  # finished
-    Classes,  # finished
+    # Classes,  # finished
     PathPlus,  # finished
     Process,  # finished
     ProcessPlus,  # finished

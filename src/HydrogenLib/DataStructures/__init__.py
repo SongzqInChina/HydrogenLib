@@ -19,8 +19,17 @@ class Stack:
     def empty(self):
         return self.size() == 0
 
-    def peek(self):
+    def get(self):
         return self.lst[-1] if not self.empty() else None
+
+    @property
+    def front(self):
+        return self.lst[-1] if not self.empty() else None
+
+    @front.setter
+    def front(self, data):
+        if not self.empty():
+            self.lst[-1] = data
 
     def __str__(self):
         return str(self.lst)

@@ -24,7 +24,7 @@ def parentheses_match(text: str):
         if char in '([{':
             parentheses_stack.push(char)
         if char in ')]}':
-            x = parentheses_stack.peek()
+            x = parentheses_stack.get()
             if x is None:
                 return False
             x = parentheses_map[x]
@@ -43,7 +43,7 @@ def get_parentheses_pair(text: str):
         if char in '([{':
             parentheses_stack.push((index, char))
         if char in ')]}':
-            i, x = parentheses_stack.peek()
+            i, x = parentheses_stack.get()
             x = parentheses_map[x]
             if x != char:
                 return None
