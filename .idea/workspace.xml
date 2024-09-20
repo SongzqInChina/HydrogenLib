@@ -4,14 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 19 2024 02">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI/_base.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI/_menu.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/upload.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/InteractiveCLI.py" beforeDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 20 2024 01">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.pypirc" beforeDir="false" afterPath="$PROJECT_DIR$/xxx.pypirc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/version" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/upload.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/upload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -333,7 +332,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726748412590</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Sept. 20 2024 01">
+      <option name="closed" value="true" />
+      <created>1726834127782</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1726834127782</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -358,7 +365,8 @@
     <MESSAGE value="Sept. 15 2024 01&#10;更新许可证&#10;Update LICENSE, LICENSE.md" />
     <MESSAGE value="Sept. 19 2024 01" />
     <MESSAGE value="Sept. 19 2024 02" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 19 2024 02" />
+    <MESSAGE value="Sept. 20 2024 01" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 20 2024 01" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
