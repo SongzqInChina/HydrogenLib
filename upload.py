@@ -20,22 +20,17 @@ args = sys.argv[1::]
 
 def init_parser(parser: argparse.ArgumentParser):
     parser.add_argument(
-        "--install", '-i',
-        help="Install HydrogenLib",
-        action="store_true"
-    )
-    parser.add_argument(
         "--skip-check", '-c',
         help="Skip check HydrogenLib wheel",
         action="store_true"
     )
     parser.add_argument(
-        "--skip-upload", '-d',
+        "--skip-upload", '-u',
         help="Skip upload HydrogenLib wheel",
         action="store_true"
     )
     parser.add_argument(
-        '--skip-build', '-s',
+        '--skip-build', '-b',
         help="Skip building HydrogenLib wheel",
         action="store_true"
     )
@@ -131,13 +126,5 @@ if __name__ == '__main__':
             sys.exit(rt_code)
         print("[bold green]success!")
 
-    if args.install:
-        with console.status("Installing HydrogenLib...", spinner=spinner):
-            rt_code, ps = run_command(["pip", "install", "HydrogenLib", '--upgrade'])
-        time.sleep(0.1)
-        if rt_code != 0:
-            console.print("[bold red]failed!")
-            console.print(ps.stderr.decode('utf-8'))
-            console.print(ps.stdout.decode('utf-8'))
-            sys.exit(rt_code)
-        print("[bold green]success!")
+    print("[bold green]all steps are success, you can run `pip install HydrogenLib -U` to update HydrogenLib")
+
