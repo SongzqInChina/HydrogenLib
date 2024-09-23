@@ -1,17 +1,71 @@
+from abc import ABC
 from copy import deepcopy
 
 
-class AutoCreateDict(dict):
+class Auto(ABC):
+    pass
+
+
+class AutoRegDict(Auto):
+    """
+    自动注册未存在于字典的键，同时访问时返回默认值
+
+    可以通过指定`isdeepcopy`属性来说明是否对默认值进行copy操作
+    """
+    default_value = None
+    isdeepcopy = True
+
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.default_value = None
+        self._dict = dict(*args, **kwargs)
 
-    def __missing__(self, key):
-        self[key] = deepcopy(self.default_value)
-        return self[key]
+    def get(self, key, default=None):
+        return self._dict.get(key, default)
+
+    def pop(self, key):
+        return self._dict.pop(key)
+
+    def copy(self):
+        return self._dict.copy()
+
+    def keys(self):
+        return self._dict.keys()
+
+    def values(self):
+        return self._dict.values()
+
+    def items(self):
+        return self._dict.items()
+
+    def __contains__(self, key):
+        return self._dict.__contains__(key)
+
+    def __len__(self):
+        return self._dict.__len__()
+
+    def __getitem__(self, key):
+        if key not in self._dict:
+            if self.isdeepcopy:
+                v = deepcopy(self.default_value)
+            else:
+                v = self.default_value
+            self._dict[key] = v
+            return v
+        return self._dict[key]
+
+    def __setitem__(self, key, value):
+        self._dict[key] = value
+
+    def __delitem__(self, key):
+        del self._dict[key]
 
 
-class AutoCompareClass:
+class AutoCompare(Auto):
+    """
+    自动完成比较操作
+    通过指定`_compare_attrs`属性来指定比较的属性，默认为None，
+    如果`_compare_attrs`为None，那么自动比较将不会生效，而是根据比较符返回一个默认值
+    如果被比较的对象不是 `AutoCompare` 的实例，那么比较时会按比较列表的第一个属性作为比较属性
+    """
     _compare_attrs = None
     _cmp_funcs = {
         'eq': lambda x, y: x == y,
@@ -28,7 +82,7 @@ class AutoCompareClass:
 
         func = self._cmp_funcs[opt]
 
-        if not isinstance(other, AutoCompareClass):
+        if not isinstance(other, AutoCompare):
             if self._compare_attrs:
                 value = getattr(self, self._compare_attrs[0])
                 return func(value, other)
@@ -37,11 +91,9 @@ class AutoCompareClass:
             return defautl
 
         my_attr_values = (
-            getattr(self, attr) for attr in self._compare_attrs
-        )
+            getattr(self, attr) for attr in self._compare_attrs)
         other_attr_values = (
-            getattr(other, attr) for attr in other._compare_attrs
-        )
+            getattr(other, attr) for attr in other._compare_attrs)
         return func(my_attr_values, other_attr_values)
 
     def __eq__(self, other):
@@ -63,17 +115,24 @@ class AutoCompareClass:
         return self._auto_compare_attrs('ge', other, True)
 
 
-class AutoJsonPickler:
-    _pickle_attrs = None
+class AutoState(Auto):
+    """
+    自动完成对象的状态导出和恢复
+
+    如果`_state_attrs`为None，那么将导出所有属性，恢复时同上
+    """
+    _state_attrs = None
 
     def __getstate__(self):
-        if self._pickle_attrs is None:
+        if self._state_attrs is None:
             return self.__dict__
-        return {attr: getattr(self, attr) for attr in self._pickle_attrs}
+        return {attr: getattr(self, attr) for attr in self._state_attrs}
 
     def __setstate__(self, state):
-        if self._pickle_attrs is None:
+        if self._state_attrs is None:
             self.__dict__ = state
         else:
-            for attr in self._pickle_attrs:
+            for attr in self._state_attrs:
                 setattr(self, attr, state[attr])
+
+

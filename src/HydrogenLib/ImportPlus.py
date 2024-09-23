@@ -20,6 +20,19 @@ def load_source(name, path):
     return module
 
 
+def load_source_noname(path):
+    """
+    use `os.path.basename` to get module name
+    :param path: source code file path
+    """
+    name = os.path.basename(path)
+    index = name.rfind(".")
+    if index == -1:
+        raise ValueError(f"Invalid file name {name}")
+    name = name[:index]
+    return load_source(name, path)
+
+
 def load_package(name, path):
     if name in sys.modules:
         raise ImportError(f"Package {name} already exists in sys.modules")

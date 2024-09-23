@@ -4,11 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 20 2024 03&#10;这个东西居然忘记加gitignore了">
-      <change afterPath="$PROJECT_DIR$/install.py" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 21 2024 01&#10;完善upload.py, 测试upload.py">
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/_packages.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Base.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Auto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Inf.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/MemberManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/MemberManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/NetworkPackages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Null.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/ObjectFunc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/Version.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/Version.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Classes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Classes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_toml_types.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_toml_types.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/File.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/File.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/ImportPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/ImportPlus.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resources/version" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Resources/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_BaseStructures.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_BaseStructures.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/upload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +81,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.PermissionManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Upload HydrogenLib.executor&quot;: &quot;Run&quot;,
     &quot;Python._error_hook.executor&quot;: &quot;Run&quot;,
     &quot;Python._expression_parser.executor&quot;: &quot;Run&quot;,
     &quot;Python._literal_eval.executor&quot;: &quot;Run&quot;,
@@ -81,11 +103,12 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\Classes\Base.py" />
       <recent name="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes" />
     </key>
   </component>
-  <component name="RunManager" selected="Python._expression_parser">
-    <configuration name="PermissionManager" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.Upload HydrogenLib">
+    <configuration name="Upload HydrogenLib" type="PythonConfigurationType" factoryName="Python">
       <module name="hydrogenlib" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -94,99 +117,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib/DataStructures" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes\PermissionManager.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="_error_hook" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="hydrogenlib" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/_error_hook.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="_expression_parser" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="hydrogenlib" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_expression_parser.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="_literal_eval" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="hydrogenlib" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_literal_eval.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="scratch" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="hydrogenlib" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="SDK_NAME" value="HydrogenLib" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch.py" />
+      <option name="SCRIPT_NAME" value="upload.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -220,17 +156,13 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.scratch" />
-        <item itemvalue="Python._error_hook" />
-        <item itemvalue="Python._literal_eval" />
-        <item itemvalue="Python.PermissionManager" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-a0e916a0ebef-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.15521.16" />
+        <option value="bundled-python-sdk-884f5ed5d46b-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.22855.92" />
       </set>
     </attachedChunks>
   </component>
@@ -355,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726836681722</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Sept. 21 2024 01&#10;完善upload.py, 测试upload.py">
+      <option name="closed" value="true" />
+      <created>1726916151692</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1726916151692</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -383,7 +323,8 @@
     <MESSAGE value="Sept. 20 2024 01" />
     <MESSAGE value="Sept. 20 2024 02&#10;完善自动上传脚本" />
     <MESSAGE value="Sept. 20 2024 03&#10;这个东西居然忘记加gitignore了" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 20 2024 03&#10;这个东西居然忘记加gitignore了" />
+    <MESSAGE value="Sept. 21 2024 01&#10;完善upload.py, 测试upload.py" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 21 2024 01&#10;完善upload.py, 测试upload.py" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

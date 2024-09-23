@@ -11,7 +11,7 @@
 - [License](#license)
 - [Matters need attention](#matters-need-attention)
 
-## Why it called `HydrogenLib`?
+## Why it goes by `HydrogenLib`?
 
 The element "Hydrogen" is the element that can react the most with his elements, 
 which is intended to simplify many practical but complex operations in python. 
@@ -29,7 +29,7 @@ This is `HydrogenLib`.
 - `HydrogenLib.Json` and `HydrogenLib.File.JsonFile*`
 use `jsonpickle` to serialize and deserialize. 
 - ### All modules have not been tested.
-- ### This project has not been uploaded to Pypi.
+- ### versions before `0.0.2.0` are dev versions.
 
 
 ## Installation
@@ -40,4 +40,4 @@ pip install HydrogenLib
 
 ## License
 
-`HydrogenLib` is distributed under the terms of the [GPL](https://spdx.org/licenses/GPL-3.0.html) license([LICENSE](LICENSE)).
+`HydrogenLib` is distributed under the terms of the [GPL](https://spdx.org/licenses/GPL-3.0.html) license([LICENSE](LICENSE.md)).

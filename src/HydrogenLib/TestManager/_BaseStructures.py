@@ -1,9 +1,9 @@
-from ..Classes.Auto import AutoJsonPickler
+from ..Classes.Auto import AutoState
 from ..Time import Timer
 
 
-class Result(AutoJsonPickler):
-    _pickle_attrs = (
+class Result(AutoState):
+    _state_attrs = (
         "ext_res", "real_res",
         "elapsed_time", "start_time",
         "error"
@@ -20,8 +20,8 @@ class Result(AutoJsonPickler):
         return self.error is None and self.real_res == self.ext_res
 
 
-class Results(AutoJsonPickler):
-    _pickle_attrs = (
+class Results(AutoState):
+    _state_attrs = (
         "errors", "successes", "fails"
     )
 
@@ -43,8 +43,8 @@ class Results(AutoJsonPickler):
         return self.successes, self.fails, self.errors
 
 
-class Point(AutoJsonPickler):
-    _pickle_attrs = (
+class Point(AutoState):
+    _state_attrs = (
         "except_res", "args", "kwargs"
     )
 
@@ -78,8 +78,8 @@ class Point(AutoJsonPickler):
         return res
 
 
-class Points(AutoJsonPickler):
-    _pickle_attrs = (
+class Points(AutoState):
+    _state_attrs = (
         "points"
     )
 

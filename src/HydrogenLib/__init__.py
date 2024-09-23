@@ -8,7 +8,7 @@ import sys
 
 from . import OutputPlus, Time
 
-version = _Version.from_file(os.path.split(__file__)[0] + r"\Resouces\version")
+version = _Version.from_file(os.path.split(__file__)[0] + r"\Resources\version")
 
 
 class _LogFormat(logging.Formatter):

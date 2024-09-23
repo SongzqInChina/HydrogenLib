@@ -11,7 +11,7 @@ from typing import (
 from . import StructPlus
 from . import ThreadingPlus
 from . import TypeFunc
-from .Classes.Null import null
+from .Classes.Base import null
 from .DataStructures import ThreadSafeCollections
 
 
@@ -188,7 +188,7 @@ class _BaseSimpleSocket:
 Sockets = socket.socket | _BaseSimpleSocket
 
 
-class SimpleSocket:
+class Socket:
     def __init__(self, s: Sockets | object | None = None):
         if isinstance(s, _BaseSimpleSocket):
             self._socket = s
@@ -229,7 +229,7 @@ class SimpleSocket:
 
     def accept(self):
         conn, addr = self._socket.accept()
-        return SimpleSocket(conn), addr
+        return Socket(conn), addr
 
     def read(self, timeout=None):
         return self._socket.read(timeout)
@@ -257,15 +257,15 @@ class SimpleSocket:
         self.close()
 
 
-def is_tcp(s: SimpleSocket | socket.socket):
-    if isinstance(s, SimpleSocket):
+def is_tcp(s: Socket | socket.socket):
+    if isinstance(s, Socket):
         return is_tcp(s.sock)
     else:
         return s.type == socket.SOCK_STREAM
 
 
-def is_udp(s: SimpleSocket | socket.socket):
-    if isinstance(s, SimpleSocket):
+def is_udp(s: Socket | socket.socket):
+    if isinstance(s, Socket):
         return is_udp(s.sock)
     else:
         return s.type == socket.SOCK_DGRAM
@@ -298,7 +298,7 @@ class RemotePost:  # RemotePost 使用一问一答形式发送数据
         def __iter__(self):
             return self.data.keys()
 
-    def __init__(self, sp_socket: SimpleSocket):
+    def __init__(self, sp_socket: Socket):
         self.socket = sp_socket
         # 优先度
         self.priority = None
@@ -430,7 +430,7 @@ class RemoteCallServer:
 
 class RemoteCallClient:
     def __init__(self, remote_host, remote_port, timeout=None):
-        self.socket = RemotePost(SimpleSocket())
+        self.socket = RemotePost(Socket())
         try:
             self.socket.connect(remote_host, remote_port, timeout)
         except socket.timeout:
@@ -461,7 +461,7 @@ class HeartbeatPacketClient:
         """
         自动发送心跳包
         """
-        self.sock = SimpleSocket()
+        self.sock = Socket()
         self.post = RemotePost(self.sock)
         self.timer = None
 
@@ -490,7 +490,7 @@ class HeartbeatPacketServer:
 
     def __init__(self):
         self.thread = None
-        self.sock = SimpleSocket()
+        self.sock = Socket()
         self.post = RemotePost(self.sock)
         self.timer = None
         self.timeout = 5
@@ -527,7 +527,7 @@ class HeartbeatPacketServer:
 
 class Server:
     def __init__(self):
-        self.sock = SimpleSocket()
+        self.sock = Socket()
         self.sock.start_server()  # 控制socket启动监听线程
 
         self.max_connects = 10

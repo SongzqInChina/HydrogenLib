@@ -25,7 +25,8 @@ dependencies = [
   "pywin32 >= 306",
   "pyaes >= 1.6.0",
   "rsa >= 4.9",
-  "psutil >= 6.0.0"
+  "psutil >= 6.0.0",
+  "rich >= 13.6.0"
 ]
 
 [project.urls]

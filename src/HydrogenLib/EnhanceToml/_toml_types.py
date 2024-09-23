@@ -1,7 +1,7 @@
-from ..Classes.Auto import AutoCompareClass
+from ..Classes.Auto import AutoCompare
 
 
-class BaseTypes(AutoCompareClass):
+class BaseTypes(AutoCompare):
     _compare_attrs = ('value',)
 
     def __init__(self, value=None):

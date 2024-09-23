@@ -1,8 +1,8 @@
-from src.HydrogenLib.Classes.Auto import AutoCreateDict, AutoCompareClass
+from src.HydrogenLib.Classes.Auto import AutoRegDict, AutoCompare
 from src.HydrogenLib.Classes.Namespace import Namespace
 
 
-class BaseStruct(AutoCompareClass):
+class BaseStruct(AutoCompare):
     _compare_attrs = ('name',)
 
     def __init__(self, name):
@@ -53,7 +53,7 @@ priority_dict = {
 
 class Manager:
     def __init__(self, users=None, groups=None, domains=None):
-        self.objects = AutoCreateDict()
+        self.objects = AutoRegDict()
         if users is not None:
             for user in users:
                 self.add_user(user)

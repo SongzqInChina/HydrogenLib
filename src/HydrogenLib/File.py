@@ -2,7 +2,7 @@ import datetime
 import os
 from typing import Any
 
-from .Classes.Null import null
+from .Classes.Base import null
 from .Json import *
 from .PathPlus import isfile, exists, tree, path_to, mkfile, mkdir, isabspath, isdir, rmfile, rmdirs
 
