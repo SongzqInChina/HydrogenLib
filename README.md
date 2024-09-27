@@ -5,39 +5,35 @@
 
 -----
 
-## Table of Contents
+**您当前使用的版本为`1.1.25` （低于 `1.2.0` ）开发版本，可能有部分功能未完成或功能异常**
 
-- [Installation](#installation)
-- [License](#license)
-- [Matters need attention](#matters-need-attention)
+## 目录
 
-## Why it goes by `HydrogenLib`?
+- [为什么这个项目被称为 `HydrogenLib`?](#为什么这个项目被称为-hydrogenlib)
+- [安装](#安装)
+- [许可证](#许可证)
+- [注意事项](#注意事项)
 
-The element "Hydrogen" is the element that can react the most with his elements, 
-which is intended to simplify many practical but complex operations in python. 
-There are nearly 40 modules in the project, from the basic file operations to the advanced socket, 
-from the underlying data structure to the available database. 
-This is `HydrogenLib`.
-
-## Matters need attention
-
-- `HydrogenLib.Database` is only a json database, which is not a relational database.
-- `HydrogenLib.BoardcastRoom` is **not** finished.
-- `HydrogenLib.TestManager` is **not** finished.
-- `HydrogenLib.Namedpipe` for mac and linux is **not** finished.
-
-- `HydrogenLib.Json` and `HydrogenLib.File.JsonFile*`
-use `jsonpickle` to serialize and deserialize. 
-- ### All modules have not been tested.
-- ### versions before `0.0.2.0` are dev versions.
-
-
-## Installation
+## 安装
 
 ```console
 pip install HydrogenLib
 ```
+## 为什么这个项目被称为 `HydrogenLib`?
 
-## License
+Hydrogen(氢)是元素周期表中的第一个元素，是所有元素中最轻的元素。
+这个项目希望为底层的低级操作封装，以方便开发者使用，简化编码。
 
-`HydrogenLib` is distributed under the terms of the [GPL](https://spdx.org/licenses/GPL-3.0.html) license([LICENSE](LICENSE.md)).
+## 注意事项
+
+- `HydrogenLib.Database` 只是一个简单的基于JSON文件的轻量级数据库，可能不适用于所有使用场景。
+- `HydrogenLib.BoardcastRoom` 未完成。
+- `HydrogenLib.Namedpipe` 为非Windows系统的支持未完成。
+
+- 有关序列化和反序列化的操作，均使用`jsonpickle`模块，可能有安全风险，请自行判断。
+- ### 所有模块都未进行测试。
+
+
+## 许可证
+
+`HydrogenLib` 使用 [GPL](https://spdx.org/licenses/GPL-3.0.html)许可证([Open LICENSE.md](LICENSE.md)).

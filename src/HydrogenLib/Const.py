@@ -38,7 +38,6 @@ PERM_ROLE_DENY = 0x4001
 JSON_DECODE = 0x5001
 JSON_ENCODE = 0x5002
 
-
 UNKNOWN = "Unknown"  # ???
 
 _link_constants = []

@@ -1,6 +1,7 @@
 import re
-from typing import Iterable
-from ..Classes.Base import Char
+from typing import Iterable, Union
+
+from ..Class.Base import Char
 
 
 class Version:
@@ -23,7 +24,7 @@ class Version:
 
     def _to_char_tuple(self, version):
         version = version.split('.')
-        return tuple(map(lambda x: Char(int(x)), version))
+        return list(map(lambda x: Char(int(x)), version))
 
     def __init__(self, version, suffix=None):
         self._check_version(version)
@@ -32,9 +33,30 @@ class Version:
         self.version = self._to_char_tuple(version)
         self.suffix = suffix
 
-    def add(self, version):
+    def add(self, version: Union[str, list[Char], object]):
         if isinstance(version, self.__class__):
-            version = version.version  # type: tuple[Char, ...]
+            version = version.version  # type: list[Char]
+        elif isinstance(version, list):
+            version = version
         self._check_version(version)
+        for i, (v1, v2) in enumerate(zip(self.version, version)):
+            self.version[i] = Char(v1 + v2)
+        return self
 
+    def sub(self, version: Union[str, list[Char], object]):
+        if isinstance(version, self.__class__):
+            version = version.version  # type: list[Char]
+        elif isinstance(version, list):
+            version = version
+        self._check_version(version)
+        for i, (v1, v2) in enumerate(zip(self.version, version)):
+            self.version[i] = Char(v1 - v2)
+            if self.version[i] < 0:
+                self.version[i] = Char(0)
+        return self
 
+    def __str__(self):
+        return "{}.{}".format(
+            '.'.join(map(lambda x: str(x), self.version)),
+            self.suffix
+        )

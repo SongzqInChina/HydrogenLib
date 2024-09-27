@@ -8,6 +8,7 @@ from . import (
     BinaryTree,
     Func,
 )
+from ..DataStructure import Stack
 
 
 def int_to_bytes(num, lenght, byteorder='little'):
@@ -42,3 +43,27 @@ def get_vaild_data(data: bytes) -> bytes:
 
 def is_errortype(exception) -> bool:
     return isinstance(exception, Exception)
+
+
+def get_attr_by_path(obj, path):
+    """
+
+    根据一个引用路径获取对象，返回一个引用栈
+
+    如``get_attr_by_path(obj, "attr1.attr2.attr3")``返回一个``Stack([obj, value1, value2, value3])``
+
+    如果你希望从globals中获取对象，你可以先把globals字典转换为一个``Namespace``，然后调用函数获取对象
+
+
+    :param obj: 初始根对象
+    :param path: 引用路径
+
+    """
+    path_list = path.split('.')
+    cur_obj = obj
+    s = Stack([cur_obj])
+    while len(path_list):
+        cur_obj = getattr(cur_obj, path_list.pop(-1))
+        s.push(cur_obj)
+
+    return s

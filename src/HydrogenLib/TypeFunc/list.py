@@ -1,4 +1,3 @@
-import decimal
 import fractions
 
 
@@ -63,17 +62,8 @@ def split(lst, *split_args: str):
     length = len(lst)
     cursor = 0
     for i in split_args:
-        feature_cursor = int(length*i)+cursor
+        feature_cursor = int(length * i) + cursor
         yield lst[cursor:feature_cursor]
         cursor = feature_cursor
     if cursor < length:
         yield lst[cursor:]
-
-
-
-
-
-
-
-
-

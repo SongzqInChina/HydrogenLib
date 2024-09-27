@@ -26,4 +26,3 @@ class SafeDeque:
     def __getattr__(self, item):
         with self.lock:
             return getattr(self.list, item)
-

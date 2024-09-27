@@ -1,6 +1,7 @@
+import re
+
 import win32file
 import win32pipe
-import re
 
 
 def is_pipe_path(path: str):

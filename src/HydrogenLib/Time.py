@@ -110,5 +110,3 @@ class Timer:
         res = Vtime(self.end_time - self.start_time)
         self.res = res
         return res
-
-

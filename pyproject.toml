@@ -11,22 +11,23 @@ requires-python = ">=3.12.0"
 license = "GPL-3.0"
 keywords = []
 authors = [
-  { name = "SongzqInChina", email = "142714722+SongzqInChina@users.noreply.github.com" },
+    { name = "SongzqInChina", email = "142714722+SongzqInChina@users.noreply.github.com" },
 ]
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Programming Language :: Python",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: Implementation :: CPython",
-  "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-  "jsonpickle >= 3.3.0",
-  "pywin32 >= 306",
-  "pyaes >= 1.6.0",
-  "rsa >= 4.9",
-  "psutil >= 6.0.0",
-  "rich >= 13.6.0"
+    "jsonpickle >= 3.3.0",
+    "pywin32 >= 306",
+    "pyaes >= 1.6.0",
+    "rsa >= 4.9",
+    "psutil >= 6.0.0",
+    "rich >= 13.6.0",
+    "ping3 >= 4.0.0"
 ]
 
 [project.urls]
@@ -40,7 +41,7 @@ path = "src/HydrogenLib/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
-  "mypy>=1.0.0",
+    "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
 check = "mypy --install-types --non-interactive {args:src/HydrogenLib tests}"
@@ -50,7 +51,7 @@ source_pkgs = ["HydrogenLib", "tests"]
 branch = true
 parallel = true
 omit = [
-  "src/HydrogenLib/__about__.py",
+    "src/HydrogenLib/__about__.py",
 ]
 
 [tool.coverage.paths]
@@ -59,9 +60,9 @@ tests = ["tests", "*/HydrogenLib/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
-  "no cov",
-  "if __name__ == .__main__.:",
-  "if TYPE_CHECKING:",
+    "no cov",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
 ]
 [tool.hatch.build]
-target="wheel"
+target = "wheel"

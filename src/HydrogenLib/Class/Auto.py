@@ -1,5 +1,9 @@
 from abc import ABC
 from copy import deepcopy
+from types import FunctionType
+
+from src.HydrogenLib.TypeFunc import get_attr_by_path
+from .Namespace import Namespace
 
 
 class Auto(ABC):
@@ -135,4 +139,99 @@ class AutoState(Auto):
             for attr in self._state_attrs:
                 setattr(self, attr, state[attr])
 
+
+class AutoOperator(Auto):
+    _operator_funcs = {}
+
+    def __add__(self, other):
+        return self._operator_funcs['+'](self, other)
+
+    def __sub__(self, other):
+        return self._operator_funcs['-'](self, other)
+
+    def __mul__(self, other):
+        return self._operator_funcs['*'](self, other)
+
+    def __truediv__(self, other):
+        return self._operator_funcs['/'](self, other)
+
+    def __floordiv__(self, other):
+        return self._operator_funcs['//'](self, other)
+
+    def __mod__(self, other):
+        return self._operator_funcs['%'](self, other)
+
+    def __pow__(self, other):
+        return self._operator_funcs['**'](self, other)
+
+    def __and__(self, other):
+        return self._operator_funcs['&'](self, other)
+
+    def __or__(self, other):
+        return self._operator_funcs['|'](self, other)
+
+    def __xor__(self, other):
+        return self._operator_funcs['^'](self, other)
+
+    def __lshift__(self, other):
+        return self._operator_funcs['<<'](self, other)
+
+    def __rshift__(self, other):
+        return self._operator_funcs['>>'](self, other)
+
+    def __invert__(self):
+        return self._operator_funcs['~'](self)
+
+    def __neg__(self):
+        return self._operator_funcs['-'](self)
+
+
+class _auto_operator:
+    @classmethod
+    def decorator(cls, oper, globs):
+        def wrapper(func):
+            return cls(oper, func, globs)
+
+        return wrapper
+
+    def __init__(self, oper: str, func: FunctionType, _globals=None):
+        self.oper = oper
+        self.func = func
+
+        if oper not in {
+            '+', '-', '*', '/', '//', '%', '**', '&', '|', '^', '<<', '>>'
+        }:
+            raise ValueError(f"{oper} is not a valid operator")
+
+        cls = get_attr_by_path(Namespace(None, **_globals), func.__qualname__).lst[-2]
+        if not isinstance(cls, AutoOperator):
+            raise TypeError(f"{cls} is not a AutoOperator")
+
+        cls._operator_funcs[oper] = self
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
+
+class _AutoInfo(Auto):
+    ...
+
+
+class AutoRepr(_AutoInfo):
+    _repr_attrs = None
+    def __repr__(self):
+        return str(
+            {attr: getattr(self, attr) for attr in self._repr_attrs}
+        )
+
+class AutoStr(_AutoInfo):
+    _str_attrs = None
+    def __str__(self):
+        return str(
+            {attr: getattr(self, attr) for attr in self._str_attrs}
+        )
+
+
+class AutoInfo(AutoRepr, AutoStr):
+    ...
 

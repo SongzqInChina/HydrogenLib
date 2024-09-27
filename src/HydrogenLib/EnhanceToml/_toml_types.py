@@ -1,4 +1,4 @@
-from ..Classes.Auto import AutoCompare
+from ..Class.Auto import AutoCompare
 
 
 class BaseTypes(AutoCompare):

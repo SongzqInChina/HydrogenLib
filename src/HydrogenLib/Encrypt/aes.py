@@ -8,6 +8,7 @@ from .func import split, pad, unpad
 
 zencrypt_logger = logging.getLogger("SzQlib.zencrypt")
 
+
 # module end
 
 

@@ -1,13 +1,17 @@
-from ..Classes.Auto import AutoState
+import rich.traceback
+
+from ..Class.Auto import AutoState, AutoInfo
 from ..Time import Timer
 
 
-class Result(AutoState):
+class Result(AutoState, AutoInfo):
     _state_attrs = (
         "ext_res", "real_res",
         "elapsed_time", "start_time",
         "error"
     )
+    _repr_attrs = _state_attrs
+    _str_attrs = _state_attrs
 
     def __init__(self):
         self.ext_res = None
@@ -20,10 +24,12 @@ class Result(AutoState):
         return self.error is None and self.real_res == self.ext_res
 
 
-class Results(AutoState):
+class Results(AutoState, AutoInfo):
     _state_attrs = (
         "errors", "successes", "fails"
     )
+    _repr_attrs = _state_attrs
+    _str_attrs = _state_attrs
 
     def __init__(self):
         self.errors: list[Result] = []
@@ -42,11 +48,16 @@ class Results(AutoState):
     def get_result(self):
         return self.successes, self.fails, self.errors
 
+    def __iter__(self):
+        return iter(self.successes + self.fails + self.errors)
 
-class Point(AutoState):
+
+class Point(AutoState, AutoInfo):
     _state_attrs = (
         "except_res", "args", "kwargs"
     )
+    _repr_attrs = _state_attrs
+    _str_attrs = _state_attrs
 
     def __init__(self):
         self.except_res = None
@@ -62,26 +73,37 @@ class Point(AutoState):
     def get_point(self):
         return self.except_res, self.args, self.kwargs
 
+    def to_dict(self):
+        return {
+            "ext_value": self.except_res,
+            "args": self.args,
+            "kwargs": self.kwargs
+        }
+
     def run(self, func):
         res = Result()
         res.ext_res = self.except_res
         timer = Timer()
+        timer.start()
         try:
-            timer.start()
             rt = func(*self.args, **self.kwargs)
             timer.end()
             res.real_res = rt
-            res.start_time = timer.start_time
-            res.elapsed_time = timer.res
         except Exception as e:
-            res.error = e
+            res.error = rich.traceback.Traceback.from_exception(
+                exc_type=type(e), exc_value=e, traceback=e.__traceback__
+            )
+        res.start_time = timer.start_time
+        res.elapsed_time = timer.res
         return res
 
 
-class Points(AutoState):
+class Points(AutoState, AutoInfo):
     _state_attrs = (
         "points"
     )
+    _repr_attrs = _state_attrs
+    _str_attrs = _state_attrs
 
     def __init__(self):
         self.points = []
@@ -101,3 +123,6 @@ class Points(AutoState):
         for p in self.points:
             res.add_result(p.run(func))
         return res
+
+    def __iter__(self):
+        return iter(self.points)

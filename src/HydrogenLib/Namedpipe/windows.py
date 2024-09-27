@@ -1,6 +1,4 @@
 # Namedpipe for windows
-from ._windows import *
-
 
 # module end
 # module start at Aug 31st 2024 20:31
@@ -29,9 +27,3 @@ from ._windows import *
 # Client: Create file
 # Server: Connect namedpipe
 # Client: Write to file
-
-
-
-
-
-

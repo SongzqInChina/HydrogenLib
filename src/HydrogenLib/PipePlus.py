@@ -54,6 +54,7 @@ class _PIPEReader:
     """
     Pipe Reader
     """
+
     def __init__(self, reader: int):
         self._pipe = reader
 

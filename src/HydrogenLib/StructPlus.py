@@ -1,5 +1,6 @@
 from typing import Any
 
+from . import TypeFunc
 from . import _BaseStruct as ostruct
 from .Json import Pickle
 
@@ -11,13 +12,13 @@ def simple_pack(data_bytes: bytes):
 
 
 def simple_unpack(data: bytes) -> bytes:
-    data_offset = Hydrogen2.typefunc.index_offset.Offset(data)
+    data_offset = TypeFunc.IndexOffset.Offset(data)
     data_length = ostruct.unpack(int, data_offset > 8)
     return data_offset.offset(data_length)
 
 
 def simple_unpacks(data: bytes):
-    data_offset = Hydrogen2.typefunc.index_offset.Offset(data)
+    data_offset = TypeFunc.IndexOffset.Offset(data)
     data_length = ostruct.unpack(int, data_offset > 8)
     one_data = data_offset.offset(data_length)
     if data_offset.isend():
@@ -27,7 +28,7 @@ def simple_unpacks(data: bytes):
 
 
 def simple_unpack_one(data: bytes):
-    data_offset = Hydrogen2.typefunc.index_offset.Offset(data)
+    data_offset = TypeFunc.IndexOffset.Offset(data)
     data_length = ostruct.unpack(int, data_offset > 8)
     return (data_offset.offset(data_length)), bytes(list(data_offset))
 
@@ -50,4 +51,3 @@ def simple_jsonpickle_unpacks(data: bytes):
 def simple_jsonpickle_unpack_one(data: bytes):
     orial_one_data, data_ = simple_unpack_one(data)
     return Pickle.decode(orial_one_data.decode()), data_
-

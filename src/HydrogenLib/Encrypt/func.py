@@ -2,6 +2,7 @@ import logging
 
 func_logger = logging.getLogger("SzQlib.zencrypt.func")
 
+
 # module end
 
 

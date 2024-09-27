@@ -36,7 +36,7 @@ class Json:
 
 class Pickle:
     @staticmethod
-    def encode(data, indent=4):
+    def encode(data, indent=None):
         return jsonpickle.encode(data, indent=indent)
 
     @staticmethod

@@ -6,7 +6,7 @@ import time
 from queue import Queue
 from threading import Event
 
-from Hydrogen.ThreadingPlus import run_with_timeout, start_daemon_thread
+from ..ThreadingPlus import run_with_timeout, start_daemon_thread
 
 
 # module end, but test not finished

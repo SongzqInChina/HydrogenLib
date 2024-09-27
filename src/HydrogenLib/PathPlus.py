@@ -104,7 +104,7 @@ def process(path) -> str:
 
 
 def _tree(folder) -> dict:
-    f_dic = {folder:{}}
+    f_dic = {folder: {}}
     now_dic = f_dic[folder]
     folder = path_to(folder)
 
@@ -122,5 +122,3 @@ def _tree(folder) -> dict:
 def tree(folder):
     t = _tree(folder)
     return t
-
-

@@ -1,11 +1,12 @@
 import curses
+
 import rich
 import rich.panel
 import rich.table
 from rich import print
 
 from ._base import InteractiveCLI
-from ..DataStructures import Stack
+from ..DataStructure import Stack
 
 
 class Options:

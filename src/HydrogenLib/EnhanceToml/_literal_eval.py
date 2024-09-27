@@ -25,7 +25,8 @@ def _literal_eval(node, globals_: dict | None, locals_: dict | None, builtins: d
         raise ValueError("Unsupported type: " + str(type(node)))
 
 
-def literal_eval(string, globals_: dict | None = None, locals_: dict | None = None, builtins: dict | ModuleType | None = None):
+def literal_eval(string, globals_: dict | None = None, locals_: dict | None = None,
+                 builtins: dict | ModuleType | None = None):
     if isinstance(builtins, ModuleType) and builtins.__name__ == "builtins":
         builtins = vars(builtins)
     if globals_ is None:

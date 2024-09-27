@@ -11,4 +11,3 @@ def get_env_dict():
     return {
         k: split_env_value(v) for k, v in env_dict.items()
     }
-

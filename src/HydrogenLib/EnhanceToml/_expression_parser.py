@@ -3,7 +3,7 @@ from types import NoneType
 
 from ._literal_eval import literal_eval
 from ._toml_types import *
-from ..DataStructures import Stack
+from ..DataStructure import Stack
 
 parentheses_map = {
     '(': ')',
@@ -159,6 +159,3 @@ def decode(text: str):
             value = expression_eval(value)
             res[table][key] = value
     return res
-
-
-

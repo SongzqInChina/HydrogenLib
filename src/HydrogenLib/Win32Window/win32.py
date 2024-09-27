@@ -5,7 +5,7 @@ import win32con
 import win32gui
 import win32process
 
-from ..ProcessPlus import CProcess
+from ..ProcessPlus import ProcessPlus
 
 MB_OK = 0
 MB_OK_CLEAN = 1
@@ -172,7 +172,7 @@ def inputbox(msg="", title="", default=''):
 
 def handles():
     def callback(__hwnd, __hwnds):
-        __hwnds += (__hwnd, )
+        __hwnds += (__hwnd,)
 
     hwnds = ()
     win32gui.EnumWindows(callback, hwnds)
@@ -414,7 +414,7 @@ class Win32Window:
                 "active": self.active(),
                 "top": self.top(),
                 "parent": self.parent(),
-                "img_name": CProcess(self.process())
+                "img_name": ProcessPlus(self.process())
             }
         ))
 

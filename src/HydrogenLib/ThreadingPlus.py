@@ -97,6 +97,3 @@ class ThreadPool:
     def count(self):
         with self.lock:
             return self._count
-
-
-

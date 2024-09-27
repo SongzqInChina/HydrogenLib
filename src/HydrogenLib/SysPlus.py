@@ -4,7 +4,7 @@ import os
 
 import psutil
 
-from .ProcessPlus import Process, CProcess
+from .ProcessPlus import Process, ProcessPlus
 
 zsystem_logger = logging.getLogger("SzQlib.zsystem")
 
@@ -118,7 +118,7 @@ class Runtime:
         return psutil.Popen(command)
 
     def execute(self, command):
-        return CProcess(psutil.Popen(command).pid)
+        return ProcessPlus(psutil.Popen(command).pid)
 
     @classmethod
     def getRuntime(cls):

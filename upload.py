@@ -49,7 +49,7 @@ def init_parser(parser: argparse.ArgumentParser):
     )
 
 
-version_path = r".\src\HydrogenLib\Resources\version"
+version_path = r"src/HydrogenLib/Resource\version"
 args = sys.argv[1::]
 
 if __name__ == '__main__':

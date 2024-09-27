@@ -66,7 +66,7 @@ def unpack(data_type, data):
 def pack_anylenght(data, lenght=16, max_lenght=False):
     data_type = type(data)
     if data_type == str:
-        return Encrypt.pad(data.encode(), lenght)
+        return Encrypt.func.pad(data.encode(), lenght)
     if data_type == int:
         x = copy.copy(data)
         data_bytes = TypeFunc.int_to_bytes(x, lenght, "little")
@@ -76,7 +76,7 @@ def pack_anylenght(data, lenght=16, max_lenght=False):
     if data_type == bytes:
         if len(data) <= max_lenght:
             return data
-        return Encrypt.pad(data, lenght)
+        return Encrypt.func.pad(data, lenght)
     if data_type == float:
         int_num, float_int_num = tuple(map(int, str(data).split('.')[:2]))
 
@@ -91,13 +91,14 @@ def pack_anylenght(data, lenght=16, max_lenght=False):
         result = int_len_bytes + int_bytes + float_bytes
 
         if len(result) > lenght:
-            raise OverflowError(f"result is too long, cannot finish package(try to use {len(int_bytes) + len(float_bytes) + 8})")
+            raise OverflowError(
+                f"result is too long, cannot finish package(try to use {len(int_bytes) + len(float_bytes) + 8})")
 
         if max_lenght:
             return result
         else:
             print(result)
-            return Encrypt.pad(result, lenght)
+            return Encrypt.func.pad(result, lenght)
 
 
 def unpack_anylenght(data_type, data: bytes, data_lenght, max_lenght=False):
@@ -111,16 +112,16 @@ def unpack_anylenght(data_type, data: bytes, data_lenght, max_lenght=False):
         return data_int
 
     if data_type == str:
-        return Encrypt.unpad(data).decode()
+        return Encrypt.func.unpad(data).decode()
 
     if data_type == bytes:
         if max_lenght:
             return data
-        return Encrypt.unpad(data)
+        return Encrypt.func.unpad(data)
 
     if data_type == float:
-        data_offset = Hydrogen2.typefunc.index_offset.Offset(Encrypt.unpad(data, data_lenght))
-        print(Encrypt.unpad(data, data_lenght))
+        data_offset = TypeFunc.IndexOffset.Offset(Encrypt.func.unpad(data, data_lenght))
+        print(Encrypt.func.unpad(data, data_lenght))
         int_lenght = unpack_anylenght(int, data_offset.offset(8), 2048, True)
         print("Int Lenght:", int_lenght)
 

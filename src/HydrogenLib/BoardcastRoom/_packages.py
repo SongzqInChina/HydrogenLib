@@ -1,4 +1,4 @@
-from ..Classes.NetworkPackages import NetPackage
+from ..Class.NetworkPackages import NetPackage
 
 
 class RequestToJoin(NetPackage):

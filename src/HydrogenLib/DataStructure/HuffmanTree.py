@@ -1,4 +1,4 @@
-from ..Classes.ProbabilityCounter import ProbabilityCounter
+from ..Class.ProbabilityCounter import ProbabilityCounter
 
 
 def get_probabilities(data):

@@ -1,4 +1,4 @@
-from ..Classes.MemberManager import Manager
+from ..Class.MemberManager import Manager
 from ..SocketPlus import *
 
 
@@ -7,4 +7,3 @@ class BoardcastServer:
         self.port = port
         self.sock = Socket()
         self.member_manager = Manager()
-

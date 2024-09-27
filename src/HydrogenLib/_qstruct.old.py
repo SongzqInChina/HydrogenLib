@@ -3,6 +3,8 @@ import struct
 
 from . import Hash as shash
 from . import _BaseStruct as ostruct
+from . import Time
+from . import TypeFunc
 
 
 def pack(data, hashes=None, timestamp=None):
@@ -14,7 +16,7 @@ def pack(data, hashes=None, timestamp=None):
     if hashes is None:
         hashes = ["md5", "sha256", "sha512"]
     if timestamp is None:
-        timestamp = time.time.time()
+        timestamp = Time.time.time()
     data_size = ostruct.pack(len(data))  # 使用小端序8个字节无符号整数表示数据长度
     time_head = ostruct.pack(int(timestamp))  # 时间戳
     hash_head = b""
@@ -33,7 +35,7 @@ def pack(data, hashes=None, timestamp=None):
 
 
 def __unpack(__data):
-    data = Hydrogen2.typefunc.index_offset.Offset(__data)
+    data = TypeFunc.IndexOffset.Offset(__data)
     init_head = ostruct.unpack(int, data > 8)  # 初始化头——数据段总长
 
     now_data = data.offseter(init_head - 8)  # 跳过初始化头，获取hash，时间戳和数据
@@ -44,7 +46,7 @@ def __unpack(__data):
     # print(data_size, time_head)
 
     data_bytes = now_data[-data_size:]  # 数据
-    data_hashes = Hydrogen2.typefunc.index_offset.Offset(now_data[: -data_size])  # 获取hash段
+    data_hashes = TypeFunc.IndexOffset.Offset(now_data[: -data_size])  # 获取hash段
     data_hashes += 16  # 跳过初始化头、时间戳（16字节）
     hashes = {}
     # 分离hash
@@ -77,7 +79,7 @@ def __unpacks(__data):
 
 
 def unpacks(__data):
-    data = Hydrogen2.typefunc.index_offset.Offset(__data)
+    data = TypeFunc.IndexOffset.Offset(__data)
     map_data = map(lambda x: __unpack(x.to(bytes)), __unpacks(data))
     for i in map_data:
         yield i  # type: dict
@@ -98,5 +100,3 @@ def lunpacks_hash(__data):
                 shash.getHashValueByName(i["data"], hash_name) == hash_value, \
                 f"哈希验证错误:\n\tname={hash_name}, \n\tvalue ={hash_value}, \n\texcept={shash.getHashValueByName(i["data"], hash_name)}."
     return ls
-
-

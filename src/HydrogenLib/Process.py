@@ -1,5 +1,4 @@
 import time
-from os import system as cmd
 from typing import Any
 
 import psutil

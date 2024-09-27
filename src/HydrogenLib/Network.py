@@ -1,5 +1,7 @@
-import ping3
+import re
 import socket
+
+import ping3
 
 
 def _ipa():

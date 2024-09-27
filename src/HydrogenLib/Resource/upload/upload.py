@@ -3,7 +3,7 @@ import os
 import subprocess
 import sys
 import time
-import HydrogenLib
+
 import rich.traceback
 from rich import print
 
@@ -68,7 +68,6 @@ args = parser.parse_args(sys.argv[1:])
 
 version_path = args.path
 name = args.name
-
 
 if __name__ == '__main__':
     console = rich.console.Console(force_terminal=True)
