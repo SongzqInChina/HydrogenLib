@@ -1,6 +1,7 @@
 import asyncio
 import socket
 
+from . import CoroPlus
 from . import StructPlus
 
 
@@ -9,7 +10,7 @@ from . import StructPlus
 # module end at 8/23/2024 # 代理服务类没做完，做完了一个简单的服务器类
 # 基于此的BoardcastRoom仍处于开发状态
 
-class _BaseSocketPlus:
+class AsyncSocket:
     def __init__(self, s: socket.socket | object | None = None):
         self.read_loop_event = asyncio.Event()
         self.write_loop_event = asyncio.Event()
@@ -153,30 +154,83 @@ class _BaseSocketPlus:
         self.close()
 
 
-Sockets = socket.socket | _BaseSocketPlus
+Sockets = socket.socket | AsyncSocket
 
 
-class Socket:
+class SyncSocket:
     def __init__(self, s: Sockets | object | None = None):
-        if isinstance(s, _BaseSocketPlus):
+        if isinstance(s, AsyncSocket):
             self._socket = s
         else:
-            self._socket = _BaseSocketPlus(s)
-        self.loop = asyncio.get_event_loop()
+            self._socket = AsyncSocket(s)
+        self.loop = CoroPlus.new_event_loop()
+
+    def _run(self, func_name, *args, **kwargs):
+        return CoroPlus.run_in_existing_loop(
+            getattr(self._socket, func_name)(*args, **kwargs),
+            self.loop
+        )
+
+    @property
+    def sock(self):
+        return self._socket.sock
+
+    def getlasterror(self):
+        return self._run('getlasterror')
+
+    def set(self, sock, start_server=True):
+        self._socket.set(sock, start_server)
+
+    def settimeout(self, timeout):
+        self._run('settimeout', timeout)
+
+    def empty(self):
+        return self._run('empty')
+
+    def bindport(self, port):
+        return self._run('bindport', port)
 
     def bind(self, host, port):
-        self.loop.run_in_executor(None, self._socket.bind, host, port)
+        return self._run('bind', host, port)
+
+    def listen(self, backlog=1):
+        return self._run('listen', backlog)
+
+    def accept(self):
+        return self._run('accept')
+
+    def connect(self, host, port, timeout=None):
+        return self._run('connect', host, port, timeout)
+
+    def read(self, timeout=None):
+        return self._run('read', timeout)
+
+    def write(self, data):
+        return self._run('write', data)
+
+    def start_server(self):
+        self._socket.start_server()
+
+    def self_accept(self):
+        origin_socket = self._socket
+        self._socket = self.accept()
+        origin_socket.close()
+        return self._socket
+
+    def close(self):
+        self._socket.close()
+        self.loop.close()
 
 
-def is_tcp(s: Socket | socket.socket):
-    if isinstance(s, Socket):
+def is_tcp(s: SyncSocket | socket.socket):
+    if isinstance(s, SyncSocket):
         return is_tcp(s.sock)
     else:
         return s.type == socket.SOCK_STREAM
 
 
-def is_udp(s: Socket | socket.socket):
-    if isinstance(s, Socket):
+def is_udp(s: SyncSocket | socket.socket):
+    if isinstance(s, SyncSocket):
         return is_udp(s.sock)
     else:
         return s.type == socket.SOCK_DGRAM

@@ -1,57 +1,9 @@
 import inspect
-import logging
 import os
 
 import psutil
 
-from .ProcessPlus import Process, ProcessPlus
-
-zsystem_logger = logging.getLogger("SzQlib.zsystem")
-
-
-def wmi_process():
-    return ("win32_process")
-
-
-def wmi_service():
-    return ("win32_service")
-
-
-def wmi_disk():
-    return ("win32_logicaldisk")
-
-
-def wmi_network():
-    return ("win32_networkadapterconfiguration")
-
-
-def wmi_bios():
-    return ("win32_bios")
-
-
-def wmi_cpu():
-    return ("win32_processor")
-
-
-def wmi_os():
-    return ("win32_operatingsystem")
-
-
-def wmi_user():
-    return ("win32_useraccount")
-
-
-def wmi_group():
-    return ("win32_group")
-
-
-def wmi_group_user():
-    return ("win32_groupuser")
-
-
-def wmi_share():
-    return ("win32_share")
-
+from .ProcessPlus import ProcessPlus
 
 if os.name == 'nt':
 
@@ -78,7 +30,7 @@ class Runtime:
         return cls._instance
 
     def __init__(self):
-        self._c = Process.myClass()
+        self._c = ProcessPlus(os.getpid())
 
     @property
     def pid(self):
@@ -123,6 +75,3 @@ class Runtime:
     @classmethod
     def getRuntime(cls):
         return cls.__getruntime()
-
-
-zsystem_logger.debug("Module zsystem loading ...")

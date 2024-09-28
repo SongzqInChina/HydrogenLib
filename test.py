@@ -1,5 +1,24 @@
-from tests import test_funcs
 from rich import print
+
+from src.HydrogenLib.TestManager import *
+from tests import test_funcs
+
+
+def test_init():
+    cc = ConfigCreator(".\\tests\\test_configs")
+    test_names = {
+        "class_namespace_namespace_test": {
+            [
+                [['a', 'b', 'c'], ['a', 'b', 'c'], {}],
+                [['adasf', 'kajsl', 'jiew'], ['adasf', 'kajsl', 'jiew'], {}]
+            ]
+        },
+        "class_auto_autos_test": {
+            [
+                [[]]
+            ]
+        }
+    }
 
 
 def main():
@@ -15,6 +34,7 @@ def main():
                     print(item.error)
                 else:
                     print(item.ext_res, item.real_res)
+
 
 if __name__ == '__main__':
     main()

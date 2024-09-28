@@ -1,8 +1,7 @@
 import fnmatch
+import os
 
 from .File import *
-
-zdatabase_logger = logging.getLogger(__name__)
 
 
 class CannotFindError(BaseException):
@@ -66,7 +65,7 @@ class DB:
         assert fnmatch.fnmatch(filename, "*.db"), "文件名必须以.db结尾"
         self._usetype = list
         self._filename = filename
-        self._stream = JsonFileOpen(filename)
+        self._stream = json_safe_open(filename, dict)
         self._version = self._stream["version"]
         self._name = self._stream['name']
         self._template = self._stream['template']
@@ -78,7 +77,7 @@ class DB:
         """
         创建一个数据表
         :param mro:
-        :param template:
+        :param template: 模版对象
         :return:
         """
         if mro in self._stream['data']:
@@ -112,7 +111,7 @@ class DB:
         """
         创建一个表并返回它的操作对象
         :param mro:
-        :param template:
+        :param template: 模版对象
         :return:
         """
         self.mkmro(mro, template)
@@ -199,10 +198,8 @@ class MroFunc:
         ls = self.where(**dic)
         ls_len = len(ls)
         if ls_len < 1:
-            zdatabase_logger.debug(f"Error Cannot find item {dic}")
             raise CannotFindError(f"Cannot find item: {dic}")
         if ls_len > 1:
-            zdatabase_logger.debug(f"Error Multipie target items: {ls_len}(except 1), query_data={dic}")
             raise MultipleTargetItemsError(f"Multiple target items: {ls_len}(except 1), query_data={dic}")
         return ls[0]
 
@@ -213,24 +210,23 @@ class MroFunc:
         :return:
         """
         if not self.exist(**dic):
-            zdatabase_logger.debug(f"Dic not exist: {dic}")
             raise NotExistError(f"Not exist: {dic}")
         try:
             data = self.absquery(**dic)
             self._stream['data'][self.mro]['data'].remove(data)
             return True
         except CannotFindError:
-            zdatabase_logger.debug(f"Cannot find data {dic}")
+
             return False
         except MultipleTargetItemsError:
-            zdatabase_logger.debug(f"Multiple target items: {dic}")
+
             return False
 
     def calibration(self, tem, dic):
         """
         将字典dic转换成完全符合tem的格式
-        :param tem:
-        :param dic:
+        :param tem: 模版
+        :param dic: 字典
         :return:
         """
         for i in tuple(dic):
@@ -244,7 +240,7 @@ class MroFunc:
     def add(self, **dic):
         """
         向表中添加一项数据
-        :param dic:
+        :param dic:数据
         :return:
         """
         # 检查是否符合模版
@@ -266,8 +262,8 @@ class MroFunc:
     def settemplate(self, template, update=True):
         """
         设置表数据模版，如果update为True，那么调用format方法更新数据
-        :param template:
-        :param update:
+        :param template: 模版对象
+        :param update:是否更新
         :return:
         """
         self._stream['data'][self.mro]['template'] = template
@@ -278,11 +274,11 @@ class MroFunc:
 def setversion(file, version):
     """
     设置数据库的版本(version)
-    :param file:
-    :param version:
+    :param file: 文件路径
+    :param version: 版本
     :return:
     """
-    f = JsonFileOpen(file)
+    f = json_safe_open(file)
     f['version'] = version
     f.close()
 
@@ -290,11 +286,11 @@ def setversion(file, version):
 def setname(file, name):
     """
     设置数据的内置名称
-    :param file:
-    :param name:
+    :param file: 文件路径
+    :param name:数据库命名
     :return:
     """
-    f = JsonFileOpen(file)
+    f = json_safe_open(file)
     f['name'] = name
     f.close()
 
@@ -302,11 +298,11 @@ def setname(file, name):
 def settemplate(file, template):
     """
     设置数据库的默认模版
-    :param file:
-    :param template:
+    :param file:文件路径
+    :param template: 模版对象
     :return:
     """
-    f = JsonFileOpen(file)
+    f = json_safe_open(file)
     f['template'] = template
     f.close()
 
@@ -314,7 +310,7 @@ def settemplate(file, template):
 def mkdb(file):
     """
     创建/清空一个数据库文件
-    :param file:
+    :param file: 文件路径
     :return:
     """
     mkdbEx(file, Template(), 0, "Unkown")
@@ -323,22 +319,24 @@ def mkdb(file):
 def mkdbEx(file, template, version, name):
     """
     使用更多选项创建数据库
-    :param file:
-    :param template:
-    :param version:
-    :param name:
+    :param file: 文件路径
+    :param template: 模版对象
+    :param version: 版本
+    :param name: 数据库命名
     :return:
     """
-    JsonCreate(file)
-    setname(file, name)
-    settemplate(file, template)
-    setversion(file, version)
+    json_write({
+        "template": template,
+        "version": version,
+        "name": name,
+        "data": {}
+    }, file)
 
 
 def mkget(file):
     """
     创建一个数据库并返回它的操作对象
-    :param file:
+    :param file: 文件路径
     :return:
     """
     mkdb(file)
@@ -348,10 +346,10 @@ def mkget(file):
 def mkgetEx(file, template, version, name):
     """
     使用更多选项创建一个数据库并返回它的操作对象
-    :param file:
-    :param template:
-    :param version:
-    :param name:
+    :param file: 文件路径
+    :param template: 模版对象
+    :param version: 版本
+    :param name: 数据库命名
     :return:
     """
     mkdbEx(file, template, version, name)
@@ -369,16 +367,17 @@ def getdb(file):
     return DB(file)
 
 
-def findDB(path):
+def findDB(path, pattern="*.db"):
     """
     查找path内的所有库文件（*.db）
-    :param path:
+    :param path: 路径
+    :param pattern: 通配符
     :return:
     """
     dbs = []
     for i in os.listdir(path):
         if os.path.isfile(i):
-            if fnmatch.fnmatch(i, "*.db"):
+            if fnmatch.fnmatch(i, pattern):
                 dbs.append(i)
     return dbs
 
@@ -386,12 +385,9 @@ def findDB(path):
 def checkDB(file):
     """
     检查文件是否是一个数据库文件
-    :param file:
+    :param file: 文件路径
     :return:
     """
-    f = JsonFileOpen(file)
+    f = json_safe_open(file)
     res = set(f.keys()) == {'name', 'version', 'data', 'template'}
     return res
-
-
-zdatabase_logger.debug(f"Module zdatabase loading ...")

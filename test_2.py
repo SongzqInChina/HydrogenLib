@@ -10,10 +10,10 @@ async def test():
 
 def test_wrapper():
     loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
+    # asyncio.set_event_loop(loop)
     res = loop.run_until_complete(test())
-    return res
+    res2 = loop.run_until_complete(test())
+    return res, res2
 
 
 print(test_wrapper())

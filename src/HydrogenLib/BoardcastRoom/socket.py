@@ -5,5 +5,5 @@ from ..SocketPlus import *
 class BoardcastServer:
     def __init__(self, port):
         self.port = port
-        self.sock = Socket()
+        self.sock = SyncSocket()
         self.member_manager = Manager()

@@ -1,3 +1,4 @@
+import asyncio
 import builtins
 import datetime
 import queue
@@ -8,8 +9,64 @@ from typing import Callable
 
 from . import TypeFunc, ThreadingPlus
 from .Class.Base import null
+from .Class.MultiSet import MultiSet
+from .CoroPlus import new_event_loop
 from .DataStructure import ThreadSafeCollections
-from .SocketPlus import Socket
+from .SocketPlus import SyncSocket, AsyncSocket
+
+
+class AsyncMultiSocket:
+    async def _read_loop(self):
+        async def put_in(data, name):
+            await self.datas[name].put(data)
+            await self.data_index.put(name)
+
+        while not self.event.is_set():
+
+            for name, sock in self.socks.items():
+                if not sock.empty():
+                    if name not in self.datas:
+                        self.datas[name] = asyncio.Queue()
+                    while not sock.empty():
+                        c = put_in(await sock.read(), name)
+                        self.loop.create_task(c)
+
+    def __init__(self):
+        self.data_index = asyncio.Queue()
+        self.data_vis = MultiSet()
+        self.datas = {}  # type: dict[str, asyncio.Queue]
+        self.socks = {}  # type: dict[str, AsyncSocket]
+        self.loop = new_event_loop()
+        self.event = asyncio.Event()
+
+    async def boardcast(self, data):
+        for name, sock in self.socks.items():
+            sock.write(data)
+
+    async def _remove_from_index(self, name):
+        self.data_vis.add(name)
+
+    async def write(self, name, data):
+        self.socks[name].write(data)
+
+    async def read(self, name):
+        await self._remove_from_index(name)
+        return await self.datas[name].get()
+
+    async def empty(self):
+        return self.data_index.empty()
+
+    async def read_one(self):
+        name = await self.data_index.get()
+        while name in self.data_vis:  # 找到第一个未读取的数据
+            self.data_vis.remove(name)
+            name = await self.data_index.get()
+        return await self.datas[name].get()
+
+    def close(self):
+        self.event.set()
+        for sock in self.socks.values():
+            sock.close()
 
 
 class RemotePost:  # RemotePost 使用一问一答形式发送数据
@@ -39,7 +96,7 @@ class RemotePost:  # RemotePost 使用一问一答形式发送数据
         def __iter__(self):
             return self.data.keys()
 
-    def __init__(self, sp_socket: Socket):
+    def __init__(self, sp_socket: SyncSocket):
         self.socket = sp_socket
         # 优先度
         self.priority = None
@@ -171,7 +228,7 @@ class RemoteCallServer:
 
 class RemoteCallClient:
     def __init__(self, remote_host, remote_port, timeout=None):
-        self.socket = RemotePost(Socket())
+        self.socket = RemotePost(SyncSocket())
         try:
             self.socket.connect(remote_host, remote_port, timeout)
         except socket.timeout:
@@ -202,7 +259,7 @@ class HeartbeatPacketClient:
         """
         自动发送心跳包
         """
-        self.sock = Socket()
+        self.sock = SyncSocket()
         self.post = RemotePost(self.sock)
         self.timer = None
 
@@ -231,7 +288,7 @@ class HeartbeatPacketServer:
 
     def __init__(self):
         self.thread = None
-        self.sock = Socket()
+        self.sock = SyncSocket()
         self.post = RemotePost(self.sock)
         self.timer = None
         self.timeout = 5
@@ -268,7 +325,7 @@ class HeartbeatPacketServer:
 
 class Server:
     def __init__(self):
-        self.sock = Socket()
+        self.sock = SyncSocket()
         self.sock.start_server()  # 控制socket启动监听线程
 
         self.max_connects = 10

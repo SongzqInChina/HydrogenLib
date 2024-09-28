@@ -40,6 +40,9 @@ class AutoRegDict(Auto):
     def items(self):
         return self._dict.items()
 
+    def clear(self):
+        return self._dict.clear()
+
     def __contains__(self, key):
         return self._dict.__contains__(key)
 
@@ -186,7 +189,7 @@ class AutoOperator(Auto):
         return self._operator_funcs['-'](self)
 
 
-class _auto_operator:
+class AutoOperatorStruct:
     @classmethod
     def decorator(cls, oper, globs):
         def wrapper(func):
@@ -212,6 +215,13 @@ class _auto_operator:
     def __call__(self, *args, **kwargs):
         return self.func(*args, **kwargs)
 
+class AutoOperatorFunc(Auto):
+    def __init__(self, globs):
+        self._globs = globs
+
+    def operator(self, oper):
+        return AutoOperatorStruct.decorator(oper, self._globs)
+
 
 class _AutoInfo(Auto):
     ...
@@ -219,13 +229,16 @@ class _AutoInfo(Auto):
 
 class AutoRepr(_AutoInfo):
     _repr_attrs = None
+
     def __repr__(self):
         return str(
             {attr: getattr(self, attr) for attr in self._repr_attrs}
         )
 
+
 class AutoStr(_AutoInfo):
     _str_attrs = None
+
     def __str__(self):
         return str(
             {attr: getattr(self, attr) for attr in self._str_attrs}
@@ -233,5 +246,12 @@ class AutoStr(_AutoInfo):
 
 
 class AutoInfo(AutoRepr, AutoStr):
-    ...
+    _info_attrs = None
 
+    def __repr__(self):
+        self._repr_attrs = self._info_attrs
+        return super().__repr__()
+
+    def __str__(self):
+        self._str_attrs = self._info_attrs
+        return super().__str__()

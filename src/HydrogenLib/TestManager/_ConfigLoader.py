@@ -1,8 +1,17 @@
 from ._BaseStructures import *
-from ..File import JsonGet, JsonSuSet
+from ..File import pickle_read, pickle_write
 
 
 class Config:
+    """
+    测试配置
+    允许读取，保存配置
+    属性：
+        points: 测试点集合对象
+        name: 测试名
+        description: 描述
+        func: 测试函数
+    """
     def __init__(self):
         self.points = Points()
         self.name = None
@@ -13,7 +22,7 @@ class Config:
         return self.points.run(self.func)
 
     def load(self, file):
-        json_config = JsonGet(file)
+        json_config = pickle_read(file)
         points, name, description = json_config.get('points'), json_config.get('name'), json_config.get('description')
         if points is None or name is None or description is None:
             raise ValueError('Invalid config file')
@@ -30,8 +39,11 @@ class Config:
         return cls().load(file)
 
     def save(self, file):
-        JsonSuSet(file, **{
-            'points': [p.to_dict() for p in self.points],
-            'name': self.name,
-            'description': self.description
-        })
+        pickle_write(
+            {
+                'points': [p.to_dict() for p in self.points],
+                'name': self.name,
+                'description': self.description
+            },
+            file
+        )
