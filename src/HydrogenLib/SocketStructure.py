@@ -10,34 +10,43 @@ from typing import Callable
 from . import TypeFunc, ThreadingPlus
 from .Class.Base import null
 from .Class.MultiSet import MultiSet
-from .CoroPlus import new_event_loop
-from .DataStructure import ThreadSafeCollections
+from .CoroPlus import new_event_loop, run_in_existing_loop
 from .SocketPlus import SyncSocket, AsyncSocket
 
 
 class AsyncMultiSocket:
+    async def put_in(self, data, name):
+        await self.datas[name].put(data)
+        await self.data_index.put(name)
+
     async def _read_loop(self):
-        async def put_in(data, name):
-            await self.datas[name].put(data)
-            await self.data_index.put(name)
 
         while not self.event.is_set():
-
+            tasks = []
             for name, sock in self.socks.items():
                 if not sock.empty():
                     if name not in self.datas:
                         self.datas[name] = asyncio.Queue()
                     while not sock.empty():
-                        c = put_in(await sock.read(), name)
-                        self.loop.create_task(c)
+                        task = asyncio.create_task(self._process_data(sock, name))
+                        tasks.append(task)
+            await asyncio.gather(*tasks)
 
-    def __init__(self):
+    def __init__(self, max_concurrency=16):
         self.data_index = asyncio.Queue()
         self.data_vis = MultiSet()
         self.datas = {}  # type: dict[str, asyncio.Queue]
         self.socks = {}  # type: dict[str, AsyncSocket]
         self.loop = new_event_loop()
         self.event = asyncio.Event()
+        self.max_concurrency = max_concurrency
+        self.semaphore = asyncio.Semaphore(max_concurrency)
+
+    async def _process_data(self, sock, name):
+        async with self.semaphore:
+            while not sock.empty():
+                data = await sock.read()
+                await self.put_in(data, name)
 
     async def boardcast(self, data):
         for name, sock in self.socks.items():
@@ -56,6 +65,36 @@ class AsyncMultiSocket:
     async def empty(self):
         return self.data_index.empty()
 
+    async def create(self, name):
+        self.socks[name] = AsyncSocket()
+
+    async def connect(self, name, host, port, timeout=None):
+        return await self.socks[name].connect(host, port, timeout)
+
+    async def accept(self, name):
+        return await self.socks[name].accept()
+
+    async def accept_and_add(self, name, nw_name):
+        sk = await self.socks[name].accept()
+        await self.add(nw_name, sk)
+
+    async def add(self, name, sock):
+        if name in self.socks:
+            raise Exception("Socket name already exists")
+        self.socks[name] = sock
+
+    async def exists(self, name):
+        return name in self.socks
+
+    async def remove(self, name):
+        if not self.exists(name):
+            raise Exception("Socket name not exists")
+        await self.socks[name].close()
+        del self.socks[name]
+
+    async def get_lasterror(self, name):
+        return self.socks[name].getlasterror()
+
     async def read_one(self):
         name = await self.data_index.get()
         while name in self.data_vis:  # 找到第一个未读取的数据
@@ -67,6 +106,18 @@ class AsyncMultiSocket:
         self.event.set()
         for sock in self.socks.values():
             sock.close()
+
+
+class SyncMultiSocket:
+    def __init__(self):
+        self.loop = new_event_loop()
+
+    def _run(self, func_name, *args, **kwargs):
+        coro = getattr(self, func_name)(*args, **kwargs)
+        return run_in_existing_loop(coro, self.loop)
+
+    def boardcast(self, data):
+        self._run('boardcast', data)
 
 
 class RemotePost:  # RemotePost 使用一问一答形式发送数据
@@ -321,63 +372,3 @@ class HeartbeatPacketServer:
             return False
         else:
             return True
-
-
-class Server:
-    def __init__(self):
-        self.sock = SyncSocket()
-        self.sock.start_server()  # 控制socket启动监听线程
-
-        self.max_connects = 10
-        self.max_wait_queue_length = 10
-
-        self.requests = ThreadSafeCollections.SafeList()
-        self.thread = None
-        self.stop_event = ThreadingPlus.threading.Event()
-        self.connects = []
-        self.events = ThreadSafeCollections.SafeList()
-        self.events.list *= 10
-
-    def start_server(self):
-        def server():
-            while not self.stop_event.is_set():
-                request = self.sock.read()
-                self.requests.append(request)
-
-        self.thread = ThreadingPlus.start_daemon_thread(server)
-
-    def bindport(self, port):
-        self.sock.bindport(port)
-
-    def stop_server(self):
-        if self.thread is not None and self.thread.alive:
-            self.stop_event.set()
-            self.thread.join()
-
-    def close(self):
-        self.stop_server()
-        self.sock.close()
-
-    def listen(self):
-        self.sock.listen(self.max_wait_queue_length)
-
-    def accept(self):
-        conn, addr = self.sock.accept()
-        tid = len(self.connects)
-        self.connects.append(conn)
-        self.events.append(ThreadingPlus.threading.Event())
-        ThreadingPlus.start_daemon_thread(self._process_loop, tid)
-
-    def get_requests(self):
-        x = self.requests.copy()
-        self.requests.list = []
-        return x
-
-    def get_request(self):
-        return self.requests.pop(0)
-
-    def _process_loop(self, tid: int):
-        while not self.events[tid].is_set():
-            package = self.connects[tid].read()
-            if package is not None:
-                self.requests.append(package)

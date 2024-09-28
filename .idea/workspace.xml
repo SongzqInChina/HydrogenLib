@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 23 2024 01&#10;修改upload.py到通用模式&#10;未完成：&#10;Classes.Version.Version&#10;InteractiveCLI&#10;BroadcastRoom&#10;&#10;完成：&#10;修改AUTO类为ABC">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/CoroPlus.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Json/Json.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/Json/Pickle.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigCreator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/File.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/File.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Json.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Json/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/PipePlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/PipePlus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/StructPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/StructPlus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_2.py" afterDir="false" />
-    </list>
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +38,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -324,7 +310,23 @@
       <option name="project" value="LOCAL" />
       <updated>1727096682933</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;完成TestCreator&#10;完善AutoOperator类的逻辑&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装">
+      <option name="closed" value="true" />
+      <created>1727525712776</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1727525712776</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑">
+      <option name="closed" value="true" />
+      <created>1727525736129</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1727525736129</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -354,7 +356,9 @@
     <MESSAGE value="Sept. 20 2024 03&#10;这个东西居然忘记加gitignore了" />
     <MESSAGE value="Sept. 21 2024 01&#10;完善upload.py, 测试upload.py" />
     <MESSAGE value="Sept. 23 2024 01&#10;修改upload.py到通用模式&#10;未完成：&#10;Classes.Version.Version&#10;InteractiveCLI&#10;BroadcastRoom&#10;&#10;完成：&#10;修改AUTO类为ABC" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 23 2024 01&#10;修改upload.py到通用模式&#10;未完成：&#10;Classes.Version.Version&#10;InteractiveCLI&#10;BroadcastRoom&#10;&#10;完成：&#10;修改AUTO类为ABC" />
+    <MESSAGE value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;完成TestCreator&#10;完善AutoOperator类的逻辑&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装" />
+    <MESSAGE value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -366,7 +370,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test.py</url>
-          <line>4</line>
+          <line>23</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
