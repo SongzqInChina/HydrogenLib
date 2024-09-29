@@ -9,115 +9,121 @@ from typing import Callable
 
 from . import TypeFunc, ThreadingPlus
 from .Class.Base import null
-from .Class.MultiSet import MultiSet
-from .CoroPlus import new_event_loop, run_in_existing_loop
+from .CoroPlus import new_event_loop
 from .SocketPlus import SyncSocket, AsyncSocket
 
 
+class AsyncSocketGroup:
+    """
+    处理一个Socket以及与它相关的连接
+    """
+
+    def __init__(self, main_sock: AsyncSocket):
+        self.main = main_sock
+        self.connects = []
+
+    async def accept(self):
+        """
+        接受一个连接，返回套接字和地址
+        """
+        sck, addr = await self.main.accept()
+        self.connects.append(sck)
+        return sck, addr
+
+    async def accept_all(self):
+        """
+        接收所有未处理的连接，返回一个整数，表示新连接的数量
+        """
+        l = len(self.connects)
+        while self.main.has_connects():
+            sck, addr = await self.main.accept()
+            self.connects.append(sck)
+        return len(self.connects) - l
+
+    async def length(self):
+        return len(self.connects)
+
+    async def get_connect(self, index):
+        return self.connects[index]
+
+    async def __aiter__(self):
+        for sck in self.connects:
+            yield sck
+
+
 class AsyncMultiSocket:
-    async def put_in(self, data, name):
-        await self.datas[name].put(data)
-        await self.data_index.put(name)
+    """
+    多Socket管理器
+    """
+    def __init__(self, s: AsyncSocket, loop: asyncio.AbstractEventLoop = None):
+        self.main = AsyncSocketGroup(s)
+        self.loop = new_event_loop() if loop is None else loop
+        self.lock = asyncio.Lock()
+        self._connects = {}  # type: dict[str, AsyncSocketGroup]
 
-    async def _read_loop(self):
-
-        while not self.event.is_set():
-            tasks = []
-            for name, sock in self.socks.items():
-                if not sock.empty():
-                    if name not in self.datas:
-                        self.datas[name] = asyncio.Queue()
-                    while not sock.empty():
-                        task = asyncio.create_task(self._process_data(sock, name))
-                        tasks.append(task)
-            await asyncio.gather(*tasks)
-
-    def __init__(self, max_concurrency=16):
-        self.data_index = asyncio.Queue()
-        self.data_vis = MultiSet()
-        self.datas = {}  # type: dict[str, asyncio.Queue]
-        self.socks = {}  # type: dict[str, AsyncSocket]
-        self.loop = new_event_loop()
-        self.event = asyncio.Event()
-        self.max_concurrency = max_concurrency
-        self.semaphore = asyncio.Semaphore(max_concurrency)
-
-    async def _process_data(self, sock, name):
-        async with self.semaphore:
-            while not sock.empty():
-                data = await sock.read()
-                await self.put_in(data, name)
+    @property
+    def connects(self):
+        """
+        加锁的Connects属性
+        """
+        async with self.lock:
+            return self._connects
 
     async def boardcast(self, data):
-        for name, sock in self.socks.items():
-            sock.write(data)
+        """
+        广播数据到所有连接
+        """
+        for name in self._connects:
+            group = self._connects[name]
+            self.loop.run_until_complete(
+                group.main.write(data)
+            )
 
-    async def _remove_from_index(self, name):
-        self.data_vis.add(name)
-
-    async def write(self, name, data):
-        self.socks[name].write(data)
-
-    async def read(self, name):
-        await self._remove_from_index(name)
-        return await self.datas[name].get()
-
-    async def empty(self):
-        return self.data_index.empty()
+    async def get(self, name):
+        """
+        尝试获取一个SocketGroup对象，如果找不到名称，返回None
+        """
+        if name not in self.connects:
+            return None
+        return self._connects[name]
 
     async def create(self, name):
-        self.socks[name] = AsyncSocket()
+        """
+        创建一个新的的SocketGroup
+        """
+        self.connects[name] = AsyncSocketGroup(AsyncSocket())
 
-    async def connect(self, name, host, port, timeout=None):
-        return await self.socks[name].connect(host, port, timeout)
-
-    async def accept(self, name):
-        return await self.socks[name].accept()
-
-    async def accept_and_add(self, name, nw_name):
-        sk = await self.socks[name].accept()
-        await self.add(nw_name, sk)
-
-    async def add(self, name, sock):
-        if name in self.socks:
-            raise Exception("Socket name already exists")
-        self.socks[name] = sock
+    async def add(self, name, sck):
+        """
+        添加一个已有的SocketGroup或Socket对象
+        """
+        if name in self.connects:
+            raise RuntimeError("name already exists")
+        if isinstance(sck, AsyncSocket):
+            sck = AsyncSocketGroup(sck)
+        self.connects[name] = sck
 
     async def exists(self, name):
-        return name in self.socks
+        """
+        检查name是否存在
+        """
+        return name in self._connects
+
+    async def sock(self, name):
+        """
+        安全读取socket
+        """
+        return self._connects.get(name)
 
     async def remove(self, name):
+        """
+        删除一个Socket对象
+        """
         if not self.exists(name):
-            raise Exception("Socket name not exists")
-        await self.socks[name].close()
-        del self.socks[name]
+            raise RuntimeError("name not exists")
 
-    async def get_lasterror(self, name):
-        return self.socks[name].getlasterror()
-
-    async def read_one(self):
-        name = await self.data_index.get()
-        while name in self.data_vis:  # 找到第一个未读取的数据
-            self.data_vis.remove(name)
-            name = await self.data_index.get()
-        return await self.datas[name].get()
-
-    def close(self):
-        self.event.set()
-        for sock in self.socks.values():
-            sock.close()
-
-
-class SyncMultiSocket:
-    def __init__(self):
-        self.loop = new_event_loop()
-
-    def _run(self, func_name, *args, **kwargs):
-        coro = getattr(self, func_name)(*args, **kwargs)
-        return run_in_existing_loop(coro, self.loop)
-
-    def boardcast(self, data):
-        self._run('boardcast', data)
+        sck = self.connects.pop(name)
+        return sck
 
 
 class RemotePost:  # RemotePost 使用一问一答形式发送数据

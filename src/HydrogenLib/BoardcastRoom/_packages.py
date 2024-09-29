@@ -1,7 +1,7 @@
 from ..Class.NetworkPackages import NetPackage
 
 
-class RequestToJoin(NetPackage):
+class Join(NetPackage):
     def get(self):
         return self.name
 
@@ -15,3 +15,18 @@ class Login(NetPackage):
 
     def __init__(self, passwd):
         self.passwd = passwd
+
+
+class Logout(NetPackage):
+    def get(self):
+        return
+
+
+class Yes(NetPackage):
+    def get(self):
+        return True
+
+
+class No(NetPackage):
+    def get(self):
+        return False

@@ -1,6 +1,8 @@
 import asyncio
 import socket
 
+from select import select
+
 from . import CoroPlus
 from . import StructPlus
 
@@ -25,13 +27,16 @@ class AsyncSocket:
         self._buffer = asyncio.Queue(256)
         self._write_buffer = asyncio.Queue(256)
 
-    def set(self, sock, start_server=True):
+        # 设置非堵塞
+        self.sock.setblocking(False)
+
+    async def set(self, sock, start_server=True):
         self.sock.close()
         self.sock = sock  # type: socket.socket
         if start_server:
-            self.start_server()
+            await self.start_server()
 
-    def close(self):
+    async def close(self):
         self.stop_server()
         try:
             self.sock.shutdown(socket.SHUT_RDWR)
@@ -39,23 +44,23 @@ class AsyncSocket:
             self.lasterror = e
         self.sock.close()
 
-    def getlasterror(self):
+    async def getlasterror(self):
         e = self.lasterror
         self.lasterror = None
         return e
 
-    def settimeout(self, timeout):
+    async def settimeout(self, timeout):
         self.sock.settimeout(timeout)
 
-    def empty(self):
+    async def empty(self):
         return self._buffer.empty()
 
     async def connect(self, host, port, timeout=None):
         try:
             self.sock.settimeout(timeout)
             await asyncio.get_event_loop().sock_connect(self.sock, (host, port))
-            self.getlasterror()
-            self.start_server()
+            await self.getlasterror()
+            await self.start_server()
             return True
         except socket.error as e:
             self.lasterror = e
@@ -64,7 +69,7 @@ class AsyncSocket:
     async def bindport(self, port):  # 绑定端口
         try:
             self.sock.bind(('', port))
-            self.getlasterror()
+            await self.getlasterror()
             return True
         except socket.error as e:
             self.lasterror = e
@@ -73,7 +78,7 @@ class AsyncSocket:
     async def bind(self, host, port):  # 绑定端口
         try:
             self.sock.bind((host, port))
-            self.getlasterror()
+            await self.getlasterror()
             return True
         except socket.error as e:
             self.lasterror = e
@@ -82,7 +87,7 @@ class AsyncSocket:
     async def listen(self, backlog=1):
         try:
             self.sock.listen(backlog)
-            self.getlasterror()
+            await self.getlasterror()
             return True
         except socket.error as e:
             self.lasterror = e
@@ -90,9 +95,7 @@ class AsyncSocket:
 
     async def accept(self):
         conn, addr = await asyncio.get_event_loop().sock_accept(self.sock)
-        conn_simple = self.__class__()
-        conn_simple.set(conn)
-        conn_simple.start_server()
+        conn_simple = self.__class__(conn)
         return conn_simple, addr
 
     async def _write(self, data):
@@ -100,7 +103,7 @@ class AsyncSocket:
 
         try:
             await asyncio.get_event_loop().sock_sendall(self.sock, packing_data_bytes)
-            self.getlasterror()
+            await self.getlasterror()
             return True
         except socket.error as e:
             self.lasterror = e
@@ -132,10 +135,10 @@ class AsyncSocket:
             return None
         return data
 
-    def write(self, data):
+    async def write(self, data):
         self._write_buffer.put_nowait(data)
 
-    def start_server(self):
+    async def start_server(self):
         self.read_coro = asyncio.create_task(self._read_loop())
         self.write_coro = asyncio.create_task(self._write_loop())
 
@@ -146,6 +149,18 @@ class AsyncSocket:
             self.read_coro.cancel()
         if self.write_coro is not None:
             self.write_coro.cancel()
+
+    async def self_accept(self):
+        old_sock = self.__class__(self.sock)
+        self.sock = old_sock.sock.accept()[0]
+        return old_sock
+
+    async def has_connects(self):
+        """
+        获取是否有未处理的连接
+        """
+        readable, _, _ = select([self.sock], [], [], 0)
+        return len(readable) > 0
 
     def __enter__(self):
         return self
