@@ -1,8 +1,6 @@
 import re
-from types import NoneType
 
 from ._literal_eval import literal_eval
-from ._toml_types import *
 from ..DataStructure import Stack
 
 parentheses_map = {
@@ -83,20 +81,8 @@ def split_parentheses(text: str):
     return parsed_result
 
 
-def expression_eval(text: str):
-    data = literal_eval(text)
-    if isinstance(data, int):
-        return Int(data)
-    if isinstance(data, float):
-        return Float(data)
-    if isinstance(data, str):
-        return String(data)
-    if isinstance(data, list):
-        return List([expression_eval(repr(i)) for i in data])
-    if isinstance(data, dict):
-        return Dict({expression_eval(repr(k)): expression_eval(repr(v)) for k, v in data.items()})
-    if isinstance(data, NoneType):
-        return Null()
+def expression_eval(text: str, _locals=..., _globals=...):
+    data = literal_eval(text, globals_=_globals, locals_=_locals)
     return data
 
 
@@ -131,7 +117,11 @@ def check(text: str):
     return "# enhancetoml" in lines[0].lower()
 
 
-def decode(text: str):
+def decode(text: str, _locals=..., _globals=...):
+    if _locals is ...:
+        _locals = {}
+    if _globals is ...:
+        _globals = {}
     if not check(text):
         raise ValueError("Not an enhanced TOML file")  # 增强TOML可能与原版TOML不兼容
     tables = find_tables(text)
@@ -156,6 +146,6 @@ def decode(text: str):
             key, value = line[:eq_char_index].strip(), line[eq_char_index + 1:]
             if key == '':
                 continue
-            value = expression_eval(value)
+            value = expression_eval(value, _locals, _globals)
             res[table][key] = value
     return res

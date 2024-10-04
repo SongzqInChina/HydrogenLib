@@ -2,6 +2,7 @@ import asyncio
 import socket
 
 from select import select
+from win32comext.axdebug.util import all_wrapped
 
 from . import CoroPlus
 from . import StructPlus
@@ -26,8 +27,6 @@ class AsyncSocket:
         self.lasterror = None
         self._buffer = asyncio.Queue(256)
         self._write_buffer = asyncio.Queue(256)
-
-        # 设置非堵塞
         self.sock.setblocking(False)
 
     async def set(self, sock, start_server=True):
@@ -149,6 +148,9 @@ class AsyncSocket:
             self.read_coro.cancel()
         if self.write_coro is not None:
             self.write_coro.cancel()
+
+    async def join(self):
+        return await self._write_buffer.join()
 
     async def self_accept(self):
         old_sock = self.__class__(self.sock)

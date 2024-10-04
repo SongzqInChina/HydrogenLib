@@ -4,12 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 27 2024 02&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成异步MultiSocket以及不完全的同步包装">
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup">
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketGroup/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketGroup/_async.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketPost/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketPost/_sync.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/_packages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/_packages.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_expression_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_expression_parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_toml_types.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +54,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -72,7 +82,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/PythonProjects/HydrogenLib/tests/test_configs&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/PythonProjects/HydrogenLib/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   },
@@ -88,8 +98,11 @@
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\Resources\upload.py" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup" />
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\" />
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\_" />
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\_async.py" />
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\Classes\Base.py" />
-      <recent name="E:\Python项目\HydrogenLib\src\HydrogenLib\Classes" />
     </key>
   </component>
   <component name="RunManager" selected="Python.Start Test">
@@ -162,8 +175,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Upload HydrogenLib" />
       <item itemvalue="Python.Start Test" />
+      <item itemvalue="Python.Upload HydrogenLib" />
       <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
@@ -340,7 +353,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727526586594</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup">
+      <option name="closed" value="true" />
+      <created>1727613564030</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1727613564030</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -373,7 +394,8 @@
     <MESSAGE value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;完成TestCreator&#10;完善AutoOperator类的逻辑&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装" />
     <MESSAGE value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑" />
     <MESSAGE value="Sept. 27 2024 02&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成异步MultiSocket以及不完全的同步包装" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 27 2024 02&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成异步MultiSocket以及不完全的同步包装" />
+    <MESSAGE value="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

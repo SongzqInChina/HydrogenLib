@@ -1,7 +1,10 @@
 from ..Class.NetworkPackages import NetPackage
 
 
-class Join(NetPackage):
+class Register(NetPackage):
+    _str_attrs = ("name",)
+    _state_attrs = ("name",)
+
     def get(self):
         return self.name
 
@@ -9,24 +12,49 @@ class Join(NetPackage):
         self.name = name
 
 
-class Login(NetPackage):
-    def get(self):
-        return self.passwd
-
-    def __init__(self, passwd):
-        self.passwd = passwd
-
-
-class Logout(NetPackage):
+class Unregister(NetPackage):
     def get(self):
         return
 
 
-class Yes(NetPackage):
+class Broadcast(NetPackage):
+    _str_attrs = ("data",)
+    _state_attrs = ("data",)
+    """
+    请求广播的客户端使用
+    """
+
+    def __init__(self, data):
+        self.data = data
+
+    def get(self):
+        return self.data
+
+
+class Data(NetPackage):
+    _str_attrs = ("data",)
+    _state_attrs = ("data",)
+    """
+    向所有客户端广播信息的服务端使用
+    """
+
+    def __init__(self, data):
+        self.data = data
+
+    def get(self):
+        return self.data
+
+
+class OK(NetPackage):
     def get(self):
         return True
 
 
-class No(NetPackage):
+class Deny(NetPackage):
+    _str_attrs = ("reason",)
+    _state_attrs = ("reason",)
+    def __init__(self, reason):
+        self.reason = reason
+
     def get(self):
-        return False
+        return self.reason

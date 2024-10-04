@@ -73,7 +73,7 @@ class AutoCompare(Auto):
     如果`_compare_attrs`为None，那么自动比较将不会生效，而是根据比较符返回一个默认值
     如果被比较的对象不是 `AutoCompare` 的实例，那么比较时会按比较列表的第一个属性作为比较属性
     """
-    _compare_attrs = None
+    _compare_attrs = ()
     _cmp_funcs = {
         'eq': lambda x, y: x == y,
         'ne': lambda x, y: x != y,
@@ -128,7 +128,7 @@ class AutoState(Auto):
 
     如果`_state_attrs`为None，那么将导出所有属性，恢复时同上
     """
-    _state_attrs = None
+    _state_attrs = ()
 
     def __getstate__(self):
         if self._state_attrs is None:
@@ -228,7 +228,7 @@ class _AutoInfo(Auto):
 
 
 class AutoRepr(_AutoInfo):
-    _repr_attrs = None
+    _repr_attrs = ()
 
     def __repr__(self):
         return str(
@@ -237,7 +237,7 @@ class AutoRepr(_AutoInfo):
 
 
 class AutoStr(_AutoInfo):
-    _str_attrs = None
+    _str_attrs = ()
 
     def __str__(self):
         return str(
@@ -246,7 +246,7 @@ class AutoStr(_AutoInfo):
 
 
 class AutoInfo(AutoRepr, AutoStr):
-    _info_attrs = None
+    _info_attrs = ()
 
     def __repr__(self):
         self._repr_attrs = self._info_attrs

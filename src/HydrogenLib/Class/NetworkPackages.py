@@ -1,9 +1,12 @@
 from abc import abstractmethod
 
-from .Auto import AutoState
+from .Auto import AutoState, AutoStr
 
 
-class NetPackage(AutoState):
+class NetPackage(AutoState, AutoStr):
+    """
+    使用时，子类的`_state_attrs` 和 `_str_attrs` 应显式指定，否则可能无法正常序列化
+    """
     @abstractmethod
     def get(self): ...
 
