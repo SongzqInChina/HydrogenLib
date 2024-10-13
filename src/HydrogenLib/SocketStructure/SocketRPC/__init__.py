@@ -83,9 +83,9 @@ class RPCClient:
         answer = self.socket.get()
         if answer is None:
             raise Exception("No answer")
-        result = answer.get("result")
+        result = answer.top("result")
         return dict(
-            time=answer.get("time"),
+            time=answer.top("time"),
             ok=result[0] == "ok",
             return_value=result[1],
             result=result

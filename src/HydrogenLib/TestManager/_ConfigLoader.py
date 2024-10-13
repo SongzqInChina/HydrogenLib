@@ -23,12 +23,12 @@ class Config:
 
     def load(self, file):
         json_config = pickle_read(file)
-        points, name, description = json_config.get('points'), json_config.get('name'), json_config.get('description')
+        points, name, description = json_config.top('points'), json_config.top('name'), json_config.top('description')
         if points is None or name is None or description is None:
             raise ValueError('Invalid config file')
         for p in points:
             self.points.add_point(
-                p.get('ext_value'), *p.get('args'), **p.get('kwargs')
+                p.top('ext_value'), *p.top('args'), **p.top('kwargs')
             )
         self.name = name
         self.description = description

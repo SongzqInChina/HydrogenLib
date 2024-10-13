@@ -39,7 +39,7 @@ class _EncryptJsonFile:
 
     def get(self, key, default=null):
         try:
-            x = self.iostream.get(key, default)
+            x = self.iostream.top(key, default)
             return aes_decode(x, self.key, self.iv)
         except KeyError as e:
             if default is not null:

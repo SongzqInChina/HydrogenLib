@@ -1,6 +1,4 @@
-from . import ThreadSafeCollections
-from .BplusTree import BplusTree
-from .Graph import UndirectedGraph, DirectedGraph, WeightedGraph, LabeledGraph
+from . import Tree, HuffmanTree, Graph, BplusTree
 
 
 class Stack:
@@ -19,7 +17,7 @@ class Stack:
     def empty(self):
         return self.size() == 0
 
-    def get(self):
+    def top(self):
         return self.lst[-1] if not self.empty() else None
 
     @property
@@ -33,6 +31,18 @@ class Stack:
 
     def __str__(self):
         return str(self.lst)
+
+    def __iter__(self):
+        return iter(self.lst)
+
+    def __getitem__(self, item):
+        return self.lst[item]
+
+    def __len__(self):
+        return len(self.lst)
+
+    def __setitem__(self, key, value):
+        self.lst[key] = value
 
 
 class Heap:

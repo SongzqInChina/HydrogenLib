@@ -1,3 +1,7 @@
 **/__pycache__/
-xxx.pypirc
 dist/
+
+test_2.py
+test_3.py
+test_4.py
+test.py

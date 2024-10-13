@@ -4,21 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketGroup/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketGroup/_async.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketPost/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketPost/_sync.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" afterDir="false" />
+    <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Oct. 4 2024 01&#10;&#10;未完成：&#10;&#10;完成：&#10;&#10;其他：&#10;删除EnhanceTOML，准备重制新的配置文件格式解析器">
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_base_class.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_lex.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_class/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_class/antlr4_grammar/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_grammar/hyconfiglanguage.g4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Interpreter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Parser.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/_funs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/REConcatenater.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/_reconcatenater_abc.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TypeFunc/LiteralEval.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test_3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/_packages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/_packages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/socket.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_expression_parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_expression_parser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/EnhanceToml/_toml_types.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketPlus.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/namepipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/Tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/Tree.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Database.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/_ZqLib_Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_lex_funcs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,7 +85,9 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.LiteralEval.executor&quot;: &quot;Run&quot;,
     &quot;Python.PermissionManager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.REConcatenater.executor&quot;: &quot;Run&quot;,
     &quot;Python.Start Test.executor&quot;: &quot;Run&quot;,
     &quot;Python.Upload HydrogenLib.executor&quot;: &quot;Run&quot;,
     &quot;Python._error_hook.executor&quot;: &quot;Run&quot;,
@@ -78,13 +96,15 @@
     &quot;Python.scratch.executor&quot;: &quot;Run&quot;,
     &quot;Python.scratch_1.executor&quot;: &quot;Run&quot;,
     &quot;Python.test.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_2.executor&quot;: &quot;Run&quot;,
+    &quot;Python.test_3.executor&quot;: &quot;Run&quot;,
     &quot;Python.upload.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/PythonProjects/HydrogenLib/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/PythonProjects/HydrogenLib/src/HydrogenLib/TypeFunc/LiteralEval.py&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   },
   &quot;keyToStringList&quot;: {
     &quot;com.intellij.ide.scratch.ScratchImplUtil$2/新建临时文件&quot;: [
@@ -98,14 +118,36 @@
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\Resources\upload.py" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\HyConfigLanguage\.old.source" />
+      <recent name="E:\PythonProjects\HydrogenLib" />
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup" />
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\" />
       <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\_" />
-      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\SocketStructure\SocketGroup\_async.py" />
-      <recent name="E:\PythonProjects\HydrogenLib\src\HydrogenLib\Classes\Base.py" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Start Test">
+  <component name="RunManager" selected="Python.test_2">
+    <configuration name="REConcatenater" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="hydrogenlib" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/HydrogenLib/REPlus" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/HydrogenLib/REPlus/REConcatenater.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Start Test" type="PythonConfigurationType" factoryName="Python">
       <module name="hydrogenlib" />
       <option name="ENV_FILES" value="" />
@@ -174,13 +216,63 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="test_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="hydrogenlib" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test_3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="hydrogenlib" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test_3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.Start Test" />
       <item itemvalue="Python.Upload HydrogenLib" />
+      <item itemvalue="Python.Start Test" />
+      <item itemvalue="Python.REConcatenater" />
+      <item itemvalue="Python.test_3" />
+      <item itemvalue="Python.test_2" />
       <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test_2" />
+        <item itemvalue="Python.test_3" />
+        <item itemvalue="Python.REConcatenater" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
@@ -361,8 +453,27 @@
       <option name="project" value="LOCAL" />
       <updated>1727613564030</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Oct. 4 2024 01&#10;&#10;未完成：&#10;BroadcastRoom的pipe版本&#10;&#10;完成：&#10;BroadcastRoom的Socket版本（异步）&#10;修正一些细节">
+      <option name="closed" value="true" />
+      <created>1728022441045</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1728022441045</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Oct. 4 2024 01&#10;&#10;未完成：&#10;&#10;完成：&#10;&#10;其他：&#10;删除EnhanceTOML，准备重制新的配置文件格式解析器">
+      <option name="closed" value="true" />
+      <created>1728022509653</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1728022509653</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.bnf" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -395,7 +506,9 @@
     <MESSAGE value="Sept. 27 2024 01&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成对原始Socket的异步转换&#10;完成对异步类的同步包装&#10;完成TestCreator&#10;完善AutoOperator类的逻辑" />
     <MESSAGE value="Sept. 27 2024 02&#10;&#10;未完成：&#10;对所有SocketStructure的异步替换&#10;&#10;完成：&#10;完成异步MultiSocket以及不完全的同步包装" />
     <MESSAGE value="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sept. 29 2024 01&#10;&#10;未完成：&#10;修改MultiSocket&#10;&#10;完成：&#10;完成AsyncSocketGroup" />
+    <MESSAGE value="Oct. 4 2024 01&#10;&#10;未完成：&#10;BroadcastRoom的pipe版本&#10;&#10;完成：&#10;BroadcastRoom的Socket版本（异步）&#10;修正一些细节" />
+    <MESSAGE value="Oct. 4 2024 01&#10;&#10;未完成：&#10;&#10;完成：&#10;&#10;其他：&#10;删除EnhanceTOML，准备重制新的配置文件格式解析器" />
+    <option name="LAST_COMMIT_MESSAGE" value="Oct. 4 2024 01&#10;&#10;未完成：&#10;&#10;完成：&#10;&#10;其他：&#10;删除EnhanceTOML，准备重制新的配置文件格式解析器" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -414,6 +527,11 @@
           <url>file://$PROJECT_DIR$/tests/__init__.py</url>
           <line>11</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py</url>
+          <line>104</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -70,7 +70,7 @@ class DB:
         self._name = self._stream['name']
         self._template = self._stream['template']
 
-        self._stream['data'] = self._stream.get('data', {})
+        self._stream['data'] = self._stream.top('data', {})
         self._stream.indent = 4
 
     def mkmro(self, mro, template: Template = _template):

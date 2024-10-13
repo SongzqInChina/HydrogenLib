@@ -54,11 +54,11 @@ class HeartbeatPacketServer:
     def start(self):
         def wrapper():
             while True:
-                packet = self.post.get()  # 读取
+                packet = self.post.top()  # 读取
                 # 根据协议，这个包应该是一个_Post字典，且time值是一个datatime类型
                 if "time" not in packet:
                     continue
-                if not isinstance(packet.get("time"), datetime.datetime | datetime.timedelta):
+                if not isinstance(packet.top("time"), datetime.datetime | datetime.timedelta):
                     continue
                 self.last_packet = packet
                 self.post.send(res="OK")  # 响应
@@ -66,7 +66,7 @@ class HeartbeatPacketServer:
         self.thread = ThreadingPlus.start_daemon_thread(wrapper)
 
     def check(self):
-        time = datetime.datetime.now() - self.last_packet.get('time')
+        time = datetime.datetime.now() - self.last_packet.top('time')
         seconds = time.total_seconds()
         if seconds > self.timeout:
             return False
