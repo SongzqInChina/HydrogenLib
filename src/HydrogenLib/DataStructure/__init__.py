@@ -44,6 +44,9 @@ class Stack:
     def __setitem__(self, key, value):
         self.lst[key] = value
 
+    def __repr__(self):
+        return "Stack({self.lst})".format(self=self)
+
 
 class Heap:
     def __init__(self):

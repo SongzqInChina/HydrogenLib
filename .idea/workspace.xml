@@ -5,36 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7959c70c-b6f9-4097-9ac2-36ee9a2c2f43" name="更改" comment="Oct. 4 2024 01&#10;&#10;未完成：&#10;&#10;完成：&#10;&#10;其他：&#10;删除EnhanceTOML，准备重制新的配置文件格式解析器">
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_base_class.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_lex.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_class/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_class/antlr4_grammar/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/antlr4_grammar/hyconfiglanguage.g4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Interpreter.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Parser.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/_funs.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/REConcatenater.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/_reconcatenater_abc.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/HydrogenLib/TypeFunc/LiteralEval.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/BoardcastRoom/namepipe.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/Tree.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/Tree.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/DataStructure/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Encryio.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketHeartbeatPackage/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/SocketStructure/SocketRPC/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_ConfigLoader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/TestManager/_manager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/_ZqLib_Test.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/.old.source/_lex_funcs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Parser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Parser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/REPlus/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/REPlus/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/Resource/version" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/Resource/version" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/HydrogenLib/__about__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -261,11 +237,11 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.Upload HydrogenLib" />
-      <item itemvalue="Python.Start Test" />
       <item itemvalue="Python.REConcatenater" />
-      <item itemvalue="Python.test_3" />
+      <item itemvalue="Python.Start Test" />
+      <item itemvalue="Python.Upload HydrogenLib" />
       <item itemvalue="Python.test_2" />
+      <item itemvalue="Python.test_3" />
       <item itemvalue="Python.test" />
     </list>
     <recent_temporary>
@@ -527,11 +503,6 @@
           <url>file://$PROJECT_DIR$/tests/__init__.py</url>
           <line>11</line>
           <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/HydrogenLib/HyConfigLanguage/Interpreter/Lexer.py</url>
-          <line>104</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

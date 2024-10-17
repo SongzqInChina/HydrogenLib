@@ -1,6 +1,21 @@
-from idlelib.macosx import isXQuartz
-
+from .Lexer import Token
 from ...DataStructure import Stack
+
+
+class SysntaxMatcher:
+    def __init__(self, *expr):
+        """
+        通过指定语法，实现对语法的检测
+        如：
+            s = SysnatxMatcher('LP=[', 'IDENT', 'RP=]')
+            s.match([Token('LP', '['), Token('IDENT', 'abc'), Token('RP', ']')])  # True
+        """
+        self.expr = expr
+        self._rules = []
+
+    def _split_expr(self):
+        for i in self.expr:
+            self._rules.append(i.split('='))
 
 
 class Node:
@@ -21,27 +36,36 @@ class Table:
 
 class Parser:
     def __init__(self, tokens):
-        self.tokens = tokens
+        self.tokens = tokens  # type: list[Token]
         self.pos = 0
 
     def check(self):
-        self._check_indent()
-        self._check_keyword()
+        self._check_parenthesis()
 
-    def _check_indent(self):
-        for idx, tk in enumerate(self.tokens.copy()):
-            if tk.type == 'TABLE_DEF':
-                if self.tokens[idx+1].type != 'INDENT':
-                    raise Exception('Indent error')
+    def _get_type(self, pos):
+        """
+        分析当前标记和后续标记，判断类型（语句，表达式，赋值...）
+        """
 
-    def _check_keyword(self):
-        table = False
-        for idx, tk in enumerate(self.tokens):
-            if tk.type == 'TABLE_DEF':
-                table = True
-            elif tk.type in ['ASSIGN', 'ANY'] and table is False:
-                raise Exception('Keyword error')
+    def parse(self):
+        def consume(type_):
+            while self.tokens[self.pos].type != 'WHITESSPACE':
+                self.pos += 1
 
+            return self.tokens[self.pos]
 
+    def _check_parenthesis(self):
+        s = Stack()
+        for token in self.tokens:
+            if token.type == 'LP':
+                s.push(token)
+            if token.type == 'RP':
+                if s.empty():
+                    raise SyntaxError('Unexpected right parenthesis')
+                t = s.pop()
+                if t.value != token.value:
+                    raise SyntaxError('Unexpected right parenthesis')
 
-
+        if not s.empty():
+            raise SyntaxError('Unexpected left parenthesis')
+        return True

@@ -25,6 +25,12 @@ data = '''
     name = "Table"
     [subtable_2]
         pass
+    [subtable_3]
+        lst = [
+            a, b, c,
+            1,2, 3,
+            'a', 'b', 'c'
+        ]
 
 import module1
 import module2 as m2
