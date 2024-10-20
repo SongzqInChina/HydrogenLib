@@ -1,6 +1,5 @@
+from collections import deque
 from typing import Any
-
-from ...DataStructure import Stack
 from ...REPlus import *
 
 
@@ -37,6 +36,9 @@ PASS = Literal('pass')
 LP = Re(r'[(\[{]')
 RP = Re(r'[)\]}]')
 
+LFILLTOKEN = Literal('{<')
+RFILLTOKEN = Literal('>}')
+
 SPLIT_CHAR = Re(r'[,.]')
 
 ASSIGN = Literal('=')
@@ -52,6 +54,16 @@ TOKEN_PATTERNS = [
     ("INDENT", Re(r'\n[\t ]+')),
     ("NEWLINE", NEWLINE),
     ("IMPORT", IMPORT),
+    ("LFILL", LFILLTOKEN),
+    ("RFILL", RFILLTOKEN),
+    ("PLUS", Literal('+')),
+    ("MINUS", Literal('-')),
+    ("MULT", Literal('*')),
+    ("DIV", Literal('/')),
+    ("FLOORDIV", Literal('//')),
+    ("LSHIFT", Literal('<<')),
+    ("RSHIFT", Literal('>>')),
+    ("MOD", Literal('%')),
     ("FROM", FROM),
     ("PASS", PASS),
     ("IDENT", IDENT),
@@ -63,7 +75,7 @@ TOKEN_PATTERNS = [
     ("LP", LP),
     ("RP", RP),
     ("SPLIT_CHAR", SPLIT_CHAR),
-    ("SPACE", WHITESPACE),
+    ("WHITESPACE", WHITESPACE),
     # ("UNKNOWN", ANY),
 ]  # type: list[tuple[str, BaseRe]]
 
@@ -87,16 +99,11 @@ def _lex(code):
 
 
 def _calc_indent_length(indent):
-    s = 0
-    for c in indent:
-        if c == '\t':
-            s += 4
-        elif c == ' ':
-            s += 1
-    return s
+    value = indent
+    return value.count('\t') * 4 + value.count(' ')
 
 
-def _process_tokens(tokens):
+def _process_tokens(tokens: list[Token]):
     i = 0
     while i < len(tokens):
         if tokens[i].type == 'INDENT':
@@ -106,6 +113,7 @@ def _process_tokens(tokens):
             tokens[i] = Token('INDENT', _calc_indent_length(indent_token.value))
             i += 1
         if tokens[i].type == 'NEWLINE':
+            # 删除
             tokens.pop(i)
             continue
 
@@ -115,17 +123,20 @@ def _process_tokens(tokens):
 def _process_indent(tokens: list[Token]):
     # 将绝对缩进转成相对缩进
     i = 0
-    s = Stack([0])
+    last_indent = 0
     while i < len(tokens):
         if tokens[i].type == 'INDENT':
             indent_length = tokens[i].value
-            s.push(indent_length)
-            indent_length -= s[-2]
-            if indent_length != 0:  # 当缩进有变化时，才生成新的记号
-                if indent_length > 0:
-                    tokens[i] = Token('INDENT', indent_length)
+            add_indent_length = indent_length - last_indent
+            if add_indent_length != 0:  # 当缩进有变化时，才生成新的记号
+                if add_indent_length > 0:
+                    tokens[i] = Token('INDENT', add_indent_length)
                 else:
-                    tokens[i] = Token('DEDENT', -indent_length)
+                    tokens[i] = Token('DEDENT', -add_indent_length)
+            else:
+                tokens.pop(i)
+                continue
+            last_indent = abs(indent_length)
         i += 1
 
 
@@ -140,16 +151,16 @@ def _delete_whitespace(tokens: list[Token]):
 
 # 词法分析器
 def lex(source_code):
-    tokens = []
+    tokens = deque()
     while source_code:
         token = _lex(source_code)
         if token is None:
             raise SyntaxError(f"Invalid syntax: {source_code.split('\n')[0]}")
         tokens.append(token)
         source_code = source_code[len(token):]
-
-    _process_tokens(tokens)
-    _process_indent(tokens)
+    tokens_lst = list(tokens)
+    _process_tokens(tokens_lst)
+    _process_indent(tokens_lst)
     # _delete_whitespace(tokens)
 
-    return tokens
+    return tokens_lst

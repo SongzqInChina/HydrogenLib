@@ -24,13 +24,15 @@ data = '''
         vars = [a, b, c]
     name = "Table"
     [subtable_2]
-        pass
+        two = ''
     [subtable_3]
         lst = [
             a, b, c,
             1,2, 3,
             'a', 'b', 'c'
         ]
+        c = subtable_2.two + "No"
+        fill_var = {<name>}
 
 import module1
 import module2 as m2
@@ -41,12 +43,16 @@ from module4 import name2 as n2
 
 Inter = src.HydrogenLib.HyConfigLanguage
 tokens = Inter.Lexer.lex(data)
+
 for t in tokens:
+    if t.type == 'WHITESPACE': continue
     print(t)
+print("[bold green]Get [bold yellow]{}[bold green] tokens. [/]".format(len(tokens)))
 
 ast = Inter.Parser.Parser(tokens)
 ast.check()
-# print(ast.parse())
+for node in ast.parse():
+    print(node)
 
 
 

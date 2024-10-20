@@ -1,8 +1,30 @@
+import re
+
 from .Lexer import Token
 from ...DataStructure import Stack
+from ...TypeFunc.List import fill_concat, concat
 
 
-class SysntaxMatcher:
+class Phrase(Token):
+    ...
+
+
+class SyntaxMatcher:
+    class Rule:
+        def __init__(self, type_, value=None):
+            self.type = type_ if type_ != '' else None
+            self.value = value
+
+        def match(self, token: Token):
+            if self.value is None:
+                if self.type is None:
+                    return True
+                return self.type == token.type
+            return self.type == token.type and self.value == token.value
+
+        def __str__(self):
+            return f"Rule({self.type},{self.value})"
+
     def __init__(self, *expr):
         """
         通过指定语法，实现对语法的检测
@@ -10,12 +32,58 @@ class SysntaxMatcher:
             s = SysnatxMatcher('LP=[', 'IDENT', 'RP=]')
             s.match([Token('LP', '['), Token('IDENT', 'abc'), Token('RP', ']')])  # True
         """
+        Rule = self.Rule
         self.expr = expr
-        self._rules = []
+        self.skips = ['WHITESPACE']
+        self._rules: list[Rule] = []
+
+        self._split_expr()
+
+    def __len__(self):
+        return len(self._rules)
 
     def _split_expr(self):
+        expr_re = re.compile(r'^(?P<TYPE>[A-Za-z0-9_]+)(=?)(?P<VALUE>.+)?$')
         for i in self.expr:
-            self._rules.append(i.split('='))
+            if i == '':
+                self._rules.append(self.Rule(i))
+                continue
+            match = expr_re.match(i)
+            if not match:
+                raise ValueError(f'Invalid expr: {i}')
+            else:
+                type_, value = match.groupdict()['TYPE'], match.groupdict()['VALUE']
+                self._rules.append(
+                    self.Rule(type_, value)
+                )
+
+    def _find(self, tokens, type_, value=None):
+        rule = self.Rule(type_, value)
+        for idx, tk in enumerate(tokens):
+            if rule.match(tk):
+                yield idx, tk
+
+    def _match(self, idx, tokens):
+        for rule in self._rules:
+            while idx < len(tokens) and tokens[idx].type in self.skips:
+                idx += 1
+
+            if not rule.match(tokens[idx]):
+                return False
+            idx += 1
+
+        return True
+
+    def find(self, tokens):
+        head_token_matches = list(self._find(tokens, self._rules[0].type, self._rules[0].value))
+        if not head_token_matches:
+            return False
+        for idx, tk in head_token_matches:
+            if self._match(idx, tokens):
+                yield idx
+
+    def match(self, tokens):
+        return self._match(0, tokens)
 
 
 class Node:
@@ -35,6 +103,28 @@ class Table:
 
 
 class Parser:
+    types = [
+        ('indent', SyntaxMatcher('INDENT')),
+        ('dedent', SyntaxMatcher('DEDENT')),
+        ('table_def', SyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
+        ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT', 'AS', 'IDENT')),
+        ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT')),
+        ('import', SyntaxMatcher('IMPORT', 'IDENT', 'AS', 'IDENT')),
+        ('import', SyntaxMatcher('IMPORT', 'IDENT')),
+        ('fill_elem', SyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
+        ('plus', SyntaxMatcher('', 'PLUS=', '')),
+        ('minus', SyntaxMatcher('', 'MINUS', '')),
+        ('assign', SyntaxMatcher('IDENT', 'ASSIGN', '')),
+        ('elem', SyntaxMatcher('', 'SPLIT_CHAR=,')),
+        ('elem', SyntaxMatcher('elem', '')),
+        ('get_attr', SyntaxMatcher('SPLIT_CHAR=.', 'IDENT')),
+        ('value', SyntaxMatcher('STR')),
+        ('value', SyntaxMatcher('INT')),
+        ('lp', SyntaxMatcher('LP')),
+        ('rp', SyntaxMatcher('RP')),
+        ('ident', SyntaxMatcher('IDENT')),
+    ]
+
     def __init__(self, tokens):
         self.tokens = tokens  # type: list[Token]
         self.pos = 0
@@ -42,29 +132,76 @@ class Parser:
     def check(self):
         self._check_parenthesis()
 
-    def _get_type(self, pos):
+    def _get_type(self, pos, tokens):
         """
-        分析当前标记和后续标记，判断类型（语句，表达式，赋值...）
+        分析当前标记和后续标记，判断语法类型（语句，表达式，赋值...）
         """
+        for type_, matcher in self.types:
+            if matcher.match(tokens[pos:]):
+                return type_, len(matcher)
+        return None, 0
 
     def parse(self):
-        def consume(type_):
-            while self.tokens[self.pos].type != 'WHITESSPACE':
+        phrases = []
+        tokens = fill_concat(phrases, self.tokens)
+
+        def consume(count):
+            for i in range(count):
+                self.pos += 1
+                move_no_whitespace()
+
+        def move_no_whitespace():
+            while tokens[self.pos].type == 'WHITESPACE':
                 self.pos += 1
 
-            return self.tokens[self.pos]
+        while self.pos < len(tokens):
+            move_no_whitespace()
+            type_, length = self._get_type(self.pos, tokens)
+            if type_ is None:  # Error
+                error_msg = '\n'
+                for idx in range(max(0, self.pos - 5), min(len(tokens), self.pos + 5)):
+                    tk = tokens[idx]
+                    if idx == self.pos:
+                        error_msg += '=>'
+                    error_msg += '\t'
+                    error_msg += str(tk)
+                    error_msg += '\n'
+                raise SyntaxError(
+                    error_msg
+                )
+            matches = []
+            for i in range(length):
+                move_no_whitespace()
+                matches.append(tokens[self.pos])
+                consume(1)
+            p = Phrase(type_, matches)
+            yield p
+            phrases.extend([Phrase('WHITESPACE', ' ')] * (length - 1))
+            phrases.append(p)
 
     def _check_parenthesis(self):
         s = Stack()
+        parenthesis_map = {
+            '{': '}',
+            '[': ']',
+            '(': ')',
+            ']': '[',
+            '}': '{',
+            ')': '(',
+        }
         for token in self.tokens:
             if token.type == 'LP':
                 s.push(token)
             if token.type == 'RP':
                 if s.empty():
-                    raise SyntaxError('Unexpected right parenthesis')
+                    raise SyntaxError('Unexpected right parenthesis(except {}, but get {})'.format(
+                        None, token.value
+                    ))
                 t = s.pop()
-                if t.value != token.value:
-                    raise SyntaxError('Unexpected right parenthesis')
+                if parenthesis_map[t.value] != token.value:
+                    raise SyntaxError('Unexpected right parenthesis(except {}, but get {})'.format(
+                        t.value, token.value
+                    ))
 
         if not s.empty():
             raise SyntaxError('Unexpected left parenthesis')

@@ -1,9 +1,12 @@
+from collections import deque
+from typing import Iterable
+
 from . import Tree, HuffmanTree, Graph, BplusTree
 
 
 class Stack:
-    def __init__(self, lst=None):
-        self.lst = [] if lst is None else lst
+    def __init__(self, lst: Iterable = None):
+        self.lst = deque() if lst is None else deque(lst)
 
     def push(self, data):
         self.lst.append(data)
