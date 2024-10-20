@@ -38,6 +38,7 @@ Source = "https://github.com/SongzqInChina/HydrogenLib"
 
 [tool.hatch.version]
 path = "src/HydrogenLib/__about__.py"
+source = "git"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
@@ -66,6 +67,3 @@ exclude_lines = [
 ]
 [tool.hatch.build]
 target = "wheel"
-
-[tool.hatch.version]
-source = "git"
