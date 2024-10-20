@@ -3,9 +3,10 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/hydrogenlib.svg)](https://pypi.org/project/hydrogenlib)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/hydrogenlib.svg)](https://pypi.org/project/hydrogenlib)
 
+## 当前为测试版本，功能不完整，详细请见 [注意事项](#注意事项)
+
 -----
 
-**您当前使用的版本为`1.1.26` （低于 `1.2.0` ）开发版本，可能有部分功能未完成或功能异常**
 
 ## 目录
 
@@ -26,12 +27,17 @@ Hydrogen(氢)是元素周期表中的第一个元素，是所有元素中最轻�
 
 ## 注意事项
 
-- `HydrogenLib.Database` 只是一个简单的基于JSON文件的轻量级数据库，可能不适用于所有使用场景。
-- `HydrogenLib.BoardcastRoom` 未完成。
-- `HydrogenLib.Namedpipe` 为非Windows系统的支持未完成。
+- 模块标注的是Python版本需大于`1.12.0`，实际可能允许运行在`1.12.0`以下版本（可能的最低版本`Python3.6`）。 
+- `.Database` 只是一个简单的基于JSON文件的轻量级数据库，可能不适用于所有使用场景。
+- `.Namedpipe` 为非Windows系统的支持未完成。
+- `.REPlus` 实现较为简单，可能无法完全满足需求。
+- `.InteractiveCLI` 子模块暂时停止开发。
+- `.HyConfigLanguage` 未完成，且无法使用
+- `.TestManager` 将会在未来版本移除，改用将要开发的`HyTest`。
+- 对于有关IO功能的函数和类，大多使用了异步模式，请注意兼容性。
 
-- 有关序列化和反序列化的操作，均使用`jsonpickle`模块，可能有安全风险，请自行判断。
-- ### 所有模块都未进行测试。
+- 代码实现中有关序列化和反序列化的操作，均使用`jsonpickle`模块，可能有安全风险。
+- **所有模块都未进行测试。**
 
 
 ## 许可证
