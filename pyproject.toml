@@ -66,3 +66,6 @@ exclude_lines = [
 ]
 [tool.hatch.build]
 target = "wheel"
+
+[tool.hatch.version]
+source = "git"
