@@ -2,7 +2,6 @@ import re
 
 from .Lexer import Token
 from ...DataStructure import Stack
-from ...TypeFunc.List import fill_concat, concat
 
 
 class Phrase(Token):
@@ -65,9 +64,10 @@ class SyntaxMatcher:
 
     def _match(self, idx, tokens):
         for rule in self._rules:
+            if idx >= len(tokens):
+                return False
             while idx < len(tokens) and tokens[idx].type in self.skips:
                 idx += 1
-
             if not rule.match(tokens[idx]):
                 return False
             idx += 1
@@ -106,27 +106,49 @@ class Parser:
     types = [
         ('indent', SyntaxMatcher('INDENT')),
         ('dedent', SyntaxMatcher('DEDENT')),
+
         ('table_def', SyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
+
         ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT', 'AS', 'IDENT')),
         ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT')),
         ('import', SyntaxMatcher('IMPORT', 'IDENT', 'AS', 'IDENT')),
         ('import', SyntaxMatcher('IMPORT', 'IDENT')),
-        ('fill_elem', SyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
-        ('plus', SyntaxMatcher('', 'PLUS=', '')),
-        ('minus', SyntaxMatcher('', 'MINUS', '')),
-        ('assign', SyntaxMatcher('IDENT', 'ASSIGN', '')),
+
+        ('fill_item', SyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
+
+        ('plus', SyntaxMatcher('PLUS', '')),
+        ('minus', SyntaxMatcher('MINUS', '')),
+        ('multiply', SyntaxMatcher('MULTIPLY', '')),
+        ('div', SyntaxMatcher('DIV', '')),
+        ('floordiv', SyntaxMatcher('FLOORDIV', '')),
+
+        ('_assign', SyntaxMatcher('IDENT', 'ASSIGN')),
+        ('assign', SyntaxMatcher('_assign', 'expr')),
+
+        ('start_seq', SyntaxMatcher('LP', '', 'SPLIT_CHAR=,')),
         ('elem', SyntaxMatcher('', 'SPLIT_CHAR=,')),
-        ('elem', SyntaxMatcher('elem', '')),
+        ('end_seq', SyntaxMatcher('', 'RP')),
+        ('end_seq', SyntaxMatcher('', 'SPLIT_CHAR=,', 'RP')),
+
         ('get_attr', SyntaxMatcher('SPLIT_CHAR=.', 'IDENT')),
-        ('value', SyntaxMatcher('STR')),
-        ('value', SyntaxMatcher('INT')),
+
+        ('constant', SyntaxMatcher('STR')),
+        ('constant', SyntaxMatcher('INT')),
+
         ('lp', SyntaxMatcher('LP')),
         ('rp', SyntaxMatcher('RP')),
-        ('ident', SyntaxMatcher('IDENT')),
+
+        ('expr', SyntaxMatcher('ident', 'get_attr')),
+        ('expr', SyntaxMatcher('get_attr', 'get_attr')),
+        ('expr', SyntaxMatcher('start_seq', '', 'end_seq')),
+
+        ('expr', SyntaxMatcher('IDENT')),
     ]
 
     def __init__(self, tokens):
+        self._tokens = tokens  # type: list[Token]
         self.tokens = tokens  # type: list[Token]
+        self.phrases = []
         self.pos = 0
 
     def check(self):
@@ -141,9 +163,9 @@ class Parser:
                 return type_, len(matcher)
         return None, 0
 
-    def parse(self):
-        phrases = []
-        tokens = fill_concat(phrases, self.tokens)
+    def _first_parse(self):
+        tokens = self.tokens
+        self.pos = 0
 
         def consume(count):
             for i in range(count):
@@ -151,7 +173,7 @@ class Parser:
                 move_no_whitespace()
 
         def move_no_whitespace():
-            while tokens[self.pos].type == 'WHITESPACE':
+            while self.pos < len(self.tokens) and tokens[self.pos].type == 'WHITESPACE':
                 self.pos += 1
 
         while self.pos < len(tokens):
@@ -175,9 +197,14 @@ class Parser:
                 matches.append(tokens[self.pos])
                 consume(1)
             p = Phrase(type_, matches)
-            yield p
-            phrases.extend([Phrase('WHITESPACE', ' ')] * (length - 1))
-            phrases.append(p)
+            self.phrases.append(p)
+
+    def _mid_parse(self):
+        self.tokens = self.phrases
+
+    def parse(self):
+        self._first_parse()
+        return self.phrases
 
     def _check_parenthesis(self):
         s = Stack()
@@ -206,3 +233,6 @@ class Parser:
         if not s.empty():
             raise SyntaxError('Unexpected left parenthesis')
         return True
+
+    def __repr__(self):
+        return f'{self.pos}'

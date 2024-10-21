@@ -19,7 +19,7 @@ class Token:
         return len(str(self.value))
 
     def __repr__(self):
-        return f"Token{(self.type, self.value)}"
+        return f"{self.__class__.__name__}{(self.type, self.value)}"
 
 
 NEWLINE = Literal('\n')
@@ -53,27 +53,35 @@ sSTR = Re("'([^'\\\\]*(\\\\.[^'\\\\]*)*)'")
 TOKEN_PATTERNS = [
     ("INDENT", Re(r'\n[\t ]+')),
     ("NEWLINE", NEWLINE),
+
     ("IMPORT", IMPORT),
+    ("FROM", FROM),
+    ("AS", AS),
+
     ("LFILL", LFILLTOKEN),
     ("RFILL", RFILLTOKEN),
+
     ("PLUS", Literal('+')),
     ("MINUS", Literal('-')),
-    ("MULT", Literal('*')),
+    ("MULTIPLY", Literal('*')),
     ("DIV", Literal('/')),
     ("FLOORDIV", Literal('//')),
     ("LSHIFT", Literal('<<')),
     ("RSHIFT", Literal('>>')),
     ("MOD", Literal('%')),
-    ("FROM", FROM),
+
     ("PASS", PASS),
     ("IDENT", IDENT),
     ("ASSIGN", ASSIGN),
+
     ("INT", INT),
     ("INT", eINT),
     ("STR", STR),
     ("STR", sSTR),
+
     ("LP", LP),
     ("RP", RP),
+
     ("SPLIT_CHAR", SPLIT_CHAR),
     ("WHITESPACE", WHITESPACE),
     # ("UNKNOWN", ANY),
