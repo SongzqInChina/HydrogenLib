@@ -151,7 +151,7 @@ def _process_indent(tokens: list[Token]):
 def _delete_whitespace(tokens: list[Token]):
     i = 0
     while i < len(tokens):
-        if tokens[i].type == 'SPACE':
+        if tokens[i].type == 'WHITESPACE':
             tokens.pop(i)
         else:
             i += 1

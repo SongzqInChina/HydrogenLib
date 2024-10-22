@@ -1,4 +1,6 @@
 import re
+from collections import deque
+from typing import Tuple
 
 from .Lexer import Token
 from ...DataStructure import Stack
@@ -8,7 +10,7 @@ class Phrase(Token):
     ...
 
 
-class SyntaxMatcher:
+class FstSyntaxMatcher:
     class Rule:
         def __init__(self, type_, value=None):
             self.type = type_ if type_ != '' else None
@@ -102,47 +104,49 @@ class Table:
         self.subtables = []
 
 
-class Parser:
+class FirstParser:
+    """
+    对原始标记列表的第一次处理
+    """
     types = [
-        ('indent', SyntaxMatcher('INDENT')),
-        ('dedent', SyntaxMatcher('DEDENT')),
+        ('indent', FstSyntaxMatcher('INDENT')),
+        ('dedent', FstSyntaxMatcher('DEDENT')),
 
-        ('table_def', SyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
+        ('table_def', FstSyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
 
-        ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT', 'AS', 'IDENT')),
-        ('import', SyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT')),
-        ('import', SyntaxMatcher('IMPORT', 'IDENT', 'AS', 'IDENT')),
-        ('import', SyntaxMatcher('IMPORT', 'IDENT')),
+        ('import', FstSyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT', 'AS', 'IDENT')),
+        ('import', FstSyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT')),
+        ('import', FstSyntaxMatcher('IMPORT', 'IDENT', 'AS', 'IDENT')),
+        ('import', FstSyntaxMatcher('IMPORT', 'IDENT')),
 
-        ('fill_item', SyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
+        ('fill_item', FstSyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
 
-        ('plus', SyntaxMatcher('PLUS', '')),
-        ('minus', SyntaxMatcher('MINUS', '')),
-        ('multiply', SyntaxMatcher('MULTIPLY', '')),
-        ('div', SyntaxMatcher('DIV', '')),
-        ('floordiv', SyntaxMatcher('FLOORDIV', '')),
+        ('plus', FstSyntaxMatcher('PLUS', '')),
+        ('minus', FstSyntaxMatcher('MINUS', '')),
+        ('multiply', FstSyntaxMatcher('MULTIPLY', '')),
+        ('div', FstSyntaxMatcher('DIV', '')),
+        ('floordiv', FstSyntaxMatcher('FLOORDIV', '')),
 
-        ('_assign', SyntaxMatcher('IDENT', 'ASSIGN')),
-        ('assign', SyntaxMatcher('_assign', 'expr')),
+        ('assign', FstSyntaxMatcher('IDENT', 'ASSIGN')),
 
-        ('start_seq', SyntaxMatcher('LP', '', 'SPLIT_CHAR=,')),
-        ('elem', SyntaxMatcher('', 'SPLIT_CHAR=,')),
-        ('end_seq', SyntaxMatcher('', 'RP')),
-        ('end_seq', SyntaxMatcher('', 'SPLIT_CHAR=,', 'RP')),
+        ('start_seq', FstSyntaxMatcher('LP', '', 'SPLIT_CHAR=,')),
+        ('elem', FstSyntaxMatcher('', 'SPLIT_CHAR=,')),
+        ('end_seq', FstSyntaxMatcher('', 'RP')),
+        ('end_seq', FstSyntaxMatcher('', 'SPLIT_CHAR=,', 'RP')),
 
-        ('get_attr', SyntaxMatcher('SPLIT_CHAR=.', 'IDENT')),
+        ('get_attr', FstSyntaxMatcher('SPLIT_CHAR=.', 'IDENT')),
 
-        ('constant', SyntaxMatcher('STR')),
-        ('constant', SyntaxMatcher('INT')),
+        ('constant', FstSyntaxMatcher('STR')),
+        ('constant', FstSyntaxMatcher('INT')),
 
-        ('lp', SyntaxMatcher('LP')),
-        ('rp', SyntaxMatcher('RP')),
+        ('lp', FstSyntaxMatcher('LP')),
+        ('rp', FstSyntaxMatcher('RP')),
 
-        ('expr', SyntaxMatcher('ident', 'get_attr')),
-        ('expr', SyntaxMatcher('get_attr', 'get_attr')),
-        ('expr', SyntaxMatcher('start_seq', '', 'end_seq')),
+        ('expr', FstSyntaxMatcher('ident', 'get_attr')),
+        ('expr', FstSyntaxMatcher('get_attr', 'get_attr')),
+        ('expr', FstSyntaxMatcher('start_seq', '', 'end_seq')),
 
-        ('expr', SyntaxMatcher('IDENT')),
+        ('expr', FstSyntaxMatcher('IDENT')),
     ]
 
     def __init__(self, tokens):
@@ -199,9 +203,6 @@ class Parser:
             p = Phrase(type_, matches)
             self.phrases.append(p)
 
-    def _mid_parse(self):
-        self.tokens = self.phrases
-
     def parse(self):
         self._first_parse()
         return self.phrases
@@ -236,3 +237,70 @@ class Parser:
 
     def __repr__(self):
         return f'{self.pos}'
+
+
+class SecRule:
+    def __init__(self, expr, cnt):
+        self.expr = expr
+        self.cnt = cnt
+
+        if self.expr == '':
+            self.expr = None
+
+    def match(self, tokens):
+        results = deque()
+        if self.cnt <= 0:  # 贪婪模式: 0: 无限匹配, -N: 至少匹配N个
+            for tk in tokens:
+                if self.expr is None or tk.type == self.expr:
+                    results.append(tk)
+                else:
+                    if self.cnt < 0 and len(results) < -self.cnt:  # 贪婪模式下，如果匹配失败，则返回None
+                        return None
+                    break
+        else:
+            for tk, i in zip(tokens, range(self.cnt)):
+                if tk.type == self.expr:
+                    results.append(tk)
+                else:
+                    return None
+        return results
+
+
+class SecSyntaxMatcher:
+    def __init__(self, *rules: Tuple[str, int]):
+        self.rules = []
+        self._process_rules(rules)
+
+    def _process_rules(self, rules):
+        # rules: Tuple[Tuple[str, int], ...]
+        for rule in rules:
+            self.rules.append(SecRule(*rule))
+
+    def match(self, tokens):
+        consumption = 0
+        results = deque()
+        for rule in self.rules:
+            result = rule.match(tokens[consumption:])
+            if result is None:
+                return None
+            consumption += len(result)
+            results.append(result)
+        return results
+
+
+class SecParser:
+    """
+    对已经预处理过的标记列表进行处理，合并表达式
+    """
+
+    def __init__(self, phrases):
+        self.phrases = phrases
+        self.pos = 0
+        self.results = deque()
+
+    def _parse(self):
+        pass
+
+    def parse(self):
+        self._parse()
+        return self.results

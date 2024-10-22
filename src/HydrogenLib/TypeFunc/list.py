@@ -215,6 +215,11 @@ class _ListReplaceConcater:
         self.replace_ls = []
         self.fore_sum = deque([0])  # 前缀和
 
+    def list(self):
+        return [
+            self._get(i) for i in range(len(self)-1)
+        ]
+
     def _replace_length(self):
         return self.fore_sum[-1]
 
@@ -224,12 +229,16 @@ class _ListReplaceConcater:
         """
         self.replace_ls.append(self.ReplaceIndex(value, length))
         self.fore_sum.append(
-            self.fore_sum[-1] + length
+            self.fore_sum[-1] + length - 1
         )
 
     def _get(self, item):
         if item >= len(self):
             raise IndexError('index out of the range')
+        if item < len(self.replace_ls):
+            return self.replace_ls[item].value
+        else:
+            return self.main_ls[item + self._replace_length()]
 
     def __getitem__(self, item):
         if isinstance(item, int):
