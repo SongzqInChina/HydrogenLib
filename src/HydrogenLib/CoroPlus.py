@@ -13,3 +13,7 @@ def run_in_existing_loop(coro, loop: asyncio.AbstractEventLoop):
 def new_event_loop():
     return asyncio.new_event_loop()
 
+
+async def to_coro(func, *args, **kwargs):
+    return func(*args, **kwargs)
+
