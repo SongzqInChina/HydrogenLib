@@ -1,7 +1,15 @@
+# Dist and build files
 **/__pycache__/
 dist/
+.idea
+# All the tests
+test*
 
-test_2.py
-test_3.py
-test_4.py
+
+# Comment out the tests
+!tests
+
+# Files in Dev
+upload.py
+src/HydrogenLib/HyConfigLanguage/.old.source
 test.py
