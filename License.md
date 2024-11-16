@@ -1,4 +1,7 @@
-## [HydrogenLib] license
+## *HydrogenLib license*
+
+---
+查看此许可证的[简体中文版本](License_CN.md)
 
 ### 1. Grant permission
 You are granted a non-exclusive, worldwide right to use, copy, modify, and redistribute the Software, provided you comply with the following terms.

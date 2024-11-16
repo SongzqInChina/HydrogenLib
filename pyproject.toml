@@ -7,8 +7,8 @@ name = "HydrogenLib"
 dynamic = ["version"]
 description = ''
 readme = "README.md"
-requires-python = ">=3.12.0"
-license = "GPL-3.0"
+requires-python = ">=3.7.0"
+license = "HydrogenLib License"
 keywords = []
 authors = [
     { name = "SongzqInChina", email = "142714722+SongzqInChina@users.noreply.github.com" },
