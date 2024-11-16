@@ -2,8 +2,8 @@ import ast
 import builtins as _builtins
 
 opers = {
-    '+': lambda x, y: x + y,
-    '-': lambda x, y: x - y,
+    '+': lambda x, y=None: (x + y) if y is not None else x,
+    '-': lambda x, y=None: (x - y) if y is not None else (-x),
     '*': lambda x, y: x * y,
     '/': lambda x, y: x / y,
     '//': lambda x, y: x // y,
@@ -55,7 +55,9 @@ ast_name_to_operator = {
     'IsNot': 'is not',
     'Not': 'not',
     'Or': 'or',
-    'And': 'and'
+    'And': 'and',
+    'UAdd': '+',
+    'USub': '-'
 }
 
 
