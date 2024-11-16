@@ -1,16 +1,21 @@
 from abc import ABC, abstractmethod
+from typing import final
 
 
 class Serializer(ABC):
     @abstractmethod
-    def dump(self, data):
+    def dumps(self, data):
         ...
 
     @abstractmethod
-    def load(self, data):
+    def loads(self, data):
         ...
 
-    @abstractmethod
     def load_from_sock(self, sock):
         ...
 
+    @final
+    def socket_support(self) -> bool:
+        return (
+                Serializer.load_from_sock is not self.load_from_sock
+        )

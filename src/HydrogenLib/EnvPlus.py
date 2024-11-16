@@ -1,13 +1,20 @@
 import os
+from collections import deque
 
 
-def split_env_value(*env_value):
-    for i in env_value:
-        yield i.split(';')
+def split(string):
+    in_string = False
+    escope = False
+
+    temp = ''
+    results = deque()
+    for char in string:
+        ...
 
 
-def get_env_dict():
-    env_dict = os.environ.copy()
-    return {
-        k: split_env_value(v) for k, v in env_dict.items()
-    }
+
+
+class EnvionmentVarieble(list):
+    def __init__(self, value_string, split_char=';'):
+        ...
+

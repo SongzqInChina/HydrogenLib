@@ -59,25 +59,15 @@ if __name__ == '__main__':
     init_parser(parser)
     args = parser.parse_args(args)
     if args.version != "None":
-        with open(version_path, "r") as f:
-            f.seek(0)
-            cur_version = tuple(map(int, f.read().strip().split('.')))
-        now_version = tuple(map(int, args.version.strip().split('.')))
-        if cur_version >= now_version:
-            console.print("[bold red]The version you set is lower than the current version!")
-        else:
-            with console.status("Setting HydrogenLib version...", spinner=spinner):
-
-                rt_code, ps = run_command(["hatch", "version", args.version])
-                with open(version_path, "w") as f:
-                    f.write(args.version)
-            time.sleep(0.1)
-            if rt_code != 0:
-                console.print("[bold red]Setting HydrogenLib version failed!")
-                console.print(ps.stderr.decode())
-                console.print(ps.stdout.decode())
-                sys.exit(rt_code)
-            print("[bold green]success!")
+        with console.status("Setting HydrogenLib version...", spinner=spinner):
+            rt_code, ps = run_command(["hatch", "version", args.version])
+        time.sleep(0.1)
+        if rt_code != 0:
+            console.print("[bold red]Setting HydrogenLib version failed!")
+            console.print(ps.stderr.decode())
+            console.print(ps.stdout.decode())
+            sys.exit(rt_code)
+        print("[bold green]success!")
     if args.clean:
         if os.name == 'nt':
             command = ["powershell.exe", "-Command", "rm", r".\dist\*"]

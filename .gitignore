@@ -2,14 +2,11 @@
 **/__pycache__/
 dist/
 .idea
-# All the tests
-test*
-
-
-# Comment out the tests
-!tests
 
 # Files in Dev
 upload.py
+
 src/HydrogenLib/HyConfigLanguage/.old.source
+
 test.py
+test_*.py

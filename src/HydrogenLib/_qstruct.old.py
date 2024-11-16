@@ -2,7 +2,7 @@ import hashlib
 import struct
 
 from . import Hash as shash
-from . import _BaseStruct as ostruct
+from . import BaseStruct as ostruct
 from . import Time
 from . import TypeFunc
 

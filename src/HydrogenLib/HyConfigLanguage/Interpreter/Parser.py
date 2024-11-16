@@ -1,91 +1,12 @@
 import re
 from collections import deque
-from typing import Tuple
+from fnmatch import fnmatch
+from typing import Optional
+
+import rich.table
 
 from .Lexer import Token
 from ...DataStructure import Stack
-
-
-class Phrase(Token):
-    ...
-
-
-class FstSyntaxMatcher:
-    class Rule:
-        def __init__(self, type_, value=None):
-            self.type = type_ if type_ != '' else None
-            self.value = value
-
-        def match(self, token: Token):
-            if self.value is None:
-                if self.type is None:
-                    return True
-                return self.type == token.type
-            return self.type == token.type and self.value == token.value
-
-        def __str__(self):
-            return f"Rule({self.type},{self.value})"
-
-    def __init__(self, *expr):
-        """
-        通过指定语法，实现对语法的检测
-        如：
-            s = SysnatxMatcher('LP=[', 'IDENT', 'RP=]')
-            s.match([Token('LP', '['), Token('IDENT', 'abc'), Token('RP', ']')])  # True
-        """
-        Rule = self.Rule
-        self.expr = expr
-        self.skips = ['WHITESPACE']
-        self._rules: list[Rule] = []
-
-        self._split_expr()
-
-    def __len__(self):
-        return len(self._rules)
-
-    def _split_expr(self):
-        expr_re = re.compile(r'^(?P<TYPE>[A-Za-z0-9_]+)(=?)(?P<VALUE>.+)?$')
-        for i in self.expr:
-            if i == '':
-                self._rules.append(self.Rule(i))
-                continue
-            match = expr_re.match(i)
-            if not match:
-                raise ValueError(f'Invalid expr: {i}')
-            else:
-                type_, value = match.groupdict()['TYPE'], match.groupdict()['VALUE']
-                self._rules.append(
-                    self.Rule(type_, value)
-                )
-
-    def _find(self, tokens, type_, value=None):
-        rule = self.Rule(type_, value)
-        for idx, tk in enumerate(tokens):
-            if rule.match(tk):
-                yield idx, tk
-
-    def _match(self, idx, tokens):
-        for rule in self._rules:
-            if idx >= len(tokens):
-                return False
-            while idx < len(tokens) and tokens[idx].type in self.skips:
-                idx += 1
-            if not rule.match(tokens[idx]):
-                return False
-            idx += 1
-
-        return True
-
-    def find(self, tokens):
-        head_token_matches = list(self._find(tokens, self._rules[0].type, self._rules[0].value))
-        if not head_token_matches:
-            return False
-        for idx, tk in head_token_matches:
-            if self._match(idx, tokens):
-                yield idx
-
-    def match(self, tokens):
-        return self._match(0, tokens)
 
 
 class Node:
@@ -104,49 +25,209 @@ class Table:
         self.subtables = []
 
 
-class FirstParser:
+class Phrase(Token):
+    ...
+
+
+TPANY = '*'
+MODE_GREEDY = 'GREEDY'
+MODE_CONDITIONAL_GREEDY = 'CONGREEDY'
+MODE_EXACT = 'EXACT'
+
+
+class MatchRule:
+    re = re.compile(
+        r'([*+-])?(\d+)?\s*:?\s*(\?)?([^\s=:]+)\s*=?\s*(.+)?'
+    )
+    _mapping = {
+        '*': MODE_GREEDY,
+        '-': MODE_CONDITIONAL_GREEDY,
+        '+': MODE_EXACT,
+        None: MODE_EXACT,
+    }
+
+    skips = ['WHITESPACE']
+
+    def __init__(self, rule_str, skips=None):
+        if rule_str.strip() == '':
+            self.mode, self.t_p__name_pat, self.value, self.cnt, self.include = MODE_EXACT, TPANY, TPANY, 1, False
+        else:
+            self.mode, self.t_p__name_pat, self.value, self.cnt, self.include = self.__split_rule(rule_str)
+
+        if skips is not None:
+            self.skips = skips  # type: list[str]
+
+    def __error(self, rule, *args):
+        raise ValueError(f"Invalid match rule: {rule}", *args)
+
+    def __split_rule(self, rule_str):
+        match = self.re.match(rule_str)
+        if not match:
+            self.__error(rule_str)
+        print(match.groups())
+        (
+            mode, cnt, include, ident,
+            value,
+            *args
+        ) = match.groups()
+
+        assert len(args) == 0
+
+        cnt = int(cnt) if cnt else 1
+
+        if mode not in self._mapping:
+            self.__error(rule_str, f'Mode={mode} not found')
+
+        mode = self._mapping.get(mode, None)
+        return mode, ident, value, cnt, (include is None)
+
+    def __check_type(self, tk):
+        return fnmatch(tk.type, self.t_p__name_pat)
+
+    def __eq(self, tk):
+        """
+        检查Token和Rule是否匹配
+        """
+        res = self.__check_type(tk)
+        if not res:
+            return False
+        if self.value != TPANY:  # 检查是否为精确匹配
+            res &= tk.value == self.value  # 值匹配
+
+        return res  # 返回结果
+
+    def __move_no_skip(self, tokens):
+        tk_length = len(tokens)
+        while self.pos < tk_length and tokens[self.pos] in self.skips:
+            self.pos += 1
+        return self.pos
+
+    def __greedy_match(self, tokens, results: deque):  # 尽可能多匹配
+        consumption = 0
+        self.pos = 0
+        while True:
+            self.__move_no_skip(tokens)
+            tk = tokens[self.pos]
+
+            if self.__eq(tk):
+                results.append(tk)
+                consumption += 1
+            else:
+                break
+
+            self.pos += 1
+
+    def __exact_match(self, tokens, results: deque):  # 要么匹配成功，要么不匹配
+        self.pos = 0
+        n = 0
+        while True:
+            self.__move_no_skip(tokens)
+            tk = tokens[self.pos]
+
+            if self.__eq(tk):
+                results.append(tk)
+                n += 1
+            else:
+                results.clear()
+                break
+
+            if n >= self.cnt:
+                break
+
+        if n < self.cnt:
+            results.clear()
+            return
+        return
+
+    def __congreedy_match(self, tokens, results: deque):  # 至少匹配cnt个
+        self.__greedy_match(tokens, results)
+        if len(results) < self.cnt:  # 匹配失败
+            results.clear()
+        return
+
+    def match(self, tokens):
+        results = deque()
+        func = None
+        if self.mode == MODE_GREEDY:
+            func = self.__greedy_match
+        elif self.mode == MODE_EXACT:
+            func = self.__exact_match
+        elif self.mode == MODE_CONDITIONAL_GREEDY:
+            func = self.__congreedy_match
+
+        func(tokens, results)
+
+        return list(results)
+
+    def __repr__(self):
+        return \
+            (
+                f'{self.__class__.__name__}'
+                f'<name={repr(self.t_p__name_pat)}, value={repr(self.value)}, cnt={self.cnt}, mode={self.mode}>'
+            )
+
+
+class SyntaxMatcher:
+    def __init__(self, *rules: str):
+        self.rules = []  # type: list[MatchRule]
+        self.__process_rules(rules)
+
+    def __process_rules(self, rules):
+        for rule in rules:
+            self.rules.append(MatchRule(rule))
+
+    def match(self, tokens) -> tuple[Optional[list[Token]], int]:
+        consumption = 0
+        results = deque()
+        for rule in self.rules:
+            result = rule.match(tokens[consumption:])
+            if result is None:
+                return None, 0
+            consumption += len(result)
+            if rule.include:
+                results.append(result)
+        return list(results), consumption
+
+
+class Parser:
     """
     对原始标记列表的第一次处理
     """
     types = [
-        ('indent', FstSyntaxMatcher('INDENT')),
-        ('dedent', FstSyntaxMatcher('DEDENT')),
+        ('indent', SyntaxMatcher('INDENT')),
+        ('dedent', SyntaxMatcher('DEDENT')),
 
-        ('table_def', FstSyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
+        ('table_def', SyntaxMatcher('LP=[', 'IDENT', 'RP=]')),
 
-        ('import', FstSyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT', 'AS', 'IDENT')),
-        ('import', FstSyntaxMatcher('FROM', 'IDENT', 'IMPORT', 'IDENT')),
-        ('import', FstSyntaxMatcher('IMPORT', 'IDENT', 'AS', 'IDENT')),
-        ('import', FstSyntaxMatcher('IMPORT', 'IDENT')),
+        ('import', SyntaxMatcher('?FROM', 'IDENT', '?IMPORT', 'IDENT', '?AS', 'IDENT')),
+        ('import', SyntaxMatcher('?FROM', 'IDENT', '?IMPORT', 'IDENT')),
+        ('import', SyntaxMatcher('?IMPORT', 'IDENT', '?AS', 'IDENT')),
+        ('import', SyntaxMatcher('?IMPORT', 'IDENT')),
 
-        ('fill_item', FstSyntaxMatcher('LFILL', 'IDENT', 'RFILL')),
+        ('fill_item', SyntaxMatcher('?LFILL', 'IDENT', '?RFILL')),
 
-        ('plus', FstSyntaxMatcher('PLUS', '')),
-        ('minus', FstSyntaxMatcher('MINUS', '')),
-        ('multiply', FstSyntaxMatcher('MULTIPLY', '')),
-        ('div', FstSyntaxMatcher('DIV', '')),
-        ('floordiv', FstSyntaxMatcher('FLOORDIV', '')),
+        ('oper', SyntaxMatcher('OPER', '*')),
 
-        ('assign', FstSyntaxMatcher('IDENT', 'ASSIGN')),
+        ('assign', SyntaxMatcher('IDENT', '?ASSIGN')),
+        ('oper_assign', SyntaxMatcher('IDENT', 'OPER', '?ASSIGN')),
 
-        ('start_seq', FstSyntaxMatcher('LP', '', 'SPLIT_CHAR=,')),
-        ('elem', FstSyntaxMatcher('', 'SPLIT_CHAR=,')),
-        ('end_seq', FstSyntaxMatcher('', 'RP')),
-        ('end_seq', FstSyntaxMatcher('', 'SPLIT_CHAR=,', 'RP')),
+        ('start_seq', SyntaxMatcher('?LP', '*', '?SPLIT_CHAR=,')),
+        ('elem', SyntaxMatcher('*', '?SPLIT_CHAR=,')),
+        ('end_seq', SyntaxMatcher('*', '?RP')),
+        ('end_seq', SyntaxMatcher('*', '?SPLIT_CHAR=,', '?RP')),
 
-        ('get_attr', FstSyntaxMatcher('SPLIT_CHAR=.', 'IDENT')),
+        ('get_attr', SyntaxMatcher('?SPLIT_CHAR=.', 'IDENT')),
 
-        ('constant', FstSyntaxMatcher('STR')),
-        ('constant', FstSyntaxMatcher('INT')),
+        ('one_expr', SyntaxMatcher('STR')),
+        ('one_expr', SyntaxMatcher('INT')),
+        ('one_expr', SyntaxMatcher('IDENT')),
 
-        ('lp', FstSyntaxMatcher('LP')),
-        ('rp', FstSyntaxMatcher('RP')),
+        ('lp', SyntaxMatcher('LP')),
+        ('rp', SyntaxMatcher('RP')),
+    ]  # type: list[tuple[SyntaxMatcher, ...]]
 
-        ('expr', FstSyntaxMatcher('ident', 'get_attr')),
-        ('expr', FstSyntaxMatcher('get_attr', 'get_attr')),
-        ('expr', FstSyntaxMatcher('start_seq', '', 'end_seq')),
-
-        ('expr', FstSyntaxMatcher('IDENT')),
+    phrase_matchers = [
+        ('expr', SyntaxMatcher('oper', 'expr')),
     ]
 
     def __init__(self, tokens):
@@ -162,10 +243,32 @@ class FirstParser:
         """
         分析当前标记和后续标记，判断语法类型（语句，表达式，赋值...）
         """
+        trys = deque()
         for type_, matcher in self.types:
-            if matcher.match(tokens[pos:]):
-                return type_, len(matcher)
-        return None, 0
+            x, length = matcher.match(tokens[pos:])
+            if length:
+                return type_, length, trys
+            trys.append((type_, length > 0))
+        return None, 0, trys
+
+    def _error(self, tokens=None, trys=None):
+        token_msg = rich.table.Table('*', 'Token', title='Token')
+        for idx in range(max(0, self.pos - 5), min(len(tokens), self.pos + 5)):
+            tk = tokens[idx]
+            if idx == self.pos:
+                token_msg.add_row('=>', str(tk))
+            else:
+                token_msg.add_row('', str(tk))
+        try_msg = rich.table.Table('Type', 'Matched', title='Try')
+        for try_res in trys:
+            type_, matched = try_res
+            try_msg.add_row(type_, 'Yes' if matched else 'No')
+        phrase_msg = rich.table.Table('Phrase', title='Phrases')
+        for phrase in self.phrases:
+            phrase_msg.add_row(phrase)
+        console = rich.get_console()
+        console.print(token_msg, try_msg, phrase_msg)
+        raise SyntaxError()
 
     def _first_parse(self):
         tokens = self.tokens
@@ -182,19 +285,9 @@ class FirstParser:
 
         while self.pos < len(tokens):
             move_no_whitespace()
-            type_, length = self._get_type(self.pos, tokens)
+            type_, length, trys = self._get_type(self.pos, tokens)
             if type_ is None:  # Error
-                error_msg = '\n'
-                for idx in range(max(0, self.pos - 5), min(len(tokens), self.pos + 5)):
-                    tk = tokens[idx]
-                    if idx == self.pos:
-                        error_msg += '=>'
-                    error_msg += '\t'
-                    error_msg += str(tk)
-                    error_msg += '\n'
-                raise SyntaxError(
-                    error_msg
-                )
+                self._error(tokens, trys)
             matches = []
             for i in range(length):
                 move_no_whitespace()
@@ -202,6 +295,11 @@ class FirstParser:
                 consume(1)
             p = Phrase(type_, matches)
             self.phrases.append(p)
+
+    def _second_parse(self):
+        self.pos = 0
+        while self.pos < len(self.phrases):
+            p = self.phrases[self.pos]
 
     def parse(self):
         self._first_parse()
@@ -221,7 +319,7 @@ class FirstParser:
             if token.type == 'LP':
                 s.push(token)
             if token.type == 'RP':
-                if s.empty():
+                if s.is_empty():
                     raise SyntaxError('Unexpected right parenthesis(except {}, but get {})'.format(
                         None, token.value
                     ))
@@ -231,76 +329,9 @@ class FirstParser:
                         t.value, token.value
                     ))
 
-        if not s.empty():
+        if not s.is_empty():
             raise SyntaxError('Unexpected left parenthesis')
         return True
 
     def __repr__(self):
         return f'{self.pos}'
-
-
-class SecRule:
-    def __init__(self, expr, cnt):
-        self.expr = expr
-        self.cnt = cnt
-
-        if self.expr == '':
-            self.expr = None
-
-    def match(self, tokens):
-        results = deque()
-        if self.cnt <= 0:  # 贪婪模式: 0: 无限匹配, -N: 至少匹配N个
-            for tk in tokens:
-                if self.expr is None or tk.type == self.expr:
-                    results.append(tk)
-                else:
-                    if self.cnt < 0 and len(results) < -self.cnt:  # 贪婪模式下，如果匹配失败，则返回None
-                        return None
-                    break
-        else:
-            for tk, i in zip(tokens, range(self.cnt)):
-                if tk.type == self.expr:
-                    results.append(tk)
-                else:
-                    return None
-        return results
-
-
-class SecSyntaxMatcher:
-    def __init__(self, *rules: Tuple[str, int]):
-        self.rules = []
-        self._process_rules(rules)
-
-    def _process_rules(self, rules):
-        # rules: Tuple[Tuple[str, int], ...]
-        for rule in rules:
-            self.rules.append(SecRule(*rule))
-
-    def match(self, tokens):
-        consumption = 0
-        results = deque()
-        for rule in self.rules:
-            result = rule.match(tokens[consumption:])
-            if result is None:
-                return None
-            consumption += len(result)
-            results.append(result)
-        return results
-
-
-class SecParser:
-    """
-    对已经预处理过的标记列表进行处理，合并表达式
-    """
-
-    def __init__(self, phrases):
-        self.phrases = phrases
-        self.pos = 0
-        self.results = deque()
-
-    def _parse(self):
-        pass
-
-    def parse(self):
-        self._parse()
-        return self.results

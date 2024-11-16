@@ -1,7 +1,7 @@
 import fnmatch
 import os
 
-from .File import *
+from .JsonFile import json_safe_open, json_write
 
 
 class CannotFindError(BaseException):

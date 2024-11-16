@@ -1,5 +1,5 @@
 from ._BaseStructures import *
-from ..File import pickle_read, pickle_write
+from ..JsonFile import pickle_read, pickle_write
 
 
 class Config:

@@ -1,4 +1,4 @@
-from src.HydrogenLib.Decorators import singleton_decorator
+from ..Decorators import singleton_decorator
 
 
 class Char(int):

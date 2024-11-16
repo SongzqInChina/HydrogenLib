@@ -4,7 +4,7 @@ import os
 import queue
 from collections import deque
 
-import src.HydrogenLib.Json.Pickle
+from .Json import Pickle
 from . import ThreadingPlus, Json
 
 
@@ -39,7 +39,7 @@ class _PIPEWriter:
     def write(self, data):
         if data is None or data is ...:
             raise ValueError("You should send 'None' or '...' to the reader, they hava their functions.")
-        data_text = src.HydrogenLib.Json._Pickle.Pickle.encode(data)
+        data_text = Pickle.encode(data)
         self._msg_queue.put(data_text)
 
     def _write_thread_func(self):
@@ -90,7 +90,7 @@ class _PIPEReader:
         while not self._event.is_set():
             try:
                 one_data = self._io.readline()
-                unpacking_data = src.HydrogenLib.Json._Pickle.Pickle.decode(one_data)
+                unpacking_data = Pickle.decode(one_data)
                 self._msg_queue.put(unpacking_data)
             except Exception as e:
                 self.errors.append(e)

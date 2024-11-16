@@ -1,8 +1,6 @@
 from abc import ABC
 from copy import deepcopy
 from types import FunctionType
-
-from src.HydrogenLib.TypeFunc import get_attr_by_path
 from .Namespace import Namespace
 
 
@@ -206,6 +204,7 @@ class AutoOperatorStruct:
         }:
             raise ValueError(f"{oper} is not a valid operator")
 
+        from ..TypeFunc import get_attr_by_path
         cls = get_attr_by_path(Namespace(None, **_globals), func.__qualname__).lst[-2]
         if not isinstance(cls, AutoOperator):
             raise TypeError(f"{cls} is not a AutoOperator")

@@ -61,14 +61,7 @@ TOKEN_PATTERNS = [
     ("LFILL", LFILLTOKEN),
     ("RFILL", RFILLTOKEN),
 
-    ("PLUS", Literal('+')),
-    ("MINUS", Literal('-')),
-    ("MULTIPLY", Literal('*')),
-    ("DIV", Literal('/')),
-    ("FLOORDIV", Literal('//')),
-    ("LSHIFT", Literal('<<')),
-    ("RSHIFT", Literal('>>')),
-    ("MOD", Literal('%')),
+    ("OPER", Re(r'((//)|[\+\-\*/^&\|%]|<<|>>)')),
 
     ("PASS", PASS),
     ("IDENT", IDENT),

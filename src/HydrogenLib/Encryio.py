@@ -4,9 +4,9 @@ import socket
 from .Class.Base import null
 from .Encrypt.aes import decrypt as aes_decode, encode as aes_encode
 from .Encrypt.rsa import encrypt as rsa_encrypt, decrypt as rsa_decrypt
-from .File import JsonFileOpen
-from .Json.Pickle import Pickle
+from .Json import Pickle
 from .SocketPlus import SyncSocket
+from .JsonFile import json_open, pickle_safe_open
 
 zencryio_logger = logging.getLogger("SzQlib.zencryio")
 
@@ -21,7 +21,7 @@ class _EncryptJsonFile:
 
     def __init__(self, filename, key, iv):
         zencryio_logger.debug("Create a encryptJsonFile object")
-        self.iostream = JsonFileOpen(filename)
+        self.iostream = pickle_safe_open(filename)
         self.key, self.iv = key, iv
 
     def __getitem__(self, item):

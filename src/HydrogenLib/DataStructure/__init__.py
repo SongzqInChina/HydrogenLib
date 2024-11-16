@@ -12,24 +12,27 @@ class Stack:
         self.lst.append(data)
 
     def pop(self):
-        return self.lst.pop() if not self.empty() else None
+        return self.lst.pop() if not self.is_empty() else None
 
     def size(self):
         return len(self.lst)
 
-    def empty(self):
+    def is_empty(self):
         return self.size() == 0
 
     def top(self):
-        return self.lst[-1] if not self.empty() else None
+        return self.lst[-1] if not self.is_empty() else None
+
+    def copy(self):
+        return self.__class__(self.lst.copy())
 
     @property
     def front(self):
-        return self.lst[-1] if not self.empty() else None
+        return self.lst[-1] if not self.is_empty() else None
 
     @front.setter
     def front(self, data):
-        if not self.empty():
+        if not self.is_empty():
             self.lst[-1] = data
 
     def __str__(self):
