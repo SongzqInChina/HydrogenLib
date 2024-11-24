@@ -1,6 +1,6 @@
 from rich import print
 
-from src.HydrogenLib.TestManager import *
+from src.hydrolib.test_manager import *
 from tests import test_funcs
 
 

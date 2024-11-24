@@ -8,10 +8,9 @@ dynamic = ["version"]
 description = ''
 readme = "README.md"
 requires-python = ">=3.7.0"
-license = "HydrogenLib License"
 keywords = []
 authors = [
-    { name = "SongzqInChina", email = "142714722+SongzqInChina@users.noreply.github.com" },
+    { name = "SongzqInChina", email = "idesong6@qq.com" },
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -37,26 +36,26 @@ Source = "https://github.com/SongzqInChina/HydrogenLib"
 
 
 [tool.hatch.version]
-path = "src/HydrogenLib/__about__.py"
+path = "src/hydrolib/__about__.py"
 
 [tool.hatch.envs.types]
 extra-dependencies = [
     "mypy>=1.0.0",
 ]
 [tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:src/HydrogenLib tests}"
+check = "mypy --install-types --non-interactive {args:src/hydrolib tests}"
 
 [tool.coverage.run]
-source_pkgs = ["HydrogenLib", "tests"]
+source_pkgs = ["hydrolib", "tests"]
 branch = true
 parallel = true
 omit = [
-    "src/HydrogenLib/__about__.py",
+    "src/hydrolib/__about__.py",
 ]
 
 [tool.coverage.paths]
-HydrogenLib = ["src/HydrogenLib", "*/HydrogenLib/src/HydrogenLib"]
-tests = ["tests", "*/HydrogenLib/tests"]
+hydrolib = ["src/hydrolib", "*/hydrolib/src/hydrolib"]
+tests = ["tests", "*/hydrolib/tests"]
 
 [tool.coverage.report]
 exclude_lines = [
@@ -66,3 +65,6 @@ exclude_lines = [
 ]
 [tool.hatch.build]
 target = "wheel"
+
+[tool.hatch.build.targets.wheel]
+packages = ['src/hydrolib']

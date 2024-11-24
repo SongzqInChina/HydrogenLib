@@ -6,7 +6,7 @@ dist/
 # Files in Dev
 upload.py
 
-src/HydrogenLib/HyConfigLanguage/.old.source
+src/hydrolib/hyconfig/.old.source
 
 test.py
 test_*.py

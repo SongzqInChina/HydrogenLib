@@ -1,5 +1,5 @@
-import src.HydrogenLib.Doc.Struct
-from src.HydrogenLib.Doc.Struct import CodeStruct
+import src.hydrolib.codedoc.Struct
+from src.hydrolib.codedoc.Struct import CodeStruct
 
 
 def get():

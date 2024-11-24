@@ -1,7 +1,7 @@
 import builtins
 
-import src.HydrogenLib
-from src.HydrogenLib.REPlus.REConcatenater import *
+import src.hydrolib
+from src.hydrolib.re_plus.REConcatenater import *
 src.HydrogenLib.init(show_locals=True)
 
 Re("abc") + Re('bcd')

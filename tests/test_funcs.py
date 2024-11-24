@@ -1,8 +1,8 @@
 # Hydrogen tests
 
-import src.HydrogenLib
-import src.HydrogenLib.Class.Auto
-import src.HydrogenLib.Class.Namespace
+import src.hydrolib
+import src.hydrolib.utils.Auto
+import src.hydrolib.utils.Namespace
 
 
 def class_namespace_namespace_test(args):

@@ -3,9 +3,15 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/src/hydrolib/hyconfig/.old.source/2024.10-" />
+      <excludeFolder url="file://$MODULE_DIR$/src/hydrolib/hyconfig/.old.source/2024.11.13" />
+      <excludeFolder url="file://$MODULE_DIR$/src/hydrolib/hyconfig/.old.source/2024.11.13-" />
     </content>
     <orderEntry type="jdk" jdkName="HydrogenLib" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="removeUnused" value="true" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

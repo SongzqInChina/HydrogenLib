@@ -1,8 +1,8 @@
 from rich import print
-import src.HydrogenLib
-import src.HydrogenLib.HyConfigLanguage.Interpreter.Lexer
-import src.HydrogenLib.HyConfigLanguage.Interpreter.Parser
-import src.HydrogenLib.HyConfigLanguage.Interpreter.Interpreter
+import src.hydrolib
+import src.hydrolib.hyconfig.Interpreter.Lexer
+import src.hydrolib.hyconfig.Interpreter.Parser
+import src.hydrolib.hyconfig.Interpreter.Interpreter
 # src.HydrogenLib.init(show_locals=True)
 
 # 测试代码

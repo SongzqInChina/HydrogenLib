@@ -49,7 +49,7 @@ def init_parser(parser: argparse.ArgumentParser):
     )
 
 
-version_path = r"src/HydrogenLib/Resource\version"
+version_path = r"src/hydrolib/src\version"
 args = sys.argv[1::]
 
 if __name__ == '__main__':
@@ -82,8 +82,8 @@ if __name__ == '__main__':
         time.sleep(0.1)
         if rt_code != 0:
             console.print("[bold red]Cleaning HydrogenLib wheel failed!")
-            console.print(ps.stderr)
-            console.print(ps.stdout)
+            console.print(ps.stderr.decode('gbk'))
+            console.print(ps.stdout.decode())
             sys.exit(rt_code)
         print("[bold green]success!")
 
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         time.sleep(0.1)
         if rt_code != 0:
             console.print("[bold red]Building HydrogenLib wheel failed!")
-            console.print(ps.stderr)
+            console.print(ps.stderr.decode())
             sys.exit(rt_code)
         print("[bold green]success!")
     # console.console.print('\n')
@@ -109,9 +109,10 @@ if __name__ == '__main__':
         print("[bold green]success!")
     # console.console.print('\n')
     if not args.skip_upload:
-        with console.status("Uploading HydrogenLib wheel...", spinner=spinner):
-            rt_code, ps = run_command(["twine", "upload", r".\dist\*", '--disable-progress-bar'])
-        time.sleep(0.1)
+        print('UpLoad...')
+        # ps = subprocess.run(["twine", "upload", r".\dist\*", '--disable-progress-bar'])
+        ps = subprocess.run(["twine", "upload", r".\dist\*"])
+        rt_code = ps.returncode
         if rt_code != 0:
             console.print(f"[bold red]failed!({rt_code})")
             console.print(ps.stdout.decode())
