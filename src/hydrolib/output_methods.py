@@ -142,13 +142,15 @@ class RedirectOutput:
         self.stderr = stderr
         self.stdin = stdin
 
+        self.back = sys.stdout, sys.stderr, sys.stdin
+
     def redirect(self):
         sys.stdout = self.stdout
         sys.stderr = self.stderr
         sys.stdin = self.stdin
 
     def unredirect(self):
-        sys.stdout, sys.stderr, sys.stdin = sys.__stdout__, sys.__stderr__, sys.__stdin__
+        sys.stdout, sys.stderr, sys.stdin = self.back
 
     def __enter__(self):
         self.redirect()

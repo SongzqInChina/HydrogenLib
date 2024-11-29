@@ -1,9 +1,24 @@
 import builtins
+import sys
 from typing import final
 
 from . import Abc
 from ... import auto_struct
 from ... import type_func
+
+from rich import print
+
+
+def _get_class(equal_name: str):
+    cls = type_func.get_attr_by_path(equal_name, {'builtins': builtins, **sys.modules})
+    return cls
+
+
+def _get_type_equal_name(obj):
+    typ = type(obj)
+    module = typ.__module__
+    name = typ.__qualname__
+    return module + '.' + name
 
 
 class BinStruct:
@@ -13,20 +28,7 @@ class BinStruct:
 
     方法:
         - pack() **不可覆写**, 打包结构体
-        - unpack(data) **不可覆写** 解包结构体,返回一个以cls为基类的新结构体实例(新返回的结构体实例的类型与打包时的结构体类型会不一致)
-            比如:
-                ```python
-                class Test(BinStruct):
-                    _data_ = ['data']
-                    data = 0
-
-                ins = Test(data=10)
-                packed_data = ins.pack()
-                new_ins = Test.unpack(packed_data)
-                print(ins.__class__ is new_ins.__class__)  # False
-                ```
-            虽然类型名称一样,但是实际类型不一样
-            具体实现可查看源码(/src/HydrogenLib/HyStruct/S_BinStruct.py)
+        - unpack(data) **不可覆写** 解包结构体
     属性:
         - _data_ 需要打包的属性**列表**
     """
@@ -46,7 +48,7 @@ class BinStruct:
     @final
     def pack(self):
         res = b''
-        this_name = self.__class__.__name__
+        this_name = _get_type_equal_name(self)
         this_length = len(this_name)
         res += bytes([this_length]) + this_name.encode()
         for name in self._data_:
@@ -63,9 +65,9 @@ class BinStruct:
             res += bytes([length_1, length_2, length_3]) + name.encode() + packed_data + type_name.encode()
         return res
 
-    @classmethod
+    @staticmethod
     @final
-    def unpack(cls, data):
+    def unpack(data):
         offset = type_func.IndexOffset.Offset(data)
         this_length = type_func.bytes_to_int(offset > 1)
         this_name = (offset > this_length).decode()
@@ -82,9 +84,9 @@ class BinStruct:
             else:
                 origin_data = auto_struct.unpack(getattr(builtins, type_name), packed_data)
             dct[name] = origin_data
-        ins = type(this_name, (cls,), dct)
-        ins._data_ = list(dct.keys())
-        return ins()
+        typ = _get_class(this_name)
+        print(typ, this_name)
+        return typ(**dct)
 
     def __gets(self):
         dct = {}

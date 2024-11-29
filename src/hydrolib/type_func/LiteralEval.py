@@ -1,5 +1,6 @@
 import ast
 import builtins as _builtins
+from typing import Optional
 
 opers = {
     '+': lambda x, y=None: (x + y) if y is not None else x,
@@ -61,8 +62,8 @@ ast_name_to_operator = {
 }
 
 
-def _literal_eval(node, globals_: dict | None, locals_: dict | None, builtins: dict | None,
-                  local_context: dict | None = None):
+def _literal_eval(node, globals_: Optional[dict], locals_: Optional[dict], builtins: Optional[dict],
+                  local_context: Optional[dict] = None):
     if local_context is None:
         local_context = {}
 
@@ -174,6 +175,9 @@ def _literal_eval(node, globals_: dict | None, locals_: dict | None, builtins: d
                     results.append(_literal_eval(node.elt, *args))
         return results
 
+    elif isinstance(node, ast.Attribute):
+        return _literal_eval(node.value, *args).__getattribute__(node.attr)
+
     elif isinstance(node, ast.comprehension):
         return list(_literal_eval(node.iter, *args))
 
@@ -181,7 +185,7 @@ def _literal_eval(node, globals_: dict | None, locals_: dict | None, builtins: d
         raise ValueError("Unsupported type: " + str(type(node)))
 
 
-def literal_eval(string, globals_: dict | None = None, locals_: dict | None = None,
+def literal_eval(string, globals_: Optional[dict] = None, locals_: Optional[dict] = None,
                  builtins: bool = False, no_eval: bool = True):
     builtins_dict = {}
     if globals_ is None: globals_ = {}
