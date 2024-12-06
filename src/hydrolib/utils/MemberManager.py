@@ -3,7 +3,7 @@ from ..utils.Namespace import Namespace
 
 
 class BaseStruct(AutoCompare):
-    _compare_attrs = ('name',)
+    __compare_attrs__ = ('name',)
 
     def __init__(self, name):
         self.name = name

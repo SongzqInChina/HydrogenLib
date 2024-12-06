@@ -5,9 +5,9 @@ from . import auto_struct as ostruct
 from .json import Pickle
 
 
-def simple_pack(data_bytes: bytes):
+def simple_pack(data_bytes: bytes, length_sign_len: int = 2):
     data_len = len(data_bytes)
-    data_len_bytes = ostruct.pack(data_len)
+    data_len_bytes = type_func.int_to_bytes(data_len, length_sign_len)
     return data_len_bytes + data_bytes
 
 

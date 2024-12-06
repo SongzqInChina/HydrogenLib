@@ -5,12 +5,12 @@ from ..hytime import Timer
 
 
 class Result(AutoState, AutoInfo):
-    _state_attrs = (
+    __state_attrs__ = (
         "ext_res", "real_res",
         "elapsed_time", "start_time",
         "error"
     )
-    _repr_attrs = _state_attrs
+    __repr_attrs__ = _state_attrs
     _str_attrs = _state_attrs
 
     def __init__(self):
@@ -25,10 +25,10 @@ class Result(AutoState, AutoInfo):
 
 
 class Results(AutoState, AutoInfo):
-    _state_attrs = (
+    __state_attrs__ = (
         "errors", "successes", "fails"
     )
-    _repr_attrs = _state_attrs
+    __repr_attrs__ = _state_attrs
     _str_attrs = _state_attrs
 
     def __init__(self):
@@ -53,10 +53,10 @@ class Results(AutoState, AutoInfo):
 
 
 class Point(AutoState, AutoInfo):
-    _state_attrs = (
+    __state_attrs__ = (
         "except_res", "args", "kwargs"
     )
-    _repr_attrs = _state_attrs
+    __repr_attrs__ = _state_attrs
     _str_attrs = _state_attrs
 
     def __init__(self):
@@ -99,10 +99,10 @@ class Point(AutoState, AutoInfo):
 
 
 class Points(AutoState, AutoInfo):
-    _state_attrs = (
+    __state_attrs__ = (
         "points"
     )
-    _repr_attrs = _state_attrs
+    __repr_attrs__ = _state_attrs
     _str_attrs = _state_attrs
 
     def __init__(self):

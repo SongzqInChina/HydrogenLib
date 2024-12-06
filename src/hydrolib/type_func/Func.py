@@ -28,6 +28,12 @@ def get_module(func):
     return func.__module__
 
 
-def is_callable(obj):
+def get_qualname(func):
+    return f'{func.__module__}.{func.__qualname__}'
+
+
+def is_function(obj):
     Func_Callable_Types = typing.Union[types.FunctionType, types.BuiltinFunctionType]
     return isinstance(obj, Func_Callable_Types)
+
+

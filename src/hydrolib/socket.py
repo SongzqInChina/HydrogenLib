@@ -17,7 +17,7 @@ class Asyncsocket:
 
         self.event_loop = event_loop
 
-    async def write(self, data):
+    async def sendall(self, data):
         return await self.event_loop.sock_sendall(
             self.sock, data
         )
@@ -30,8 +30,11 @@ class Asyncsocket:
     async def accept(self):
         return await self.event_loop.sock_accept(self.sock)
 
-    async def connect(self, addr):
-        return await self.event_loop.sock_connect(self.sock, addr)
+    async def connect(self, addr, timeout=None):
+        if timeout is None:
+            return await self.event_loop.sock_connect(self.sock, addr)
+        else:
+            return await asyncio.wait_for(self.event_loop.sock_connect(self.sock, addr), timeout)
 
     async def connect_ex(self, addr):
         return self.sock.connect_ex(addr)

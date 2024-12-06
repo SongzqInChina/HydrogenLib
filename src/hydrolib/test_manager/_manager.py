@@ -31,7 +31,7 @@ class TestManager:
     def run(self, main_class):
         ps_list = []  # type: list[threading.Thread]
         for config in self.configs:
-            config.func = get_attr_by_path(main_class, config.name).top()
+            config.func = get_attr_by_path(config.name)
 
         for config in self.configs:
             ps = start_daemon_thread(self.run_test, config, self.queue)

@@ -1,1 +1,1 @@
-from ._async import AsyncSocketGroup, SocketConnect
+from ._async import AsyncSocketGroup

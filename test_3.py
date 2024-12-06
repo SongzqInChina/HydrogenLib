@@ -1,26 +1,30 @@
-import builtins
+from src.hydrolib.type_func.Overload import *
 
-import src.hydrolib
-from src.hydrolib.re_plus.REConcatenater import *
-src.HydrogenLib.init(show_locals=True)
 
-Re("abc") + Re('bcd')
+@overload
+def func(a: int, b: int):
+    return a * b + b
 
-var_assign = (Re(r'[a-zA-Z_][a-zA-Z0-9_]*', name="name") + Re(r'\s*=\s*', ignore=True) +
-              Re(r'.+', name="value"))
-start = Re('^')
 
-NEWLINE = Literal('\n')
-WHITESPACE = Re(' +')
-IDENT = Re(r'[a-zA-Z_][a-zA-Z0-9_.]*')
-TABLE_DEF = Literal('[', ignore=True) + Re(IDENT, name="table_name") + Literal(']', ignore=True)
-KEYWORD = Re("(from|import|as|pass)")
-# ASSIGN = Literal('=')
-ANY = Re('.+')
-ASSIGN = Re(IDENT, name='var_name') + Re(r'\s*=\s*', ignore=True) + Re(ANY, name="value")
-builtins.print(ASSIGN.pattern())
-res = ASSIGN.match('a = 1')
-# ('a', ' = ', '1')
-print(res.group())
-print(res.groups())
-print(res.groupdict())
+@overload
+def func(a: str, b: str):
+    return a.join(b)
+
+
+@overload
+def func(a: str, b=None):
+    return a * b
+
+
+print(list(get_func_overloads(func)))
+
+# 正确示范
+print(func(1, 2))
+print(func("1", "2"))
+print(func("x", 10))
+
+# Error
+try:
+    print(func('ladjf', None))
+except OverloadRuntimeError as e:
+    print(e)

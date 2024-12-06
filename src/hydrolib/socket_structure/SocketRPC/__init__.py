@@ -19,7 +19,7 @@ class RPCServer:
         self.socket.server_at(port)
 
     def link(self, func):
-        if not type_func.Func.is_callable(func):
+        if not type_func.Func.is_function(func):
             raise Exception("Func param must be callable")
         func_name = func.__name__
         if func is builtins.eval or func_name == "eval":
@@ -31,7 +31,7 @@ class RPCServer:
         type_ = type(func)
         if type_ == str:
             return self.functions.pop(type_)
-        if type_func.Func.is_callable(func):
+        if type_func.Func.is_function(func):
             return self.functions.pop(func.__name__)
         raise Exception("Func param must be str or a func")
 

@@ -240,3 +240,9 @@ class Offset:
         """
         self.less_start(lenght)
         return self
+
+    def __lshift__(self, other):
+        return self.back(other)
+
+    def __rshift__(self, other):
+        return self.offset(other)

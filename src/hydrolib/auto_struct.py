@@ -3,10 +3,12 @@ import struct
 
 from . import encrypt
 from . import type_func
+from . import struct_plus
 
 
 def pack(data):
     """
+    对基本Struct模块的功能进行一定的改进的方法
     **Format Mro**
 
     - x           pad byte
@@ -35,11 +37,11 @@ def pack(data):
     """
     data_type = type(data)
     if data_type == int:
-        return struct.pack("<q", data)
+        return type_func.int_to_bytes_nonelength(data)
     elif data_type == float:
         return struct.pack("<d", data)
     elif data_type == str:
-        raise TypeError from TypeError("argument for 's' must be a bytes object")
+        return data.encode()
     elif data_type == bytes:
         return data
     elif data_type == bool:
@@ -50,13 +52,13 @@ def pack(data):
 
 def unpack(data_type, data):
     if data_type == int:
-        return struct.unpack("<q", data)[0]
+        return type_func.bytes_to_int(data)
     elif data_type == float:
         return struct.unpack("<d", data)[0]
     elif data_type == str:
-        return struct.unpack("<s", data)[0]
+        return data.decode()
     elif data_type == bytes:
-        return struct.unpack("<p", data)[0]
+        return data
     elif data_type == bool:
         return struct.unpack("<?", data)[0]
     else:

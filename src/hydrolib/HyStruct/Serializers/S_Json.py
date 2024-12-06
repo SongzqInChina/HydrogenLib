@@ -21,7 +21,7 @@ class Json(Abc.Serializer):
         self.s = None
 
     def dumps(self, data):
-        return json.dumps(data)
+        return json.dumps(data).encode()
 
     def loads(self, data):
         return json.loads(data)

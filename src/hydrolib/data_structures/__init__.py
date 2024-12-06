@@ -55,8 +55,9 @@ class Stack:
 
 
 class Heap:
-    def __init__(self):
-        self.heap = []
+    def __init__(self, lst=None, reversed=False):
+        self.heap = lst or []
+        self.iter_reversed = reversed
 
     def _parent(self, i):
         return (i - 1) // 2
@@ -95,6 +96,15 @@ class Heap:
         self.heap.append(value)
         self._heapify_up(len(self.heap) - 1)
 
+    def remove(self, value):
+        index = self.heap.index(value)
+        self._swap(index, len(self.heap) - 1)
+        self.heap.pop()
+        self._heapify_down(index)
+
+    def append(self, value):
+        self.insert(value)
+
     def extract_min(self):
         if not self.heap:
             raise IndexError("Heap is empty.")
@@ -109,3 +119,23 @@ class Heap:
         if not self.heap:
             raise IndexError("Heap is empty.")
         return self.heap[0]
+
+    def copy(self):
+        return self.__class__(self.heap.copy())
+
+    def iter(self):
+        copy = self.copy()
+        while copy:
+            yield copy.heap[0]
+            last = copy.heap.pop()
+            if copy:
+                copy.heap[0] = last
+                copy._heapify_down(0)
+
+    iter_reversed = False
+
+    def __iter__(self):
+        return self.iter() if not self.iter_reversed else reversed(tuple(self.iter()))
+
+    def __len__(self):
+        return len(self.heap)

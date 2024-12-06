@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
 from typing import final
+from typing import Any
 
 
 class Serializer(ABC):
     @abstractmethod
-    def dumps(self, data):
+    def dumps(self, data) -> bytes:
         ...
 
     @abstractmethod
-    def loads(self, data):
+    def loads(self, data) -> Any:
         ...
 
     def load_from_sock(self, sock):

@@ -1,22 +1,29 @@
 from typing import Literal
 
-from . import (
-    Dict,
-    List,
-    Template,
-    IndexOffset,
-    BinaryTree,
-    Func,
-)
-from ..data_structures import Stack
+from .BinaryTree import *
+from .Bitmap import *
+from .Dict import *
+from .Func import *
+from .IndexOffset import *
+from .List import *
+from .LiteralEval import *
+from .Number import *
+from .Template import *
+from .Type import *
 
 
-def int_to_bytes(num, lenght, byteorder='little'):
+def int_to_bytes(num: int, lenght, byteorder='little'):
     try:
         byte = num.to_bytes(lenght, byteorder)
     except OverflowError as e:
         raise e
     return byte
+
+
+def int_to_bytes_nonelength(num: int):
+    length = len(hex(num))
+    length = max(length // 2 - 1, 1)  # 十六进制下,每两个字符占一个字节
+    return num.to_bytes(length, 'little')
 
 
 def bytes_to_int(data: bytes, byteorder: Literal["little", "big"] = 'little'):
@@ -45,28 +52,17 @@ def is_errortype(exception) -> bool:
     return isinstance(exception, Exception)
 
 
-def get_attr_by_path(obj, path):
+def get_attr_by_path(path, Globals=None, Locals=None):
     """
-
-    根据一个引用路径获取对象，返回一个引用栈
-
-    如``get_attr_by_path(obj, "attr1.attr2.attr3")``返回一个``Stack([obj, value1, value2, value3])``
-
-    如果你希望从globals中获取对象，你可以先把globals字典转换为一个``Namespace``，然后调用函数获取对象
-
-
-    :param obj: 初始根对象
     :param path: 引用路径
+    :param Globals: globals() 字典
+    :param Locals: locals() 字典
 
     """
-    path_list = path.split('.')
-    cur_obj = obj
-    s = Stack([cur_obj])
-    while len(path_list):
-        cur_obj = getattr(cur_obj, path_list.pop(-1))
-        s.push(cur_obj)
-
-    return s
+    try:
+        return LiteralEval.literal_eval(path, Globals, Locals)
+    except (NameError, ValueError, SyntaxError, TypeError, Exception):
+        return None
 
 
 def get_type_name(origin_data):

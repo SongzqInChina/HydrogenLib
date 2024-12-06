@@ -16,7 +16,7 @@ class NetPackage(AutoState, AutoStr):
 
 
 class Request(NetPackage):
-    _state_attrs = ("header", "data")
+    __state_attrs__ = ("header", "data")
 
     def __init__(self, header=None, data=None):
         self.header = {} if header is None else header
@@ -27,7 +27,7 @@ class Request(NetPackage):
 
 
 class Answer(NetPackage):
-    _state_attrs = ("header", "result", "status")
+    __state_attrs__ = ("header", "result", "status")
 
     def __init__(self, header=None, result=None, status=None):
         self.header = header
@@ -39,7 +39,7 @@ class Answer(NetPackage):
 
 
 class Error(NetPackage):
-    _state_attrs = ("header", "error", "reason")
+    __state_attrs__ = ("header", "error", "reason")
 
     def __init__(self, header=None, error=None, reason=None):
         self.header = header
@@ -51,7 +51,7 @@ class Error(NetPackage):
 
 
 class Info(NetPackage):
-    _state_attrs = ("header", "info")
+    __state_attrs__ = ("header", "info")
 
     def __init__(self, header=None, info=None):
         self.header = header
@@ -62,7 +62,7 @@ class Info(NetPackage):
 
 
 class Action(NetPackage):
-    _state_attrs = ("header", "action")
+    __state_attrs__ = ("header", "action")
 
     def __init__(self, header=None, action=None):
         self.header = header

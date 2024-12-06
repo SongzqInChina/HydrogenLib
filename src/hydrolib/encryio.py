@@ -6,8 +6,6 @@ from .json import Pickle
 from .json_file import pickle_safe_open
 from .utils.Base import null
 
-zencryio_logger = logging.getLogger("SzQlib.zencryio")
-
 
 # module end
 
@@ -18,7 +16,6 @@ class _EncryptJsonFile:
     """
 
     def __init__(self, filename, key, iv):
-        zencryio_logger.debug("Create a encryptJsonFile object")
         self.iostream = pickle_safe_open(filename)
         self.key, self.iv = key, iv
 
@@ -135,5 +132,3 @@ def EncryptJsonOpen(filename, key, iv):
 #
 #             return Pickle.decode(decry_data.decode())
 
-
-zencryio_logger.debug("Module zencryio loading ...")

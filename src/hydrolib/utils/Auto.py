@@ -66,12 +66,12 @@ class AutoRegDict(Auto):
 class AutoCompare(Auto):
     """
     自动完成比较操作
-    通过指定`_compare_attrs`属性来指定比较的属性，默认为None，
-    如果`_compare_attrs`为None，那么自动比较将不会生效，而是根据比较符返回一个默认值
+    通过指定`__compare_attrs__`属性来指定比较的属性，默认为None，
+    如果`__compare_attrs__`为None，那么自动比较将不会生效，而是根据比较符返回一个默认值
     如果被比较的对象不是 `AutoCompare` 的实例，那么比较时会按比较列表的第一个属性作为比较属性
     """
-    _compare_attrs = ()
-    _cmp_funcs = {
+    __compare_attrs__ = ()
+    __cmp_funcs__ = {
         'eq': lambda x, y: x == y,
         'ne': lambda x, y: x != y,
         'lt': lambda x, y: x < y,
@@ -81,23 +81,23 @@ class AutoCompare(Auto):
     }
 
     def _auto_compare_attrs(self, opt, other, defautl=False):
-        if opt not in self._cmp_funcs:
+        if opt not in self.__cmp_funcs__:
             return defautl
 
-        func = self._cmp_funcs[opt]
+        func = self.__cmp_funcs__[opt]
 
         if not isinstance(other, AutoCompare):
-            if self._compare_attrs:
-                value = getattr(self, self._compare_attrs[0])
+            if self.__compare_attrs__:
+                value = getattr(self, self.__compare_attrs__[0])
                 return func(value, other)
 
-        if self._compare_attrs is None or other._compare_attrs is None:
+        if self.__compare_attrs__ is None or other.__compare_attrs__ is None:
             return defautl
 
         my_attr_values = (
-            getattr(self, attr) for attr in self._compare_attrs)
+            getattr(self, attr) for attr in self.__compare_attrs__)
         other_attr_values = (
-            getattr(other, attr) for attr in other._compare_attrs)
+            getattr(other, attr) for attr in other.__compare_attrs__)
         return func(my_attr_values, other_attr_values)
 
     def __eq__(self, other):
@@ -125,65 +125,65 @@ class AutoState(Auto):
 
     如果`_state_attrs`为None，那么将导出所有属性，恢复时同上
     """
-    _state_attrs = ()
+    __state_attrs__ = ()
 
     def __getstate__(self):
-        if self._state_attrs is None:
+        if self.__state_attrs__ is None:
             return self.__dict__
-        return {attr: getattr(self, attr) for attr in self._state_attrs}
+        return {attr: getattr(self, attr) for attr in self.__state_attrs__}
 
     def __setstate__(self, state):
-        if self._state_attrs is None:
+        if self.__state_attrs__ is None:
             self.__dict__ = state
         else:
-            for attr in self._state_attrs:
+            for attr in self.__state_attrs__:
                 setattr(self, attr, state[attr])
 
 
 class AutoOperator(Auto):
-    _operator_funcs = {}
+    __operator_funcs__ = {}
 
     def __add__(self, other):
-        return self._operator_funcs['+'](self, other)
+        return self.__operator_funcs__['+'](self, other)
 
     def __sub__(self, other):
-        return self._operator_funcs['-'](self, other)
+        return self.__operator_funcs__['-'](self, other)
 
     def __mul__(self, other):
-        return self._operator_funcs['*'](self, other)
+        return self.__operator_funcs__['*'](self, other)
 
     def __truediv__(self, other):
-        return self._operator_funcs['/'](self, other)
+        return self.__operator_funcs__['/'](self, other)
 
     def __floordiv__(self, other):
-        return self._operator_funcs['//'](self, other)
+        return self.__operator_funcs__['//'](self, other)
 
     def __mod__(self, other):
-        return self._operator_funcs['%'](self, other)
+        return self.__operator_funcs__['%'](self, other)
 
     def __pow__(self, other):
-        return self._operator_funcs['**'](self, other)
+        return self.__operator_funcs__['**'](self, other)
 
     def __and__(self, other):
-        return self._operator_funcs['&'](self, other)
+        return self.__operator_funcs__['&'](self, other)
 
     def __or__(self, other):
-        return self._operator_funcs['|'](self, other)
+        return self.__operator_funcs__['|'](self, other)
 
     def __xor__(self, other):
-        return self._operator_funcs['^'](self, other)
+        return self.__operator_funcs__['^'](self, other)
 
     def __lshift__(self, other):
-        return self._operator_funcs['<<'](self, other)
+        return self.__operator_funcs__['<<'](self, other)
 
     def __rshift__(self, other):
-        return self._operator_funcs['>>'](self, other)
+        return self.__operator_funcs__['>>'](self, other)
 
     def __invert__(self):
-        return self._operator_funcs['~'](self)
+        return self.__operator_funcs__['~'](self)
 
     def __neg__(self):
-        return self._operator_funcs['-'](self)
+        return self.__operator_funcs__['-'](self)
 
 
 class AutoOperatorStruct:
@@ -208,7 +208,7 @@ class AutoOperatorStruct:
         if not isinstance(cls, AutoOperator):
             raise TypeError(f"{cls} is not a AutoOperator")
 
-        cls._operator_funcs[oper] = self
+        cls.__operator_funcs__[oper] = self
 
     def __call__(self, *args, **kwargs):
         return self.func(*args, **kwargs)
@@ -222,16 +222,25 @@ class AutoOperatorFunc(Auto):
         return AutoOperatorStruct.decorator(oper, self._globs)
 
 
+class AutoRegisterChildMeta(type):
+    __children_types__ = []
+
+    def __new__(cls, name, bases, attrs):
+        new_cls = super().__new__(cls, name, bases, attrs)
+        new_cls.__children_types__.append(new_cls)
+        return new_cls
+
+
 class _AutoInfo(Auto):
     ...
 
 
 class AutoRepr(_AutoInfo):
-    _repr_attrs = ()
+    __repr_attrs__ = ()
 
     def __repr__(self):
         return str(
-            {attr: getattr(self, attr) for attr in self._repr_attrs}
+            {attr: getattr(self, attr) for attr in self.__repr_attrs__}
         )
 
 

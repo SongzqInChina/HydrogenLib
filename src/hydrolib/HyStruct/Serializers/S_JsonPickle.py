@@ -1,11 +1,11 @@
 import jsonpickle
+from . import S_Json
 
-from . import S_Json as JsonBase
 
-
-class JsonPickle(JsonBase.Json):
+class JsonPickle(S_Json.Json):
     def dumps(self, data):
-        jsonpickle.dumps(data)
+        return jsonpickle.dumps(data).encode()
 
     def loads(self, data):
         return jsonpickle.loads(data)
+
