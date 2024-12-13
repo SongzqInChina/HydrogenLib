@@ -1,4 +1,6 @@
-# <center>HydrogenLib</center>
+<div style="text-align: center">
+# HydrogenLib
+</div>
 
 ![LOGO](HydroLib-LOGO-SVG.svg)
 
