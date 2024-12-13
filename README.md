@@ -3,8 +3,6 @@
     <h1>HydrogenLib</h1>
 </div>
 
----
-
 ![LOGO](HydroLib-LOGO-SVG.svg)
 
 <div style="text-align: center">
