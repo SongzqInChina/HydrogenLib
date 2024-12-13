@@ -1,6 +1,6 @@
 # <center>HydrogenLib</center>
 
-![LOGO](LOGO-PNG.png)
+![LOGO](HydroLib-LOGO-SVG.svg)
 
 <div style="text-align: center">
 
