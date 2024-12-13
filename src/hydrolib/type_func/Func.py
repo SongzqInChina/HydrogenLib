@@ -28,12 +28,16 @@ def get_module(func):
     return func.__module__
 
 
-def get_qualname(func):
-    return f'{func.__module__}.{func.__qualname__}'
+def is_instance(ins_or_cls):
+    return not isinstance(ins_or_cls, type)
+
+
+def get_qualname(func_type_or_ins: typing.Union[types.FunctionType, type, object]):
+    if is_instance(func_type_or_ins) and not is_function(func_type_or_ins):
+        return get_qualname(func_type_or_ins.__class__)
+    return f'{func_type_or_ins.__module__}.{func_type_or_ins.__qualname__}'
 
 
 def is_function(obj):
     Func_Callable_Types = typing.Union[types.FunctionType, types.BuiltinFunctionType]
     return isinstance(obj, Func_Callable_Types)
-
-

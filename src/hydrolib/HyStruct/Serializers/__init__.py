@@ -10,11 +10,11 @@ def pack(obj, serializer: Serializer = None):
     if serializer is None:
         serialier = Json()
 
-    return simple_pack(
-        simple_pack(
+    return connect_length(
+        connect_length(
             serializer.dumps(obj)
         ) +
-        simple_pack(
+        connect_length(
             serializer.__class__.__name__.encode()
         )
     )
